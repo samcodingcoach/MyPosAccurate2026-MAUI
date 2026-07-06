@@ -28,7 +28,7 @@
         </Border>
 
         <RefreshView Grid.Row="1" x:Name="RV_SO" Refreshing="OnRefreshing" Margin="10,0,10,10">
-            <CollectionView x:Name="CV_SO" RemainingItemsThreshold="2" RemainingItemsThresholdReached="OnThresholdReached">
+            <CollectionView x:Name="CV_SO" SelectionMode="None" RemainingItemsThreshold="2" RemainingItemsThresholdReached="OnThresholdReached">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
                 </CollectionView.ItemsLayout>
@@ -71,6 +71,9 @@
                                     <BoxView HeightRequest="0.5" Grid.ColumnSpan="2" Grid.Row="1" Color="#E0E0E0" HorizontalOptions="Fill" ></BoxView>
                                     <Border Grid.Row="0" Grid.Column="1"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Padding="15,8" StrokeShape="RoundRectangle 20"  
                                             Stroke="Transparent" StrokeThickness="0" BackgroundColor="WhiteSmoke">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="BtnHasilStokOpname_Tapped" />
+                                        </Border.GestureRecognizers>
                                         <HorizontalStackLayout Spacing="10">
                                             <Label Text="Hasil Stok Opname" TextColor="#444" FontAttributes="Bold" FontSize="Caption"></Label>
                                             <Image Source="search100.png" HeightRequest="15"></Image>

@@ -152,6 +152,15 @@ public partial class SO_List : ContentPage
         _selectedDate = string.Format("{0:dd/MM/yyyy}", e.NewDate);
         await LoadData(true);
     }
+
+    private async void BtnHasilStokOpname_Tapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Border border && border.BindingContext is SOItem item)
+        {
+            var detailPage = new DetailwithInsert { DetailId = item.id };
+            await Navigation.PushAsync(detailPage);
+        }
+    }
 }
 
 // ===== DTO =====
@@ -165,6 +174,7 @@ public class SOResponse
 
 public class SOItem
 {
+    public int id { get; set; }
     public string number { get; set; }
     public string transDate { get; set; }
     public string statusName { get; set; }
