@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Produk.List_Produk"
+             BackgroundColor="#f8fafa" NavigationPage.HasNavigationBar="False"
+             Title="List_Produk">
+    <Grid RowDefinitions="Auto,*">
+        <!--search & sort-->
+        <Border Grid.Row="0" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                    <SearchBar Placeholder="Kode Barang atau Nama" x:Name="T_Search" TextChanged="T_Search_TextChanged"></SearchBar>
+                </Border>
+                <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Image Source="filtersort100.png" HeightRequest="24">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="SortImage_Tapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
+            </Grid>
+        </Border>
+        
+        <!--daftar produk dengan pakai collectionview-->
+        <RefreshView Grid.Row="1" x:Name="RefreshViewProduk" Refreshing="RefreshViewProduk_Refreshing" Margin="10,0,10,10">
+            <CollectionView x:Name="ProductList" 
+                            RemainingItemsThreshold="2" 
+                            RemainingItemsThresholdReached="CollectionView_RemainingItemsThresholdReached"
+                            SelectionMode="Single"
+                            SelectionChanged="ProductList_SelectionChanged">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="10" VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="0" StrokeShape="RoundRectangle 10" Margin="0" Stroke="WhiteSmoke" StrokeThickness="1" BackgroundColor="White">
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto">
+                                <Grid Grid.Row="0">
+                                    <Image Source="{Binding DisplayImage}" HeightRequest="150" Aspect="AspectFill"></Image>
+                                    <Border BackgroundColor="#90000000" Stroke="Transparent" 
+                                            HorizontalOptions="Fill" VerticalOptions="Fill" StrokeShape="RoundRectangle 10,10,0,0"
+                                            IsVisible="{Binding IsHabis}">
+                                        <Label Text="HABIS" TextColor="White" FontAttributes="Bold" FontSize="18"
+                                               HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                </Grid>
+                                <StackLayout Orientation="Horizontal" Grid.Row="1" Margin="10">
+                                    <Label Text="{Binding name}" MaxLines="2" LineBreakMode="TailTruncation" 
+                                           TextColor="#444" FontAttributes="Bold" HorizontalOptions="StartAndExpand"></Label>
+                                    <Image Source="more50gray.png" HeightRequest="12" Rotation="90" HorizontalOptions="End" VerticalOptions="Center"></Image>
+                                </StackLayout>
+                                <Label Text="{Binding item_no}" Grid.Row="2" Margin="10,0" TextColor="Grey" FontSize="Small"></Label>
+                                <Label Text="{Binding FormattedPrice}" FontAttributes="Bold" TextColor="Goldenrod" 
+                                       Margin="0,5,10,10" FontSize="18" Grid.Row="3" HorizontalTextAlignment="End"></Label>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

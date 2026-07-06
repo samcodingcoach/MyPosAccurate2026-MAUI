@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Coa.List_Coa"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa">
+    <Grid RowDefinitions="Auto,*">
+        <!--search & sort-->
+        <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                    <SearchBar Placeholder="Kode Akun atau Nama" x:Name="T_Search" TextChanged="T_Search_TextChanged">
+                    </SearchBar>
+                </Border>
+                <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Image Source="filtersort100" HeightRequest="24" Opacity="0.8">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapAdd" Tapped="TapAdd_Tapped" />
+                            <!--keluar pilihan action sheet Pendapatan, Kas & Bank, Semua-->
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
+            </Grid>
+
+        </Border>
+
+        <RefreshView Grid.Row="1" x:Name="RV_Coa" Refreshing="OnRefreshing" Margin="10,0,10,10">
+            <CollectionView x:Name="CV_Coa" IsGrouped="True" RemainingItemsThreshold="1" RemainingItemsThresholdReached="OnThresholdReached">
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal" Spacing="10" Margin="0,15,0,5">
+                            <Label Text="{Binding Name}" TextColor="#444" FontAttributes="Bold"></Label>
+                            <Label Text="{Binding CountText}" TextColor="LightGrey" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" FontSize="Caption"></Label>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="0" Margin="0,0,0,10" StrokeShape="RoundRectangle 10" VerticalOptions="Start"
+                                Stroke="WhiteSmoke" StrokeThickness="1" BackgroundColor="White">
+                            <Grid Padding="15" ColumnDefinitions="*, Auto" RowSpacing="10"
+                                  RowDefinitions="Auto,Auto,Auto">
+
+                                <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+                                    <StackLayout>
+                                        <Label Text="{Binding name}" FontSize="14" FontAttributes="Bold"></Label>
+                                        <Label Text="{Binding no}" TextColor="LightGrey" FontSize="Caption"></Label>
+                                    </StackLayout>
+                                    <Border Padding="10,2" HorizontalOptions="EndAndExpand" 
+                                            VerticalOptions="Center" StrokeShape="RoundRectangle 5"
+                                            Stroke="Transparent" StrokeThickness="1" BackgroundColor="#DFE0E0">
+                                        <Label Text="{Binding lvl_fmt}" FontSize="11"></Label>
+                                    </Border>
+                                </StackLayout>
+
+                                <BoxView HeightRequest="0.5" Grid.ColumnSpan="2" Grid.Row="1" Color="#E0E0E0" HorizontalOptions="Fill" ></BoxView>
+
+                                <StackLayout Grid.Column="0" Grid.Row="2" Spacing="-2">
+                                    <Label Text="{Binding asOf_fmt}" TextColor="LightGrey" FontSize="11"></Label>
+                                    <Label Text="{Binding balance_fmt}" FontSize="18" FontAttributes="Bold" TextColor="DarkCyan"></Label>
+                                </StackLayout>
+
+                                <Image Source="more50gray.png" VerticalOptions="Center" Grid.Column="1" Grid.Row="2" 
+                                       Rotation="90" HeightRequest="14"></Image>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+
+    </Grid>
+</ContentPage>

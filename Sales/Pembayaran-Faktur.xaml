@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Sales.Pembayaran_Faktur" BackgroundColor="#d2dae2"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Padding="0">
+        <!--No-Faktur, Konsumen, Tanggal bayar-->
+        <Border Grid.Row="0" Padding="0,10" Margin="10,10,10,0" StrokeShape="RoundRectangle 10"  Stroke="Transparent" StrokeThickness="0.5" 
+                BackgroundColor="White">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="0" Padding="0">
+                <StackLayout Orientation="Horizontal" Grid.Row="0" Padding="15,5" >
+                    <Label Text="Nomor Faktur :" VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                    <Label Text="" HorizontalOptions="EndAndExpand" 
+                       TextColor="DarkCyan" FontSize="16" x:Name="FormNumber" VerticalTextAlignment="Center" FontAttributes="Bold"></Label>
+
+                </StackLayout>
+                <BoxView HeightRequest="0.5" Grid.Row="1" Margin="0,5,0,10" Color="#E0E0E0" HorizontalOptions="Fill" />
+
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Padding="15,5" >
+                    <Label Text="Konsumen :" VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                    <Label Text="" HorizontalOptions="EndAndExpand" x:Name="FormNameCustomerNo"
+                       FontSize="16" VerticalTextAlignment="Center" FontAttributes="Bold"></Label>
+
+                </StackLayout>
+                <BoxView HeightRequest="0.5" Grid.Row="3" Margin="0,5,0,10" Color="#E0E0E0" HorizontalOptions="Fill" />
+
+                <StackLayout Orientation="Horizontal" Grid.Row="4" Padding="15,0" >
+                    <Label Text="Tanggal Bayar :" VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                    
+                    <DatePicker HorizontalOptions="EndAndExpand" x:Name="PickerTanggalBayar" FontAttributes="Bold" Format="dd/MM/yyyy"></DatePicker>
+                </StackLayout>
+
+            </Grid>
+        </Border>
+        <!--Bank, jumlah pembayaran-->
+        <Border Grid.Row="1" Padding="0,10" Margin="10" StrokeShape="RoundRectangle 10"  Stroke="Transparent" StrokeThickness="0.5" 
+                BackgroundColor="White">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="0" Padding="0">
+                <StackLayout Orientation="Horizontal" Grid.Row="0" Padding="15,2" >
+                    <Label Text="Bank :" VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                    <Border Padding="10,0" StrokeShape="RoundRectangle 5" WidthRequest="200"
+                            Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" HorizontalOptions="EndAndExpand">
+
+                        <StackLayout Orientation="Horizontal" >
+                            <Picker x:Name="PickerBank" Title="Pilih Metode Bayar" SelectedIndexChanged="PickerBank_SelectedIndexChanged" />
+                            <Image Source="search32.png" HorizontalOptions="EndAndExpand" HeightRequest="18" Opacity="0.5" IsVisible="True"></Image>
+                        </StackLayout>
+
+                    </Border>
+
+                </StackLayout>
+                <BoxView HeightRequest="0.5" Grid.Row="1" Margin="0,5,0,10" Color="#E0E0E0" HorizontalOptions="Fill" />
+
+
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Padding="15,0" >
+                    <Label Text="Nilai Faktur :" VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                    <Border Padding="10,0" StrokeShape="RoundRectangle 5"
+                            Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" HorizontalOptions="EndAndExpand">
+
+                        <Entry Text="0" Placeholder="Jumlah Bayar" x:Name="FormtotalAmount" HorizontalTextAlignment="End" FontAttributes="Bold"
+                               TextColor="DarkCyan"></Entry>
+                    </Border>
+
+                </StackLayout>
+
+                <!--Nomor Virtual Account (muncul saat memilih Transfer Bank)-->
+                <BoxView x:Name="LineNoVA" IsVisible="False" HeightRequest="0.5" Grid.Row="3" Margin="0,10,0,10" Color="#E0E0E0" HorizontalOptions="Fill" />
+                <StackLayout x:Name="RowNoVA" IsVisible="False" Orientation="Horizontal" Grid.Row="4" Padding="15,0" >
+                    <Label Text="No. VA :" VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                    <Border Padding="10,0" StrokeShape="RoundRectangle 5" WidthRequest="200"
+                            Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" HorizontalOptions="EndAndExpand">
+
+                        <Entry Placeholder="Nomor Virtual Account" x:Name="EntryNoVA" Keyboard="Numeric" MaxLength="20"
+                               HorizontalTextAlignment="End" FontAttributes="Bold" TextColor="DarkCyan"></Entry>
+                    </Border>
+
+                </StackLayout>
+
+            </Grid>
+        </Border>
+        
+        <!--Detail Barang-->
+        <Border Grid.Row="2" Padding="0" Margin="10,0,10,10" StrokeShape="RoundRectangle 10" Stroke="Transparent" StrokeThickness="0.5"
+                BackgroundColor="White" VerticalOptions="Start">
+            <toolkit:Expander IsExpanded="False">
+                <toolkit:Expander.Header>
+                    <Grid ColumnDefinitions="*,Auto" Padding="15,12">
+                        <Label Text="Detail Barang (0 items)" Grid.Column="0" x:Name="LabelHeaderDetail"
+                               TextColor="#444" FontSize="15" FontAttributes="Bold" VerticalTextAlignment="Center" />
+                        <Image Source="chevron100.png" Grid.Column="1" HeightRequest="22" VerticalOptions="Center" />
+                    </Grid>
+                </toolkit:Expander.Header>
+
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="0">
+                    
+                    <BoxView HeightRequest="0.5" Grid.Row="0" Color="#E0E0E0" HorizontalOptions="Fill" />
+
+                    <!--Header kolom-->
+                    <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" Padding="15,8">
+                        <Label Text="Nama &amp; Jumlah" Grid.Column="0" TextColor="Grey" FontSize="12" />
+                        <Label Text="Diskon" Grid.Column="1" TextColor="Grey" FontSize="12" WidthRequest="80"
+                               HorizontalTextAlignment="End" />
+                        <Label Text="Total Harga" Grid.Column="2" TextColor="Grey" FontSize="12" WidthRequest="110"
+                               HorizontalTextAlignment="End" />
+                    </Grid>
+
+                    <!--Daftar item-->
+                    <CollectionView x:Name="ListBarangContainer" Grid.Row="2" MaximumHeightRequest="280">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" Padding="15,10">
+                                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                            <Label Text="{Binding item.name}" FontSize="14" TextColor="#222" />
+                                            <Label Text="{Binding QtyAndPrice}" FontSize="12" TextColor="Grey" />
+                                        </VerticalStackLayout>
+                                        <Label Text="{Binding FormattedItemDiscount}" Grid.Column="1" WidthRequest="80" FontSize="13" TextColor="#E74C3C" HorizontalTextAlignment="End" VerticalTextAlignment="Center" />
+                                        <Label Text="{Binding FormattedTotalPrice}" Grid.Column="2" WidthRequest="110" FontSize="14" FontAttributes="Bold" TextColor="DarkCyan" HorizontalTextAlignment="End" VerticalTextAlignment="Center" />
+                                    </Grid>
+                                    <BoxView HeightRequest="0.5" Color="#EEEEEE" HorizontalOptions="Fill" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!--Ringkasan total-->
+                    <BoxView HeightRequest="0.5" Grid.Row="3" Color="#E0E0E0" HorizontalOptions="Fill" />
+                    <VerticalStackLayout Grid.Row="4" Padding="15,10,15,12" Spacing="6">
+                        <!--<Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Jumlah Item" Grid.Column="0" TextColor="Grey" FontSize="13" />
+                            <Label x:Name="LabelItemCount" Text="0 item" Grid.Column="1" TextColor="#222" FontSize="13"
+                                   HorizontalTextAlignment="End" />
+                        </Grid>-->
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Diskon Faktur" Grid.Column="0" TextColor="Grey" FontSize="13" />
+                            <Label x:Name="LabelTotalDiskon" Text="Rp 0" Grid.Column="1" TextColor="#E74C3C" FontSize="13"
+                                   HorizontalTextAlignment="End" />
+                        </Grid>
+                        <!--diskon akhir-->
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Diskon Pembayaran" Grid.Column="0" TextColor="Grey" FontSize="13" />
+                            <Label x:Name="LabelDiskonPembayaran" Text="Rp 0" Grid.Column="1" TextColor="#E74C3C" FontSize="13"
+                                   HorizontalTextAlignment="End" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Total Biaya" Grid.Column="0" TextColor="Grey" FontSize="13" />
+                            <Label x:Name="LabelTotalBiaya" Text="Rp 0" Grid.Column="1" TextColor="#222" FontSize="13"
+                                   HorizontalTextAlignment="End" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Total Pajak (PPN)" Grid.Column="0" TextColor="Grey" FontSize="13" />
+                            <Label x:Name="LabelTotalPajak" Text="Rp 0" Grid.Column="1" TextColor="#222" FontSize="13"
+                                   HorizontalTextAlignment="End" />
+                        </Grid>
+                        <BoxView HeightRequest="0.5" Color="#EEEEEE" HorizontalOptions="Fill" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Grand Total" Grid.Column="0" TextColor="#222" FontSize="14" FontAttributes="Bold"
+                                   VerticalTextAlignment="Center" />
+                            <Label x:Name="LabelGrandTotal" Text="Rp 0" Grid.Column="1" TextColor="#222" FontSize="14" FontAttributes="Bold"
+                                   HorizontalTextAlignment="End" />
+                        </Grid>
+                        <Grid x:Name="RowPembulatan" ColumnDefinitions="*,Auto">
+                            <Label Text="Pembulatan" x:Name="LabelSelisihPembulatan" Grid.Column="0" TextColor="#575757" FontSize="15" FontAttributes="Bold"
+                                   VerticalTextAlignment="Center" />
+                            <Label x:Name="LabelPembulatan" Text="Rp 0" Grid.Column="1" TextColor="DarkCyan" FontSize="18" FontAttributes="Bold"
+                                   HorizontalTextAlignment="End" />
+                        </Grid>
+                    </VerticalStackLayout>
+
+                </Grid>
+            </toolkit:Expander>
+        </Border>
+      
+        <Border x:Name="ViewNominalPembayaran" Grid.Row="3" Padding="0,10" Margin="0,10,0,0" StrokeShape="RoundRectangle 20,20,0,0"  Stroke="Transparent" StrokeThickness="0.5" 
+            BackgroundColor="White">
+           
+            <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="0" Padding="0">
+                <StackLayout Orientation="Horizontal" Grid.Row="0" Padding="15,0" >
+                    <Label Text="Nominal Pembayaran :" VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                    <Border Padding="10,0" StrokeShape="RoundRectangle 5" WidthRequest="200" 
+                            Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" HorizontalOptions="EndAndExpand">
+
+                        <Entry Placeholder="Jumlah Bayar" x:Name="NominalBayarKonsumen" Keyboard="Numeric"
+                               TextChanged="NominalBayarKonsumen_TextChanged" HorizontalTextAlignment="End" FontAttributes="Bold"
+                               TextColor="DarkCyan"></Entry>
+                    </Border>
+
+                </StackLayout>
+                <BoxView HeightRequest="0.5" Grid.Row="1" Margin="0,10" Color="#E0E0E0" HorizontalOptions="Fill" />
+                <StackLayout Orientation="Horizontal"  Grid.Row="2" Padding="15,0" >
+                    <Label Text="Kembalian :" TextColor="Goldenrod" VerticalTextAlignment="Center" ></Label>
+
+                    <Label Text="Rp 0" HorizontalTextAlignment="End" x:Name="KembalianKonsumen"
+                           FontAttributes="Bold" FontSize="18" TextColor="Goldenrod" CharacterSpacing="1"
+                           HorizontalOptions="EndAndExpand"></Label>
+
+                </StackLayout>
+            </Grid>
+            
+        </Border>
+        <!--nominal pembayaran dan kembalian-->
+        <Border x:Name="ViewDiskon" IsVisible="False" Grid.Row="3" Padding="0,10" Margin="0,10,0,0" StrokeShape="RoundRectangle 20,20,0,0"  Stroke="Transparent" StrokeThickness="0.5" 
+                BackgroundColor="White">
+            <StackLayout Padding="10">
+                <StackLayout Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+                    <Image Source="diskon100.png" HeightRequest="16"></Image>
+                    <Label Text="Diskon Akhir" FontSize="16" FontAttributes="Bold" VerticalTextAlignment="Center" 
+                           TextColor="Grey"></Label>
+                    <Image Source="close100.png" HeightRequest="22" HorizontalOptions="EndAndExpand">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapCloseDiskon" Tapped="TapCloseDiskon_Tapped"></TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+
+                <Border Padding="10,5" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Entry Placeholder="Ex. 10.000" x:Name="EntryDiskonNominal" TextChanged="EntryDiskonNominal_TextChanged"></Entry>
+                </Border>
+
+            </StackLayout>
+        </Border>
+        <!--keterangan dan nomor bukti-->
+        <Border x:Name="ViewKeterangan" IsVisible="False" Grid.Row="3" Padding="0,10" Margin="0,10,0,0" StrokeShape="RoundRectangle 20,20,0,0"  Stroke="Transparent" StrokeThickness="0.5" 
+                BackgroundColor="White">
+            <StackLayout Padding="10">
+                <StackLayout Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+                    <Image Source="propertiesgrey100.png" HeightRequest="16"></Image>
+                    <Label Text="Keterangan" FontSize="16" FontAttributes="Bold" VerticalTextAlignment="Center" 
+                           TextColor="Grey"></Label>
+                    <Image Source="close100.png" HeightRequest="22" HorizontalOptions="EndAndExpand">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapViewKeterangan" Tapped="TapViewKeterangan_Tapped"></TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+                <Border Padding="10,5" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" 
+                    StrokeThickness="0.5" BackgroundColor="WhiteSmoke" Margin="0,0,0,10">
+                    <StackLayout>
+                        <Entry x:Name="EntryNoBukti" VerticalTextAlignment="Start" Placeholder="Nomor Bukti Pembayaran"></Entry>
+                        <BoxView HeightRequest="0.5" Grid.Row="0" Color="#E0E0E0" HorizontalOptions="Fill" />
+                        <Entry HeightRequest="120" x:Name="EntryKeterangan" VerticalTextAlignment="Start" Placeholder="Keterangan"></Entry>
+                    </StackLayout>
+                </Border>
+                
+            </StackLayout>
+
+        </Border>
+        <!--Tombol-Tombol-->
+        <Grid ColumnDefinitions="0.25*,0.25*,*" Grid.Row="5">
+            <StackLayout BackgroundColor="DodgerBlue" Grid.Column="0">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="TapViewKet" Tapped="TapViewKet_Tapped"></TapGestureRecognizer>
+                </StackLayout.GestureRecognizers>
+                <Image Source="propertieswhite100.png" TranslationY="5" HeightRequest="32" VerticalOptions="Center"></Image>
+            </StackLayout>
+
+            <StackLayout BackgroundColor="DeepPink" Grid.Column="1">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="TapViewDiskon" Tapped="TapViewDiskon_Tapped"></TapGestureRecognizer>
+                </StackLayout.GestureRecognizers>
+                <Image Source="diskonwhite100.png" TranslationY="5" HeightRequest="32" VerticalOptions="Center"></Image>
+            </StackLayout>
+
+            <Button Grid.Row="2" CornerRadius="0" Grid.Column="3"
+                FontSize="20" FontAttributes="Bold" x:Name="B_SimpanPembayaran" Clicked="B_SimpanPembayaran_Clicked"
+                BackgroundColor="DarkCyan"  Text="BAYAR"></Button>
+        </Grid>
+
+    </Grid>
+</ContentPage>

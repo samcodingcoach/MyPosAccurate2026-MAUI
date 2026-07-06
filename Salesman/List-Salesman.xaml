@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Salesman.List_Salesman"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa"
+             Title="List_Salesman">
+    <Grid RowDefinitions="Auto,*">
+        <!--search-->
+        <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                    <SearchBar Placeholder="ID Karyawan atau Nama" x:Name="T_Search"
+                      TextChanged="T_Search_TextChanged"></SearchBar>
+                </Border>
+                <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Image Source="newadd100.png" HeightRequest="24">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapAdd" Tapped="TapAdd_Tapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
+            </Grid>
+
+        </Border>
+
+        <!--data salesman-->
+        <RefreshView Grid.Row="1" x:Name="RV_Salesman" Refreshing="OnRefreshing">
+            <CollectionView x:Name="CV_Salesman" Margin="10,2" SelectionMode="Single" SelectionChanged="CV_Salesman_SelectionChanged"
+                            RemainingItemsThreshold="3" RemainingItemsThresholdReached="OnThresholdReached">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="8"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label Text="Tidak ada data salesman." TextColor="Grey" HorizontalTextAlignment="Center" Margin="0,40,0,0"/>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="0" StrokeShape="RoundRectangle 10" VerticalOptions="Start"
+                                Stroke="WhiteSmoke" StrokeThickness="1" BackgroundColor="White">
+                            <Grid Padding="20,15" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                                
+                                <!--Ambil huruf depan nama karyawan-->
+                                <toolkit:AvatarView Text="{Binding Initial}" Grid.Column="0" BackgroundColor="{Binding AvatarColor}" 
+                                                    FontSize="20" FontAttributes="Bold"
+                                                    TextColor="#444" />
+
+                                <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding name}" TextColor="#444" FontAttributes="Bold"></Label>
+                                    <Label Text="{Binding number, StringFormat='ID: {0}'}" FontSize="Caption" TextColor="Grey"></Label>
+                                </StackLayout>
+
+                                <Image Source="{Binding StatusIcon}" HeightRequest="24" Grid.Column="2"></Image>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Loading Overlay -->
+        <Grid x:Name="LoadingOverlay" Grid.Row="1" BackgroundColor="#80000000" IsVisible="False" Margin="10,2">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding Source={x:Reference LoadingOverlay}, Path=IsVisible}"
+                                   Color="White"
+                                   HorizontalOptions="Center" />
+                <Label Text="Memuat Data..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

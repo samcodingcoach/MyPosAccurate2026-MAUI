@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Receipt.List_Receipt"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="#f8fafa" NavigationPage.HasNavigationBar="False"
+             Title="Daftar Transaksi">
+
+    <Grid RowDefinitions="Auto, *,Auto">
+        <!-- Search & Filter Header -->
+
+            
+        <Border Grid.Row="0" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+            <toolkit:Expander IsExpanded="False">
+                <toolkit:Expander.Header>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                        <SearchBar Placeholder="Nomor Penerimaan" x:Name="T_Search" TextChanged="OnSearchTextChanged"></SearchBar>
+                    </Border>
+                    <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                        <Image Source="filtersort100.png" HeightRequest="24"></Image>
+                    </Border>
+                </Grid>
+            </toolkit:Expander.Header>
+                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                    <Grid ColumnDefinitions="*,*" Grid.Row="0" RowDefinitions="Auto,Auto" ColumnSpacing="10" Margin="0,10">
+                        <Label Text="Berdasarkan tanggal" Margin="0,0,0,5" TextColor="Grey"></Label>
+                        <Border Grid.Column="0" Grid.Row="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                            <DatePicker FontSize="Large" x:Name="DP_startdate" DateSelected="OnFilterDateSelected"/>
+                        </Border>
+                        <Border Grid.Column="1" Grid.Row="1"  Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                            <DatePicker FontSize="Large" x:Name="DP_enddate" DateSelected="OnFilterDateSelected"/>
+                        </Border>
+                    </Grid>
+                    <!--cara bayar, data dari coa/list-kasbank.php-->
+                    <StackLayout Grid.Row="1" Spacing="5" Margin="0,0,0,10">
+                        <Label Text="Berdasarkan cara bayar" Margin="0,0,0,5" TextColor="Grey"></Label>
+                        <CollectionView x:Name="CV_CaraBayar" SelectionMode="None">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="8"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="10" StrokeShape="RoundRectangle 15" Stroke="DarkCyan"
+                                            StrokeThickness="0.5" HorizontalOptions="Start" BackgroundColor="Transparent">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnCaraBayarTapped"/>
+                                        </Border.GestureRecognizers>
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="BackgroundColor" Value="DarkCyan"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="{Binding name}" Margin="10,0" FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center" TextColor="DarkCyan">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="White"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                    <!--konsumen, data dari pelanggan/list.php-->
+                    <StackLayout Grid.Row="2" Spacing="5" Margin="0,0,0,10">
+                        <Label Text="Berdasarkan konsumen" Margin="0,0,0,5" TextColor="Grey"></Label>
+                        <CollectionView x:Name="CV_Konsumen" SelectionMode="None">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="8"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="10" StrokeShape="RoundRectangle 15" Stroke="DarkCyan"
+                                            StrokeThickness="0.5" HorizontalOptions="Start" BackgroundColor="Transparent">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnKonsumenTapped"/>
+                                        </Border.GestureRecognizers>
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="BackgroundColor" Value="DarkCyan"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="{Binding name}" Margin="10,0" FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center" TextColor="DarkCyan">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="White"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+
+                </Grid>
+            </toolkit:Expander>
+        </Border>
+        
+        <!--data receipt pakai collection view, scroll able-->
+
+        <CollectionView x:Name="CV_Receipt" Grid.Row="1" Margin="10,0" SelectionMode="Single" SelectionChanged="OnReceiptSelectionChanged"
+                        RemainingItemsThreshold="3" RemainingItemsThresholdReached="OnReceiptThresholdReached">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.EmptyView>
+                <Label Text="Tidak ada data penerimaan." TextColor="Grey" HorizontalTextAlignment="Center" Margin="0,40,0,0"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="20,15" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                            <StackLayout Grid.Column="0" Grid.Row="0">
+                                <Label Text="{Binding number}" FontAttributes="Bold" FontSize="18" TextColor="#444"></Label>
+                                <Label Text="{Binding transDate}" TextColor="Grey"></Label>
+                            </StackLayout>
+                            <StackLayout Grid.Column="1" Grid.Row="0">
+                                <Border Padding="10,5" StrokeShape="RoundRectangle 5"
+                                        Stroke="Transparent" HorizontalOptions="End" StrokeThickness="0.5" BackgroundColor="CadetBlue">
+                                    <StackLayout Orientation="Horizontal" Spacing="10">
+                                        <Image Source="{Binding PaymentMethodIcon}" HeightRequest="10" VerticalOptions="Center"></Image>
+                                        <Label Text="{Binding PaymentMethodDisplay}" VerticalTextAlignment="Center" TextColor="White"></Label>
+                                    </StackLayout>
+                                </Border>
+                                <Label Text="{Binding FormattedTotalPayment}" Margin="0,5,0,0" TextColor="DarkCyan" FontAttributes="Bold" FontSize="26" HorizontalOptions="EndAndExpand"></Label>
+                            </StackLayout>
+
+                            <Line X2="360" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Stroke="#CFCFCF" StrokeThickness="1.4" StrokeDashArray="3,3"
+                                    HorizontalOptions="Fill" />
+                            <StackLayout Grid.Column="0" Grid.Row="2">
+                                <Label Text="Kasir" TextColor="Grey"></Label>
+                                <Label Text="{Binding DisplayKasir}" FontAttributes="Bold" FontSize="18" TextColor="#444"></Label>
+                            </StackLayout>
+                            <StackLayout Grid.Column="1" Grid.Row="2">
+                                <Label Text="Customer" TextColor="Grey" HorizontalOptions="End"></Label>
+                                <Label Text="{Binding CustomerName}" HorizontalOptions="End" FontAttributes="Bold" FontSize="18" TextColor="#444"></Label>
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Loading Overlay -->
+        <Grid x:Name="LoadingOverlay" Grid.Row="1" BackgroundColor="#80000000" IsVisible="False" Margin="10,0">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding Source={x:Reference LoadingOverlay}, Path=IsVisible}" 
+                                   Color="White" 
+                                   HorizontalOptions="Center" />
+                <Label Text="Memuat Data..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

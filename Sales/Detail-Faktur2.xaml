@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Sales.Detail_Faktur2"
+             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+             BackgroundColor="#F8F9FA">
+    <the49:BottomSheet.Detents>
+        <the49:RatioDetent Ratio="0.35" />
+    </the49:BottomSheet.Detents>
+
+
+    <VerticalStackLayout Padding="15,10" Spacing="2" Margin="0,20,0,0">
+        <!-- Drag Handle Indicator -->
+        <!--<BoxView HeightRequest="4" WidthRequest="40" CornerRadius="2" BackgroundColor="#E0E0E0" HorizontalOptions="Center" Margin="0,0,0,10" />-->
+        <!-- Header Section -->
+        <VerticalStackLayout Spacing="0" HorizontalOptions="Center">
+            <Label Text="Total Pembayaran" TextColor="#6C757D" FontSize="12" HorizontalTextAlignment="Center" />
+            <Label x:Name="LblTotal" Text="-" FontSize="24" FontAttributes="Bold" TextColor="DarkCyan" HorizontalTextAlignment="Center" />
+            <ActivityIndicator x:Name="LoadingIndicator" IsRunning="True" IsVisible="True" Color="DarkCyan" HorizontalOptions="Center" Scale="0.8" />
+        </VerticalStackLayout>
+        
+        <BoxView HeightRequest="1" Color="#F1F3F5" Margin="0,5" />
+
+        <!-- Details Section -->
+        <Grid x:Name="DetailContainer" ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="5" IsVisible="False">
+            
+            <!-- Nomor Faktur -->
+            <Label Text="Nomor Faktur" Grid.Row="0" Grid.Column="0" TextColor="#6C757D" FontSize="13" VerticalOptions="Center"/>
+            <Label x:Name="LblNoFaktur" Text="-" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="End" FontAttributes="Bold" TextColor="#212529" FontSize="13" VerticalOptions="Center" />
+
+            <!-- Waktu -->
+            <Label Text="Waktu Transaksi" Grid.Row="1" Grid.Column="0" TextColor="#6C757D" FontSize="13" VerticalOptions="Center"/>
+            <Label x:Name="LblTanggal" Text="-" Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="End" FontAttributes="Bold" TextColor="#212529" FontSize="13" VerticalOptions="Center" />
+
+            <!-- No Pembayaran -->
+            <Label Text="No. Pembayaran" Grid.Row="2" Grid.Column="0" TextColor="#6C757D" FontSize="13" VerticalOptions="Center"/>
+            <Label x:Name="LblNoPembayaran" Text="-" Grid.Row="2" Grid.Column="1" HorizontalTextAlignment="End" FontAttributes="Bold" TextColor="#212529" FontSize="13" VerticalOptions="Center" />
+
+            <!-- Kasir -->
+            <Label Text="Kasir" Grid.Row="3" Grid.Column="0" TextColor="#6C757D" FontSize="13" VerticalOptions="Center"/>
+            <Label x:Name="LblKasir" Text="-" Grid.Row="3" Grid.Column="1" HorizontalTextAlignment="End" FontAttributes="Bold" TextColor="#212529" FontSize="13" VerticalOptions="Center" />
+
+            <!-- Metode -->
+            <Label Text="Metode" Grid.Row="4" Grid.Column="0" TextColor="#6C757D" FontSize="13" VerticalOptions="Center"/>
+            <Label x:Name="LblMetode" Text="-" Grid.Row="4" Grid.Column="1" HorizontalTextAlignment="End" FontAttributes="Bold" TextColor="#212529" FontSize="13" VerticalOptions="Center" />
+
+            <!-- Bank -->
+            <Label Text="Bank" Grid.Row="5" Grid.Column="0" TextColor="#6C757D" FontSize="13" VerticalOptions="Center"/>
+            <Label x:Name="LblBank" Text="-" Grid.Row="5" Grid.Column="1" HorizontalTextAlignment="End" FontAttributes="Bold" TextColor="#212529" FontSize="13" VerticalOptions="Center" />
+
+        </Grid>
+        <!-- Action Buttons -->
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" Margin="0,15,0,0">
+            <Border Grid.Column="1" Padding="12,10" StrokeShape="RoundRectangle 8"  Stroke="Transparent" StrokeThickness="0.5" 
+                    BackgroundColor="DarkCyan">
+
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapPrintExport" Tapped="TapPrintExport_Tapped"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="export100.png"  HeightRequest="24"></Image>
+                    <Label Text="Cetak dan PDF" FontAttributes="Bold" TextColor="White" VerticalTextAlignment="Center"></Label>
+                </StackLayout>
+
+            </Border>
+        </Grid>
+
+    </VerticalStackLayout>
+</the49:BottomSheet>

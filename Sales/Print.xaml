@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="MyPosAccurate2026.Sales.Print"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#d2dae2">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!--Header-->
+        <Border Grid.Row="0" Padding="20" StrokeShape="Rectangle" Stroke="Transparent"
+                BackgroundColor="DarkCyan">
+            <!--Badge centang-->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" HorizontalOptions="Center">
+                <Border Grid.Column="0" WidthRequest="24" HeightRequest="24" StrokeShape="RoundRectangle 24"
+                         Stroke="Transparent" BackgroundColor="#FFFFFF" HorizontalOptions="Center">
+                    <Label Text="&#10004;" TextColor="DarkCyan" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <Label Text="Pembayaran Berhasil" Grid.Column="1" TextColor="White" FontSize="22" FontAttributes="Bold"
+                            VerticalTextAlignment="Center" />
+            </Grid>
+        </Border>
+
+        <!--Konten struk-->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="15" Spacing="10" HorizontalOptions="Center" WidthRequest="390">
+
+                <!--Kartu struk-->
+                <Border Padding="0" StrokeShape="RoundRectangle 18" Stroke="Transparent" BackgroundColor="White">
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Opacity="0.12" Radius="20" Offset="0,8" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Padding="24,24" Spacing="2">
+                        
+                        <!--Judul-->
+                        <Label Text="STRUK PEMBAYARAN" TextColor="#1A1A1A" FontSize="20" FontAttributes="Bold"
+                               CharacterSpacing="1.5" HorizontalTextAlignment="Center" />
+                        <Label x:Name="LabelHeaderCompanyName" Text="-" TextColor="Grey" FontSize="14"
+                               HorizontalTextAlignment="Center" Margin="0,2,0,12" />
+
+                        <!--Garis putus-putus-->
+                        <Line X2="360" Stroke="#CFCFCF" StrokeThickness="1.4" StrokeDashArray="3,3"
+                              HorizontalOptions="Fill" />
+
+                        <!--Info transaksi-->
+                        <VerticalStackLayout Spacing="2" Margin="0,12,0,0">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                <Label Grid.Column="0" Text="No. Struk" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelNoStruk" Text="-" TextColor="#1A1A1A" FontSize="15"
+                                       FontAttributes="Bold" HorizontalTextAlignment="End" />
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                <Label Grid.Column="0" Text="No. Faktur" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelNoFaktur" Text="-" TextColor="#333" FontSize="15"
+                                       HorizontalTextAlignment="End" />
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                <Label Grid.Column="0" Text="Tanggal" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelTanggal" Text="-" TextColor="#333" FontSize="15"
+                                       HorizontalTextAlignment="End" />
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                <Label Grid.Column="0" Text="Kasir" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelKasir" Text="-" TextColor="#333" FontSize="15"
+                                       HorizontalTextAlignment="End" />
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                <Label Grid.Column="0" Text="Konsumen" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelKonsumen" Text="-" TextColor="#333" FontSize="15"
+                                       FontAttributes="Bold" HorizontalTextAlignment="End" />
+                            </Grid>
+                            <Grid x:Name="RowSales" ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                <Label Grid.Column="0" Text="Sales" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelSales" Text="-" TextColor="#333" FontSize="15"
+                                       HorizontalTextAlignment="End" />
+                            </Grid>
+                            <Grid x:Name="RowPengiriman" ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                <Label Grid.Column="0" Text="Pengiriman" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelPengiriman" Text="-" TextColor="#333" FontSize="15"
+                                       HorizontalTextAlignment="End" />
+                            </Grid>
+                            <VerticalStackLayout x:Name="RowAlamat" IsVisible="False" Spacing="4" Margin="0,4,0,0">
+                               
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10">
+                                    <Label Text="Alamat" TextColor="Grey" FontSize="15" Grid.Row="0" />
+                                    <Label Grid.Column="0" Grid.Row="1" x:Name="LabelAlamat" Text="-" TextColor="#333" FontSize="15"
+                                           HorizontalTextAlignment="Start" VerticalOptions="Start" />
+                                    <zxing:BarcodeGeneratorView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="GpsQrCode" Format="QrCode" 
+                                           WidthRequest="100" HeightRequest="100" VerticalOptions="Start" IsVisible="False" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+
+                        
+                        <Line X2="360" Stroke="#CFCFCF" StrokeThickness="1.4" StrokeDashArray="3,3"
+                                HorizontalOptions="Fill" />
+
+                        <!--Label kolom item-->
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                            <Label Grid.Column="0" Text="ITEM" TextColor="#999" FontSize="13" FontAttributes="Bold"
+                                   CharacterSpacing="1" />
+                            <Label Grid.Column="1" Text="TOTAL" TextColor="#999" FontSize="13" FontAttributes="Bold"
+                                   CharacterSpacing="1" HorizontalTextAlignment="End" />
+                        </Grid>
+
+                        <!--Daftar item-->
+                        <VerticalStackLayout x:Name="ListItemContainer" BindableLayout.ItemsSource="{Binding .}" Spacing="0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout Padding="0,8" Spacing="3">
+                                        <Label Text="{Binding NamaBarang}" TextColor="#1A1A1A" FontSize="16" FontAttributes="Bold" />
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <Label Grid.Column="0" Text="{Binding QtyAndPrice}" TextColor="Grey" FontSize="14" />
+                                            <Label Grid.Column="1" Text="{Binding FormattedLineTotal}" TextColor="#1A1A1A"
+                                                   FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="End" />
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <Line X2="360" Stroke="#CFCFCF" StrokeThickness="1.4" StrokeDashArray="3,3"
+                              HorizontalOptions="Fill" Margin="0,10" />
+
+                        <!--Ringkasan-->
+                        <VerticalStackLayout Spacing="2">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Substotal" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelSubtotal" Text="Rp 0" TextColor="#333" FontSize="15"
+                                       HorizontalTextAlignment="End" />
+                            </Grid>
+                            <Grid x:Name="RowDiskonFaktur" ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Diskon Faktur" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelDiskonFaktur" Text="Rp 0" TextColor="#E74C3C" FontSize="15"
+                                       HorizontalTextAlignment="End" />
+                            </Grid>
+
+                            <!--Biaya-biaya (detailExpense)-->
+                            <Label x:Name="LabelBiayaHeader" Text="Biaya-biaya" TextColor="#777" FontSize="15"
+                                   FontAttributes="Bold" IsVisible="False" Margin="0,3,0,0" />
+                            <VerticalStackLayout x:Name="ListExpenseContainer" BindableLayout.ItemsSource="{Binding .}" Spacing="4">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="*,Auto" Padding="12,0,0,0">
+                                            <Label Grid.Column="0" Text="{Binding detailName}" TextColor="#555" FontSize="15" />
+                                            <Label Grid.Column="1" Text="{Binding FormattedAmount}" TextColor="#333" FontSize="15"
+                                                   HorizontalTextAlignment="End" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Total Pajak (PPN)" TextColor="Grey" FontSize="15" />
+                                <Label Grid.Column="1" x:Name="LabelPajak" Text="Rp 0" TextColor="#333" FontSize="15"
+                                       HorizontalTextAlignment="End" />
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <!--TOTAL (band sorot)-->
+                        <Border Padding="16,10" StrokeShape="RoundRectangle 12" Stroke="Transparent"
+                                BackgroundColor="#E3F2F2" Margin="0,12,0,0">
+                            <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                                <Label Grid.Column="0" Text="TOTAL" TextColor="#0E6E6E" FontSize="18" FontAttributes="Bold"
+                                       VerticalTextAlignment="Center" />
+                                <Label Grid.Column="1" x:Name="LabelTotal" Text="Rp 0" TextColor="#0E6E6E" FontSize="28"
+                                       FontAttributes="Bold" HorizontalTextAlignment="End" VerticalTextAlignment="Center" />
+                            </Grid>
+                        </Border>
+
+                        <!--Pembayaran tunai: dibayar & kembalian-->
+                        <Border x:Name="BoxTunai" IsVisible="False" Padding="16,10" StrokeShape="RoundRectangle 12"
+                                Stroke="Transparent" BackgroundColor="#FFF7E0" Margin="0,8,0,0">
+                            <VerticalStackLayout Spacing="2">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="Tunai Dibayar" TextColor="#8A6D00" FontSize="16"
+                                           VerticalTextAlignment="Center" />
+                                    <Label Grid.Column="1" x:Name="LabelBayar" Text="Rp 0" TextColor="#8A6D00" FontSize="18"
+                                           FontAttributes="Bold" HorizontalTextAlignment="End" />
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="Kembalian" TextColor="#C77800" FontSize="16" FontAttributes="Bold"
+                                           VerticalTextAlignment="Center" />
+                                    <Label Grid.Column="1" x:Name="LabelKembalian" Text="Rp 0" TextColor="#C77800" FontSize="20"
+                                           FontAttributes="Bold" HorizontalTextAlignment="End" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!--Metode-->
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
+                            <Label Grid.Column="0" Text="Metode Pembayaran" TextColor="Grey" FontSize="15" />
+                            <Label Grid.Column="1" x:Name="LabelMetode" Text="-" TextColor="#1A1A1A" FontSize="15"
+                                   FontAttributes="Bold" HorizontalTextAlignment="End" />
+                        </Grid>
+
+                        <!--Catatan-->
+                        <VerticalStackLayout x:Name="RowCatatan" IsVisible="False" Spacing="3" Margin="0,10,0,0">
+                            <Label Text="Catatan" TextColor="Grey" FontSize="15" />
+                            <Label x:Name="LabelCatatan" Text="-" TextColor="#555" FontSize="15" />
+                        </VerticalStackLayout>
+
+                        <Line X2="360" Stroke="#CFCFCF" StrokeThickness="1.4" StrokeDashArray="3,3"
+                              HorizontalOptions="Fill" Margin="0,16,0,8" />
+
+                        <Label Text="Terima kasih telah berbelanja" TextColor="#777" FontSize="15"
+                               FontAttributes="Italic" HorizontalTextAlignment="Center" Margin="0,4,0,0" />
+
+                        <!-- Footer Company -->
+                        <Line X2="360" Stroke="#CFCFCF" StrokeThickness="1.4" StrokeDashArray="3,3"
+                              HorizontalOptions="Fill" Margin="0,10,0,15" />
+                        
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="LabelCompanyName" Text="-" TextColor="#1A1A1A" FontSize="14" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label x:Name="LabelCompanyAddressCity" Text="-" TextColor="Grey" FontSize="12" HorizontalTextAlignment="Center" />
+                            <Label x:Name="LabelCompanyContact" Text="-" TextColor="Grey" FontSize="12" HorizontalTextAlignment="Center" />
+                            <Label x:Name="LabelPrintDate" Text="-" TextColor="Grey" FontSize="11" HorizontalTextAlignment="Center" Margin="0,5,0,0" />
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!--Indikator memuat-->
+                <ActivityIndicator x:Name="StrukLoading" IsRunning="False" IsVisible="False"
+                                   Color="DarkCyan" HorizontalOptions="Center" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--Tombol bawah: Print / WhatsApp / Skip-->
+        <VerticalStackLayout Grid.Row="2" BackgroundColor="White" Padding="15,12,15,15" Spacing="10">
+            <VerticalStackLayout.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </VerticalStackLayout.Shadow>
+            <Grid ColumnDefinitions="*,*,Auto" ColumnSpacing="10">
+                
+                <Border Grid.Column="0" Padding="12,10" StrokeShape="RoundRectangle 8"  Stroke="Transparent" StrokeThickness="0.5" 
+                        BackgroundColor="WhiteSmoke">
+
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapPrint" Tapped="TapPrint_Tapped"></TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                        <Image Source="print100.png"  HeightRequest="24"></Image>
+                        <Label Text="PRINT" TranslationX="5" FontAttributes="Bold" TextColor="DarkCyan" VerticalTextAlignment="Center"></Label>
+                    </StackLayout>
+
+                </Border>
+                
+                <Border Grid.Column="1" Padding="12,10" StrokeShape="RoundRectangle 8"  Stroke="Transparent" StrokeThickness="0.5" 
+                        BackgroundColor="DarkCyan">
+
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapWA" Tapped="TapWA_Tapped"></TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                        <Image Source="wawhite100.png"  HeightRequest="24"></Image>
+                        <Label Text="WHATSAPP" TranslationX="5" HorizontalTextAlignment="Center" FontAttributes="Bold" TextColor="White" VerticalTextAlignment="Center"></Label>
+                    </StackLayout>
+
+                </Border>
+
+                
+                <Button Grid.Column="2" x:Name="B_Skip" Text="X" Clicked="B_Skip_Clicked"
+                        BackgroundColor="OrangeRed" TextColor="White" CornerRadius="12"
+                        FontSize="16" FontAttributes="Bold" HeightRequest="54" />
+            </Grid>
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

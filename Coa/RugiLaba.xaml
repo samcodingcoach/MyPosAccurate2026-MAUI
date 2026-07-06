@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Coa.RugiLaba"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+        <!--search date for RL-->
+        <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="20,5" StrokeShape="RoundRectangle 10" 
+                Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <!-- Grid dengan 5 kolom dan 1 baris, isi dikosongkan untuk sementara -->
+            <Grid ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <!-- Konten akan ditambahkan nanti -->
+
+
+                <Image Source="date100.png" HeightRequest="18" Grid.Column="0"></Image>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" Spacing="10">
+                    <DatePicker x:Name="DP_StartDate" Format="dd/MM/yyyy"></DatePicker>
+                    <Label Text="-" VerticalOptions="Center"></Label>
+                    <DatePicker x:Name="DP_EndDate" Format="dd/MM/yyyy"></DatePicker>
+                </StackLayout>
+
+                <Image Source="search100.png" Grid.Column="2" HeightRequest="18">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="BtnSearch_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+
+        </Border>
+
+     
+        <Border Grid.Row="1" x:Name="FormTotal" VerticalOptions="Start" IsVisible="True" Padding="20" StrokeShape="RoundRectangle 10" 
+                Margin="10,0,10,0" Stroke="Transparent" 
+                StrokeThickness="0.5" BackgroundColor="DarkCyan">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <StackLayout Spacing="0">
+                <!--laba bersih-->
+                <StackLayout Spacing="2">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="LabaBersih_Tapped" />
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="Laba Bersih" FontAttributes="Bold" FontSize="Caption" Opacity="0.8" CharacterSpacing="2" TextColor="White"></Label>
+                    
+                    <Grid>
+                        <Label x:Name="LblLabaBersih" Text="Rp 0" FontSize="24" TextColor="White" FontAttributes="Bold"></Label>
+                        <Label x:Name="LblExpanderIcon" Text="▼" TextColor="White" FontSize="18" HorizontalOptions="EndAndExpand" VerticalOptions="Center"></Label>
+                    </Grid>
+
+                    <BoxView HeightRequest="0.5" Opacity="1" Margin="0,13" Color="White" 
+                             HorizontalOptions="Fill" ></BoxView>
+                </StackLayout>
+                
+                <Grid x:Name="GridSummaryDetails" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*" IsVisible="False">
+                    <!--Total Pendapatan dan HPP-->
+                    <StackLayout Grid.Column="0" Grid.Row="0">
+                        <Label Text="Total Pendapatan" FontAttributes="Bold" FontSize="Caption" Opacity="0.8" CharacterSpacing="2" TextColor="White"></Label>
+                        <Label x:Name="LblTotalPendapatan" Text="Rp 0" FontSize="18" TextColor="White" FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    
+                    <StackLayout Grid.Column="1" Grid.Row="0">
+                        <Label Text="HPP" FontAttributes="Bold" FontSize="Caption" Opacity="0.8" CharacterSpacing="2" TextColor="White"></Label>
+                        <Label x:Name="LblHPP" Text="Rp 0" FontSize="18" TextColor="White" FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    
+                    <!--Laba Kotor dan Operasional-->
+                    <StackLayout Grid.Column="0" Grid.Row="1" Margin="0,15">
+                        <Label Text="Laba Kotor" FontAttributes="Bold" FontSize="Caption" Opacity="0.8" CharacterSpacing="2" TextColor="White"></Label>
+                        <Label x:Name="LblLabaKotor" Text="Rp 0" FontSize="18" TextColor="White" FontAttributes="Bold"></Label>
+                    </StackLayout>
+
+                    <StackLayout Grid.Column="1" Grid.Row="1" Margin="0,15">
+                        <Label Text="Beban Operasional" FontAttributes="Bold" FontSize="Caption" Opacity="0.8" CharacterSpacing="2" TextColor="White"></Label>
+                        <Label x:Name="LblBebanOperasional" Text="Rp 0" FontSize="18" TextColor="White" FontAttributes="Bold"></Label>
+                    </StackLayout>
+
+                    <!--Pendapatan Lain-lain,Beban Lain Lain-->
+                    <StackLayout Grid.Column="0" Grid.Row="2" Margin="0,0,0,15">
+                        <Label Text="Pendapatan Lainnya" FontAttributes="Bold" FontSize="Caption" Opacity="0.8" CharacterSpacing="2" TextColor="White"></Label>
+                        <Label x:Name="LblPendapatanLain" Text="Rp 0" FontSize="18" TextColor="White" FontAttributes="Bold"></Label>
+                    </StackLayout>
+
+                    <StackLayout Grid.Column="1" Grid.Row="2" Margin="0,0,0,15">
+                        <Label Text="Beban Lainnya" FontAttributes="Bold" FontSize="Caption" Opacity="0.8" CharacterSpacing="2" TextColor="White"></Label>
+                        <Label x:Name="LblBebanLain" Text="Rp 0" FontSize="18" TextColor="White" FontAttributes="Bold"></Label>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+
+            
+        </Border>
+       
+        <!--ambil ui dari halaman Coa/Detail.xaml mulai line 74/75 untuk menampilkan data Rugi Laba-->
+        <RefreshView Grid.Row="2" x:Name="RV_RugiLaba" Refreshing="OnRefreshing" Margin="10,10,10,10">
+            <CollectionView x:Name="CV_RugiLaba" IsGrouped="True">
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <StackLayout Margin="0,10,0,0">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Name}" TextColor="{Binding TitleColor}" FontAttributes="Bold"></Label>
+                                <Border Padding="15,2" StrokeShape="RoundRectangle 10" 
+                                        Stroke="Transparent" HorizontalOptions="EndAndExpand"
+                                        StrokeThickness="0.5" BackgroundColor="#D4E6E5">
+                                    <Label Text="{Binding TotalFormatted}" TextColor="#444" VerticalTextAlignment="Center" FontSize="Caption"></Label>
+                                </Border>
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="0" StrokeShape="RoundRectangle 10" VerticalOptions="Start"
+                                Stroke="LightGray" StrokeThickness="1" BackgroundColor="Transparent" Margin="0,5,0,5">
+                                
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" BackgroundColor="Transparent">
+
+                                <!-- Parent (Level 1) Data -->
+                                <StackLayout Grid.Column="0" Grid.Row="0" Padding="20,20,20,10">
+                                    <Label Text="{Binding accountName}" FontSize="18" TextColor="#333"></Label>
+                                    <Label Text="{Binding accountNo}" TextColor="LightGrey" FontSize="Caption"></Label>
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Center" Padding="20,20,20,10">
+                                    <Label Text="{Binding amount_fmt}" FontSize="18" TextColor="#444" FontAttributes="Bold"></Label>
+                                </StackLayout>
+                                <BoxView HeightRequest="0.5" Opacity="1" Grid.Column="0" 
+                                         Grid.ColumnSpan="2" Grid.Row="1" Color="LightGrey" 
+                                         HorizontalOptions="Fill" ></BoxView>
+                                         
+                                <!-- Children (Level 2) nested inside -->
+                                <StackLayout Grid.Row="2" Grid.ColumnSpan="2" BindableLayout.ItemsSource="{Binding Children}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="12,0,0,0" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" BackgroundColor="White">
+                                                <StackLayout Grid.Column="0" Grid.Row="0" Padding="20,20,20,10">
+                                                    <Label Text="{Binding accountName}" FontSize="16" TextColor="#333"></Label>
+                                                    <Label Text="{Binding accountNo}" TextColor="LightGrey" FontSize="Caption"></Label>
+                                                </StackLayout>
+
+                                                <StackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Center" Padding="20,20,20,10">
+                                                    <Label Text="{Binding amount_fmt}" FontSize="16" TextColor="#444" FontAttributes="Bold"></Label>
+                                                </StackLayout>
+                                                <BoxView HeightRequest="0.5" Opacity="1" Grid.Column="0" 
+                                                         Grid.ColumnSpan="2" Grid.Row="1" Color="LightGrey" 
+                                                         HorizontalOptions="Fill" ></BoxView>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+                <CollectionView.Footer>
+                    <Grid Padding="10,20,10,20">
+                        <Button x:Name="BtnDownloadPdf" Text="DOWNLOAD PDF" CharacterSpacing="2" FontAttributes="Bold" BackgroundColor="#444" Clicked="BtnDownloadPdf_Clicked"/>
+                    </Grid>
+                </CollectionView.Footer>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

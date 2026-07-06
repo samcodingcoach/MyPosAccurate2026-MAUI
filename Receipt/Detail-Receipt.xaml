@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Receipt.Detail_Receipt"
+             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+             BackgroundColor="#F8F9FA">
+    <the49:BottomSheet.Detents>
+        <the49:RatioDetent Ratio="0.5" />
+    </the49:BottomSheet.Detents>
+    
+    <ScrollView>
+        <StackLayout>
+            <ActivityIndicator x:Name="LoadingIndicator" IsRunning="True" IsVisible="True" Color="DarkCyan" HorizontalOptions="Center" Margin="0,40,0,0" Scale="1.2" />
+            <Grid x:Name="DetailContainer" RowDefinitions="Auto,Auto,Auto,Auto" Padding="0,20,0,0" IsVisible="False">
+        <Border Grid.Row="0" Padding="20" StrokeShape="RoundRectangle 18" Margin="10,5,10,10" 
+                Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#444" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,*">
+                <StackLayout Grid.Column="0">
+                    <Label Text="Total Penerimaan"></Label>
+                    <Label Text="{Binding FormattedTotalPayment}" FontSize="24" FontAttributes="Bold" TextColor="#444"></Label>
+                </StackLayout>
+
+                <Border Padding="15,7" StrokeShape="RoundRectangle 15" HorizontalOptions="EndAndExpand" Stroke="DarkCyan" Grid.Column="1"
+                        StrokeThickness="0.5"  BackgroundColor="DarkCyan">
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Image Source="check50.png" HeightRequest="18"></Image>
+                        <Label Text="TERBAYAR" VerticalOptions="Center" FontAttributes="Bold" TextColor="White"></Label>
+                    </StackLayout>
+
+                </Border>
+            </Grid>
+
+
+
+        </Border>
+
+        <Grid ColumnDefinitions="*,*" Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+            <StackLayout Grid.Column="0" Grid.ColumnSpan="2">
+                <Border Grid.Row="0" Padding="20,10" StrokeShape="RoundRectangle 18,18,0,0" Margin="10,0" 
+                        Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Label Text="Transaksi Informasi" FontSize="16" TextColor="#444" FontAttributes="Bold"></Label>
+                </Border>
+                <StackLayout Orientation="Horizontal" Padding="31,8">
+                    <Label Text="Nomor Penerimaan" FontSize="14" TextColor="#444"></Label>
+                    <Label Text="{Binding number}" FontAttributes="Bold" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" FontSize="14" TextColor="#444"></Label>
+                </StackLayout>
+                <BoxView BackgroundColor="Grey" Margin="10,0" HeightRequest="0.5" Opacity="0.2"></BoxView>
+                <StackLayout Orientation="Horizontal" Padding="31,8">
+                    <Label Text="Tanggal" FontSize="14" TextColor="#444"></Label>
+                    <Label Text="{Binding transDate}" FontAttributes="Bold" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" FontSize="14" TextColor="#444"></Label>
+                </StackLayout>
+                <BoxView BackgroundColor="Grey" Margin="10,0" HeightRequest="0.5" Opacity="0.2"></BoxView>
+                <StackLayout Orientation="Horizontal" Padding="31,8">
+                    <Label Text="Kasir" FontSize="14" TextColor="#444"></Label>
+                    <Label Text="{Binding DisplayKasir}" FontAttributes="Bold" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" FontSize="14" TextColor="#444"></Label>
+                </StackLayout>
+                <BoxView BackgroundColor="Grey" Margin="10,0" HeightRequest="0.5" Opacity="0.2"></BoxView>
+                <StackLayout Orientation="Horizontal" Padding="31,8">
+                    <Label Text="Konsumen" FontSize="14" TextColor="#444"></Label>
+                    <Label Text="{Binding DisplayCustomer}" FontAttributes="Bold" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" FontSize="14" TextColor="#444"></Label>
+                </StackLayout>
+                <BoxView BackgroundColor="Grey" Margin="10,0" HeightRequest="0.5" Opacity="0.2"></BoxView>
+                <StackLayout Orientation="Horizontal" Padding="31,8">
+                    <Label Text="{Binding QrisOrVaLabel}" FontSize="14" TextColor="#444"></Label>
+                    <Label Text="{Binding QrisOrVa}" FontAttributes="Bold" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" FontSize="14" TextColor="#444"></Label>
+                </StackLayout>
+                <BoxView BackgroundColor="Grey" Margin="10,0" HeightRequest="0.5" Opacity="0.2"></BoxView>
+            </StackLayout>
+        </Grid>
+        
+        <Grid ColumnDefinitions="*,*" Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto,Auto" Margin="0,15,0,0">
+            <StackLayout Grid.Column="0" Grid.ColumnSpan="2">
+                <Border Grid.Row="0" Padding="20,10" StrokeShape="RoundRectangle 18,18,0,0" Margin="10,0" 
+                        Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Faktur Detail" VerticalTextAlignment="Center" FontSize="16" TextColor="#444" FontAttributes="Bold"></Label>
+                        <Border Padding="10,7" StrokeShape="RoundRectangle 5" HorizontalOptions="EndAndExpand" Stroke="DarkCyan" Grid.Column="1"
+                             StrokeThickness="0.5"  BackgroundColor="DarkCyan">
+                            <Label Text="{Binding InvoiceNumber}" VerticalOptions="Center" FontAttributes="Bold" TextColor="White"></Label>
+                        </Border>
+                    </StackLayout>
+                </Border>
+                <StackLayout Orientation="Horizontal" Padding="31,8">
+                    <Label Text="Subtotal" FontSize="14" TextColor="#444"></Label>
+                    <Label Text="{Binding FormattedSubTotal}" FontAttributes="Bold" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" FontSize="14" TextColor="#444"></Label>
+                </StackLayout>
+               
+                <Line X2="360" Stroke="#CFCFCF" Margin="10,0" StrokeThickness="1.4" StrokeDashArray="3,3"
+                    HorizontalOptions="Fill" />
+                
+                <StackLayout Padding="31,8" Spacing="0">
+                    <Label Text="Diskon Dan Pembulatan" TextTransform="Uppercase" FontSize="14" TextColor="#444"></Label>
+                    <!--bisa looping array, pakai listview/collection vertical scroll-->
+                    <CollectionView ItemsSource="{Binding Discounts}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal" Padding="0,8">
+                                    <Label Text="{Binding AccountName}" FontSize="14" TextColor="#444"></Label>
+                                    <Label Text="{Binding FormattedAmount}" FontAttributes="Bold" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" FontSize="14" TextColor="#444"></Label>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+                <BoxView BackgroundColor="Grey" Margin="10,0" HeightRequest="0.5" Opacity="0.2"></BoxView>
+                <StackLayout Orientation="Horizontal" Padding="31,8">
+                    <Label Text="Grand Total" FontSize="14" TextColor="#444"></Label>
+                    <Label Text="{Binding FormattedGrandTotal}" FontAttributes="Bold" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand" FontSize="14" TextColor="#444"></Label>
+                </StackLayout>
+                <BoxView BackgroundColor="Grey" Margin="10,0" HeightRequest="0.5" Opacity="0.2"></BoxView>
+
+                <Border Grid.Row="0" Padding="20,10" StrokeShape="RoundRectangle 18" Margin="10,10,10,0" 
+                    Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <StackLayout>
+                        <Label Text="Catatan:" TextColor="DarkCyan" FontAttributes="Bold"></Label>
+                        <Label Text="{Binding DescriptionDisplay}" TextColor="Gray" Margin="0,5" LineBreakMode="WordWrap"></Label>
+                    </StackLayout>
+                </Border>
+
+            </StackLayout>
+        </Grid>
+
+        <Border Grid.Row="3" Padding="20,10" StrokeShape="RoundRectangle 18" Margin="10,0,10,10" HorizontalOptions="End"  Stroke="Transparent" StrokeThickness="0.5" 
+                BackgroundColor="DarkCyan">
+
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <StackLayout.GestureRecognizers>
+                    <!--ekseskusi seperti Detail-Faktur2-->
+                    <TapGestureRecognizer x:Name="TapPrintExport" Tapped="TapPrintExport_Tapped"></TapGestureRecognizer>
+                </StackLayout.GestureRecognizers>
+                <Image Source="export100.png"  HeightRequest="24"></Image>
+                <Label Text="Cetak dan PDF" FontAttributes="Bold" TextColor="White" VerticalTextAlignment="Center"></Label>
+            </StackLayout>
+
+        </Border>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</the49:BottomSheet>

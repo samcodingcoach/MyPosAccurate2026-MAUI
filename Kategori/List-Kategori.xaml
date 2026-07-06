@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Kategori.List_Kategori"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa"
+             >
+    <Grid RowDefinitions="Auto,*">
+        <!--search & sort-->
+        <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                    <SearchBar Placeholder="Kode Kategori atau Nama" x:Name="T_Search">
+                    </SearchBar>
+                </Border>
+                <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Image Source="newadd100.png" HeightRequest="24">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapAdd"  />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
+            </Grid>
+
+        </Border>
+
+        <!--form input new kategori muncul jika tombol plus-->
+        <Border Grid.Row="0" x:Name="FormInput" IsVisible="False" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+            
+            <StackLayout Spacing="10" Padding="10,15">
+                <Label x:Name="FormTitle" Text="Kategori Baru" FontAttributes="Bold" TextColor="DarkCyan" FontSize="18"></Label>
+                <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                        BackgroundColor="WhiteSmoke">
+                    <Entry Placeholder="Nama Kategori" x:Name="FormNamaKategori"></Entry>
+                </Border>
+                <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                    BackgroundColor="WhiteSmoke">
+                    <StackLayout Orientation="Horizontal">
+                        <Picker x:Name="PickerParentKategori"  HorizontalOptions="FillAndExpand" Title="Pilih Parent Kategori" ItemDisplayBinding="{Binding name}" />
+                        <Image Source="chevron100.png" TranslationX="-5" Opacity="0.6" HeightRequest="18"></Image>
+                    </StackLayout>
+                </Border>
+                <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="End">
+                    <Button Text="Batal" x:Name="BBatal" Clicked="BBatal_Clicked" BorderColor="WhiteSmoke" BorderWidth="0.5" Margin="0,15,0,0" BackgroundColor="Transparent" TextColor="#444" FontSize="18"></Button>
+                    <Button Text="Simpan Kategori" x:Name="BSimpan" Clicked="BSimpan_Clicked" Margin="0,15,0,0" FontAttributes="Bold" BackgroundColor="DarkCyan" TextColor="White" FontSize="18"></Button>
+                </StackLayout>
+            </StackLayout>
+
+        </Border>
+
+        <!--data kategori: dikelompokkan per induk (parent), bisa di-refresh (pull) & paging (scroll bawah, 100/hit)-->
+        <RefreshView Grid.Row="1" x:Name="RV_Kategori" Refreshing="OnRefreshing">
+            <CollectionView x:Name="CV_Kategori" Margin="10,2" SelectionMode="None"
+                            RemainingItemsThreshold="3" RemainingItemsThresholdReached="OnThresholdReached">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="8"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label Text="Tidak ada data kategori." TextColor="Grey" HorizontalTextAlignment="Center" Margin="0,40,0,0"/>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="0" StrokeShape="RoundRectangle 10" VerticalOptions="Start"
+                                Stroke="WhiteSmoke" StrokeThickness="1" BackgroundColor="White">
+                            <Grid Padding="20,15">
+                                <StackLayout>
+                                    <!--induk kategori (tap untuk edit kategori induk)-->
+                                    <StackLayout Orientation="Horizontal">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnGroupHeaderTapped" />
+                                        </StackLayout.GestureRecognizers>
+                                        <Label Text="{Binding Name}" FontAttributes="Bold" CharacterSpacing="1" FontSize="Large" VerticalOptions="Center"></Label>
+                                        <Image Source="more50gray.png" HorizontalOptions="EndAndExpand" HeightRequest="18" Rotation="90"></Image>
+                                    </StackLayout>
+                                    <!--looping sub kategori-->
+                                    <StackLayout BindableLayout.ItemsSource="{Binding Children}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout>
+                                                    <Grid ColumnDefinitions="*,Auto" Margin="20,18,0,2">
+                                                        <!--nama sub kategori-->
+                                                        <Label Text="{Binding name}" TextColor="#444" Grid.Column="0" VerticalOptions="Center"></Label>
+                                                        <Label Text="Edit" TextColor="CadetBlue" FontAttributes="Bold" Grid.Column="1">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnEditTapped" />
+                                                            </Label.GestureRecognizers>
+                                                        </Label>
+                                                    </Grid>
+                                                    <BoxView HeightRequest="0.5" Margin="20,10,0,0" Color="#E0E0E0" HorizontalOptions="Fill" ></BoxView>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Loading Overlay -->
+        <Grid x:Name="LoadingOverlay" Grid.Row="1" BackgroundColor="#80000000" IsVisible="False" Margin="10,2">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding Source={x:Reference LoadingOverlay}, Path=IsVisible}"
+                                   Color="White"
+                                   HorizontalOptions="Center" />
+                <Label Text="Memuat Data..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

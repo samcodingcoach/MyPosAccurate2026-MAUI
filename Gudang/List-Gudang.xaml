@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Gudang.List_Gudang"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa"
+             >
+    <Grid RowDefinitions="Auto,*">
+        <!--search & sort-->
+        <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                    <SearchBar Placeholder="Cari Gudang" x:Name="T_Search" TextChanged="T_Search_TextChanged"></SearchBar>
+                </Border>
+                <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Image Source="newadd100.png" HeightRequest="24">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapAdd" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
+            </Grid>
+
+        </Border>
+        
+        <!--edit gudang-->
+        <Border Grid.Row="1" x:Name="FormEdit" IsVisible="False" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+            <StackLayout Spacing="10" Padding="10,15">
+                <Label x:Name="FormTitle" Text="Edit Gudang" FontAttributes="Bold" TextColor="DarkCyan" FontSize="18"></Label>
+                <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5"  BackgroundColor="WhiteSmoke">
+                    <Entry Placeholder="Nama Gudang" x:Name="FormNamaGudang"></Entry>
+                </Border>
+                <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                        BackgroundColor="WhiteSmoke">
+                    <Entry Placeholder="Nama P.I.C" x:Name="FormPIC"></Entry>
+                </Border>
+                <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                        BackgroundColor="WhiteSmoke">
+                    <Entry Placeholder="Provinsi" Text="KALIMANTAN TIMUR" 
+                            x:Name="FormProvinsi"></Entry>
+                </Border>
+                <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                        BackgroundColor="WhiteSmoke">
+                    <Editor Placeholder="Alamat Gudang" HeightRequest="80" x:Name="FormAddress"></Editor>
+                </Border>
+                
+                <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="End">
+                    <Button Text="Batal" x:Name="BBatal" Clicked="BBatal_Clicked" BorderColor="WhiteSmoke" BorderWidth="0.5" Margin="0,15,0,0" BackgroundColor="Transparent" TextColor="#444" FontSize="18"></Button>
+                    <Button Text="Perbarui" x:Name="BUpdate" Clicked="BUpdate_Clicked" Margin="0,15,0,0" FontAttributes="Bold" BackgroundColor="DarkCyan" TextColor="White" FontSize="18"></Button>
+                </StackLayout>
+            </StackLayout>
+        </Border>
+        
+        <RefreshView Grid.Row="1" x:Name="RV_Gudang" Refreshing="OnRefreshing" Margin="10,0,10,10">
+            <CollectionView x:Name="CV_Gudang" RemainingItemsThreshold="1" RemainingItemsThresholdReached="OnThresholdReached">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="0" Margin="0,0,0,10" 
+                                StrokeShape="RoundRectangle 10" VerticalOptions="Start"
+                                Stroke="LightGray" StrokeThickness="0.5" BackgroundColor="White">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,3" />
+                            </Border.Shadow>
+                            <Grid Padding="20,15" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" 
+                                  RowSpacing="12">
+
+                                <Label Text="{Binding name}" FontAttributes="Bold" TextColor="#444" Grid.Column="0" Grid.Row="0"></Label>
+                                <Image Source="edit10.png" HeightRequest="18" VerticalOptions="Center" Grid.Column="1" Grid.Row="0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer x:Name="UpdateGudang" Tapped="UpdateGudang_Tapped"></TapGestureRecognizer>
+                                    </Image.GestureRecognizers>                                    
+                                </Image>
+
+                            <!--aktif dan barang rusak-->
+                                <HorizontalStackLayout Grid.Column="0" Grid.ColumnSpan="2" Spacing="12" Grid.Row="1">
+                                    <Border Padding="15,3" IsVisible="{Binding is_suspended}" StrokeShape="RoundRectangle 10" VerticalOptions="Start"
+                                            Stroke="#FED7D7" StrokeThickness="0.5" 
+                                            BackgroundColor="#FFF5F5">
+                                        <Label Text="Non Aktif" FontSize="Caption" FontAttributes="Bold" TextColor="#822727"></Label>
+                                    </Border>
+                                    <Border Padding="15,3" IsVisible="False" StrokeShape="RoundRectangle 10" VerticalOptions="Start"
+                                            Stroke="#C9F6D8" StrokeThickness="0.5" 
+                                            BackgroundColor="#F0FFF4">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding is_suspended}" Value="False">
+                                                <Setter Property="IsVisible" Value="True" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="Aktif" FontSize="Caption" FontAttributes="Bold" TextColor="#22543D"></Label>
+                                    </Border>
+                                    <Border Padding="15,3" IsVisible="{Binding is_scrap}" StrokeShape="RoundRectangle 10" VerticalOptions="Start"
+                                             Stroke="#FED7D7" StrokeThickness="0.5" 
+                                             BackgroundColor="#FFF5F5"> 
+                                        <Label Text="Gudang Barang Rusak" FontSize="Caption" FontAttributes="Bold" TextColor="#822727"></Label>
+                                    </Border>
+                                </HorizontalStackLayout>
+
+                                <StackLayout Grid.Row="2" Spacing="6" Margin="0,10,0,0">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Image Source="manager50.png" HeightRequest="18"></Image>
+                                        <Label Text="{Binding pic}" TextColor="#444" 
+                                               VerticalTextAlignment="Center"
+                                               FontSize="Caption"></Label>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Image Source="gps50.png" HeightRequest="18"></Image>
+                                        <Label Text="{Binding full_address}" FontSize="Caption" 
+                                               TextColor="#444" LineBreakMode="WordWrap" WidthRequest="220" MaxLines="2" VerticalTextAlignment="Center"></Label>
+                                    </HorizontalStackLayout>
+                                </StackLayout>
+                                
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

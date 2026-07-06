@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Stok.SO_List"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa">
+    <Grid RowDefinitions="Auto,*">
+        <!--search date for RL-->
+        <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="10" StrokeShape="RoundRectangle 10" 
+               Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                    <SearchBar Placeholder="Nomor Perintah SO" x:Name="T_Search" TextChanged="T_Search_TextChanged">
+                    </SearchBar>
+                </Border>
+                <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Grid WidthRequest="30" HeightRequest="30">
+                        <!-- DatePicker transparan untuk men-trigger popup pemilihan tanggal -->
+                        <DatePicker x:Name="FilterDate" Opacity="0" DateSelected="FilterDate_DateSelected" Format="dd/MM/yyyy" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                        <Image Source="date100.png" HeightRequest="24" Opacity="0.8" InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <RefreshView Grid.Row="1" x:Name="RV_SO" Refreshing="OnRefreshing" Margin="10,0,10,10">
+            <CollectionView x:Name="CV_SO" RemainingItemsThreshold="2" RemainingItemsThresholdReached="OnThresholdReached">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" Padding="18" RowSpacing="12">
+                                
+                                <StackLayout Grid.Column="0" Grid.Row="0">
+                                    <!--number-->
+                                    <Label Text="{Binding number}" TextColor="DarkCyan" FontSize="18" FontAttributes="Bold" CharacterSpacing="1"></Label>
+                                    <!--startDate-->
+                                    <Label Text="{Binding transDateView}" TextColor="Grey" FontSize="Caption"></Label>
+                                </StackLayout>
+
+                                <Border Grid.Row="0" Grid.Column="1"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Padding="15,5" StrokeShape="RoundRectangle 20"  Stroke="Transparent" StrokeThickness="0" BackgroundColor="#fff4c7">
+                                    <!--statusName-->
+                                    <Label Text="{Binding statusName}" TextColor="#a0400e" FontAttributes="Bold" FontSize="Caption"></Label>
+                                </Border>
+
+                                <StackLayout Grid.Row="1" Grid.Column="0">
+                                    <Label Text="GUDANG" TextColor="Grey" FontSize="Caption"></Label>
+                                    <!--warehouse.name-->
+                                    <Label Text="{Binding warehouse.name}" TextColor="#444"></Label>
+                                </StackLayout>
+                                
+                                <StackLayout Grid.Row="1" Grid.Column="1">
+                                    <Label Text="PENANGGUNG JAWAB" HorizontalOptions="EndAndExpand" TextColor="Grey" FontSize="Caption"></Label>
+                                    <!--personCharged-->
+                                    <Label Text="{Binding personCharged}" TextColor="#444" HorizontalOptions="EndAndExpand"></Label>
+                                </StackLayout>
+
+                                <Grid ColumnDefinitions="Auto,*" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="5">
+                                    <BoxView Grid.Column="0" BackgroundColor="DarkCyan" HeightRequest="20" WidthRequest="2"></BoxView>
+                                    <!--description-->
+                                    <Label Text="{Binding description}" MaxLines="2" LineBreakMode="TailTruncation" Grid.Column="1" TextColor="Grey" FontAttributes="Italic"></Label>
+                                </Grid>
+
+                                <StackLayout Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Spacing="10">
+                                    <BoxView HeightRequest="0.5" Grid.ColumnSpan="2" Grid.Row="1" Color="#E0E0E0" HorizontalOptions="Fill" ></BoxView>
+                                    <Border Grid.Row="0" Grid.Column="1"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Padding="15,8" StrokeShape="RoundRectangle 20"  
+                                            Stroke="Transparent" StrokeThickness="0" BackgroundColor="WhiteSmoke">
+                                        <HorizontalStackLayout Spacing="10">
+                                            <Label Text="Hasil Stok Opname" TextColor="#444" FontAttributes="Bold" FontSize="Caption"></Label>
+                                            <Image Source="search100.png" HeightRequest="15"></Image>
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

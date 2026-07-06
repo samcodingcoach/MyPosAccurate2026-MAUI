@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true">
+		<!-- FileProvider untuk membagikan file (mis. PDF struk) ke aplikasi lain seperti WhatsApp -->
+		<provider
+			android:name="androidx.core.content.FileProvider"
+			android:authorities="${applicationId}.fileprovider"
+			android:exported="false"
+			android:grantUriPermissions="true">
+			<meta-data
+				android:name="android.support.FILE_PROVIDER_PATHS"
+				android:resource="@xml/file_paths" />
+		</provider>
+	</application>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+	<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+	<uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
+
+	<uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+
+	<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/>
+
+	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+	<queries>
+		<!-- Agar paket WhatsApp terlihat di Android 11+ (package visibility) -->
+		<package android:name="com.whatsapp" />
+		<package android:name="com.whatsapp.w4b" />
+		<intent>
+			<action android:name="android.intent.action.SEND" />
+			<data android:mimeType="application/pdf" />
+		</intent>
+		<intent>
+			<action android:name="android.intent.action.VIEW" />
+			<data android:scheme="https" />
+		</intent>
+		<intent>
+			<action android:name="android.intent.action.VIEW" />
+			<data android:scheme="http" />
+		</intent>
+	</queries>
+</manifest>

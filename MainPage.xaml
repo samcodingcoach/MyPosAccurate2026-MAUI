@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:MyPosAccurate2026"
+       FlyoutBehavior="Disabled"
+       Shell.TabBarUnselectedColor="#80808080"
+       x:Class="MyPosAccurate2026.MainPage">
+
+    <!--Bottom navigation : Beranda, Transaksi, Pengaturan, Profil-->
+    <TabBar>
+        <Tab Title="Beranda" Icon="navhome50.png">
+            <ShellContent ContentTemplate="{DataTemplate local:Beranda}" />
+        </Tab>
+        <Tab Title="Transaksi" Icon="navtx50.png">
+            <!--ContentTemplate masih kosong, nanti disetting-->
+            <ShellContent>
+                <ContentPage />
+            </ShellContent>
+        </Tab>
+        <Tab Title="Pengaturan" Icon="navsetting50.png">
+            <!--ContentTemplate masih kosong, nanti disetting-->
+            <ShellContent>
+                <ContentPage />
+            </ShellContent>
+        </Tab>
+        <Tab Title="Profil" Icon="navprofil50.png">
+            <!--ContentTemplate masih kosong, nanti disetting-->
+            <ShellContent>
+                <ContentPage />
+            </ShellContent>
+        </Tab>
+    </TabBar>
+
+</Shell>

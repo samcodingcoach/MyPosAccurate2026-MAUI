@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Sales.QRIS"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#d2dae2">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!--Header QRIS-->
+        <Border Grid.Row="0" Padding="20,18" StrokeShape="Rectangle" Stroke="Transparent"
+                BackgroundColor="DarkCyan">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                <Image Grid.Column="0" Source="close100.png" HeightRequest="24" VerticalOptions="Center">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapTutup" Tapped="TapTutup_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                    <Label Text="Pembayaran QRIS" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="Scan untuk menyelesaikan transaksi" TextColor="#9FB6CC" FontSize="12" />
+                </VerticalStackLayout>
+                <Image Grid.Column="2" Source="qris_logo.png" HeightRequest="26" VerticalOptions="Center" />
+            </Grid>
+        </Border>
+
+        <!--Konten utama-->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,18" Spacing="16" HorizontalOptions="Center" WidthRequest="380">
+
+                <!--Hitung mundur expired-->
+                <Border Padding="16,10" StrokeShape="RoundRectangle 30" Stroke="Transparent"
+                        BackgroundColor="#FDECEA" HorizontalOptions="Center">
+                    <StackLayout Orientation="Horizontal" Spacing="8">
+                        <Label Text="&#9203;" FontSize="16" VerticalTextAlignment="Center" />
+                        <Label Text="Bayar sebelum" TextColor="#C0392B" FontSize="13" VerticalTextAlignment="Center" />
+                        <Label x:Name="LabelCountdown" Text="10:00" TextColor="#C0392B" FontSize="16"
+                               FontAttributes="Bold" CharacterSpacing="1" VerticalTextAlignment="Center" />
+                    </StackLayout>
+                </Border>
+
+                <!--Kartu QR-->
+                <Border Padding="0" StrokeShape="RoundRectangle 20" Stroke="Transparent" BackgroundColor="White">
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Opacity="0.12" Radius="18" Offset="0,6" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="0">
+
+                        <!--Total Pembayaran-->
+                        <VerticalStackLayout Padding="20,18,20,14" Spacing="4" HorizontalOptions="Center">
+                            <Label Text="Total Pembayaran" TextColor="Grey" FontSize="13"
+                                   HorizontalTextAlignment="Center" />
+                            <Label x:Name="LabelTotalPembayaran" Text="Rp 0"  TextColor="DarkCyan" FontSize="30"
+                                   FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+
+                        <BoxView HeightRequest="0.5" Color="#E0E0E0" HorizontalOptions="Fill" />
+
+                        <!--QR Code-->
+                        <Border Margin="20" Padding="0" StrokeShape="RoundRectangle 16"
+                                Stroke="#E0E0E0" StrokeThickness="1" BackgroundColor="White"
+                                HorizontalOptions="Center">
+                            <Grid WidthRequest="280" HeightRequest="280" Padding="0">
+                                <Image x:Name="QrImage" Aspect="AspectFit" HeightRequest="280"
+                                       HorizontalOptions="Fill" VerticalOptions="Fill" />
+                                <!--Placeholder saat QR belum dimuat-->
+                                <ActivityIndicator x:Name="QrLoading" IsRunning="True" IsVisible="True"
+                                                   Color="DarkCyan" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                        <Label Text="Scan kode QR dengan aplikasi&#10;mobile banking atau e-wallet apa pun"
+                               TextColor="Grey" FontSize="12" Margin="20,0,20,18"
+                               HorizontalTextAlignment="Center" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!--Detail transaksi-->
+                <Border Padding="16,14" StrokeShape="RoundRectangle 16" Stroke="Transparent" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Text="Order ID" Grid.Column="0" TextColor="Grey" FontSize="13" />
+                            <Label x:Name="LabelOrderId" Text="-" Grid.Column="1" TextColor="#222" FontSize="13"
+                                   FontAttributes="Bold" HorizontalTextAlignment="End" />
+                        </Grid>
+                        <BoxView HeightRequest="0.5" Color="#EEEEEE" HorizontalOptions="Fill" />
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Text="Status" Grid.Column="0" TextColor="Grey" FontSize="13" />
+                            <Label x:Name="LabelStatus" Text="Menunggu Pembayaran" Grid.Column="1"
+                                   TextColor="#E67E22" FontSize="13" FontAttributes="Bold"
+                                   HorizontalTextAlignment="End" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--Tombol bawah-->
+        <VerticalStackLayout Grid.Row="2" BackgroundColor="White" Padding="16,12,16,16" Spacing="10">
+            <VerticalStackLayout.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </VerticalStackLayout.Shadow>
+            <Button x:Name="B_CekStatus" Text="CEK STATUS PEMBAYARAN" Clicked="B_CekStatus_Clicked"
+                    BackgroundColor="DarkCyan" TextColor="White" CornerRadius="12"
+                    FontSize="16" FontAttributes="Bold" HeightRequest="50" />
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

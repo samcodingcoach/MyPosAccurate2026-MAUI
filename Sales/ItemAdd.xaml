@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Sales.ItemAdd" NavigationPage.HasNavigationBar="False"
+             Title="Item Add">
+
+  
+    
+    <Grid RowDefinitions="*, Auto" Padding="20,15,20,10">
+        <StackLayout Grid.Row="0">
+            <!--kode item , kategori konsumen-->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" Margin="0,10,0,0">
+
+                <StackLayout Grid.Column="0">
+                    <Label Text="KODE / NO ITEM" Grid.Column="0" x:Name="FormNoItem" 
+                        FontAttributes="Bold" TextColor="DarkCyan" FontSize="20"></Label>
+
+                    <Label Text="" x:Name="FormLabelStokAvailable" TextColor="DarkGoldenrod"></Label>
+
+                </StackLayout>
+
+                <StackLayout Grid.Column="1" HorizontalOptions="EndAndExpand">
+                    <Label Text="Kategori Konsumen" FontAttributes="Bold"></Label>
+                    <Label Text="" x:Name="FormPriceCategory" HorizontalTextAlignment="End" TextColor="Grey"></Label>
+                </StackLayout>
+            </Grid>
+
+            <!--Nama Barang-->
+            <Border Padding="10,10,10,5" Margin="0,10,0,0"  StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                <StackLayout>
+                    <Label Text="Nama Barang" FontAttributes="Bold" TranslationX="2"></Label>
+                    <Entry Placeholder="Masukan Nama Barang" Text="Xiaomi " x:Name="FormNamaBarang" IsEnabled="False"
+                           ClearButtonVisibility="WhileEditing" HorizontalOptions="FillAndExpand"></Entry>
+                </StackLayout>
+            </Border>
+            <!--qty dan harga-->
+            <Grid ColumnDefinitions="0.4*,*" ColumnSpacing="10" Margin="0,10,0,0">
+                <!--Kuantitas-->
+                <Border Padding="10,10,10,5" Grid.Column="0" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <StackLayout>
+                        <Label Text="Qty" FontAttributes="Bold" TranslationX="2"></Label>
+                        <Entry Placeholder="Qty" Text="1" Keyboard="Numeric" x:Name="FormQty" TextChanged="FormQty_TextChanged"
+                            ClearButtonVisibility="WhileEditing" HorizontalTextAlignment="Center"></Entry>
+                    </StackLayout>
+                </Border>
+
+                <!--Harga -->
+                <Border Padding="10,10,10,5" Grid.Column="1" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <StackLayout>
+                        <Label Text="Harga Jual" FontAttributes="Bold" TranslationX="2"></Label>
+                        <Entry Placeholder="Masukan Harga Jual" Keyboard="Numeric" x:Name="FormHargaJual" IsReadOnly="True" 
+                               TextColor="DarkCyan"
+                               FontAttributes="Bold"
+                            ClearButtonVisibility="WhileEditing" HorizontalOptions="FillAndExpand"></Entry>
+                    </StackLayout>
+                </Border>
+            </Grid>
+            <!--check diskon-->
+            <HorizontalStackLayout Margin="0,10,0,0">
+                <CheckBox x:Name="FormCheckDiskonItem" Color="DarkCyan" CheckedChanged="FormCheckDiskonItem_CheckedChanged"></CheckBox>
+                <Label Text="Item diskon" FontAttributes="Bold" VerticalTextAlignment="Center" TranslationY="-2"></Label>
+            </HorizontalStackLayout>
+            <!--item diskon-->
+            <StackLayout x:Name="FormInputDiskonItem" IsVisible="False">
+                <BoxView BackgroundColor="Gray" HeightRequest="1" Opacity="0.3"></BoxView>
+                <Border Margin="0,10,0,0" Padding="10,10,10,0" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <StackLayout>
+                        <Label Text="Promo" FontAttributes="Bold" TranslationX="2"></Label>
+                        <StackLayout Orientation="Horizontal">
+                            <Picker x:Name="PickerPromo" ItemDisplayBinding="{Binding DisplayPromo}" SelectedIndexChanged="PickerPromo_SelectedIndexChanged" HorizontalOptions="FillAndExpand" Title="Pilih Promo"  />
+                            <Image Source="search32.png" HeightRequest="20" Opacity="0.5"></Image>
+                        </StackLayout>
+                    </StackLayout>
+                </Border>
+
+                <HorizontalStackLayout Margin="5,10,0,10">
+                    <Label Text="Nilai Diskon: " FontAttributes="Bold"></Label>
+                    <Label Text="0%" x:Name="FormPersenDiskon"></Label>
+                </HorizontalStackLayout>
+
+                <BoxView BackgroundColor="Gray" HeightRequest="1" Opacity="0.3"></BoxView>
+            </StackLayout>
+
+            <!--Gudang dan Sales-->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" Margin="0,10,0,0">
+             
+                <Border Padding="10,10,10,5" Grid.Column="0"  StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <StackLayout>
+                        <Label Text="Gudang" FontAttributes="Bold" TranslationX="2"></Label>
+                        <Entry Placeholder="Masukan Gudang" Text="Gudang Utama" IsEnabled="False"
+                           x:Name="FormNamaGudang"
+                           ClearButtonVisibility="WhileEditing" HorizontalOptions="FillAndExpand"></Entry>
+                    </StackLayout>
+                </Border>
+
+                <Border Padding="10,10,10,5" Grid.Column="1" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <StackLayout>
+                        <Label Text="Sales / Penjual" FontAttributes="Bold" TranslationX="2"></Label>
+                        <StackLayout Orientation="Horizontal">
+                            <Picker x:Name="PickerSales" HorizontalOptions="FillAndExpand" Title="Pilih Sales" ItemDisplayBinding="{Binding DisplayName}" SelectedIndexChanged="PickerSales_SelectedIndexChanged" Margin="0,5,0,0"/>
+                            <Image Source="search32.png" HeightRequest="20" Opacity="0.5"></Image>
+                        </StackLayout>
+                    </StackLayout>
+                </Border>
+
+            </Grid>
+
+            <!--No Seri Input-->
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" x:Name="GridNoSeri" Margin="0,10,0,5">
+                <Border Padding="10,5,10,5" Grid.Column="0" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <StackLayout>
+                        <Entry Placeholder="Masukan Nomor Serial Barang" x:Name="FormNomorSerial" 
+                               ClearButtonVisibility="WhileEditing" HorizontalOptions="FillAndExpand"></Entry>
+                    </StackLayout>
+                </Border>
+
+                <Button Text="Tambah" Grid.Column="1" BackgroundColor="OrangeRed" x:Name="BTambahSN" Clicked="BTambahSN_Clicked"></Button>
+            </Grid>
+            <!--No Seri List-->
+
+            <Label Text="" x:Name="FormSerialCounter" TextColor="Grey"></Label>
+
+            <CollectionView x:Name="ListSnContainer" MaximumHeightRequest="150" VerticalOptions="Start" Margin="0,5,0,0">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="2" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15" Padding="10,6" Margin="0,1" BackgroundColor="{Binding RowColor}">
+
+                            
+
+                            <Label Text="{Binding SerialNumber}" VerticalOptions="Center" FontAttributes="Bold" TextColor="DarkCyan" FontSize="14"/>
+
+                            <Label Text="{Binding Qty, StringFormat='Qty: {0}'}" VerticalOptions="Center" Grid.Column="1" TextColor="Gray" FontSize="13"/>
+
+                            <Label Text="Hapus" Grid.Column="2" TextColor="OrangeRed" FontAttributes="Bold" VerticalOptions="Center" FontSize="13">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="HapusSN_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+        </StackLayout>
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Grid.Row="1">
+            <StackLayout Grid.Column ="0">
+                <Label Text="Total Harga" FontAttributes="Bold"></Label>
+                <Label Text="Rp 0" FontSize="18" x:Name="FormTotalHarga" FontAttributes="Bold" TextColor="DarkCyan"></Label>
+            </StackLayout>
+
+            <Button Text="Simpan" x:Name="BSimpan" FontAttributes="Bold" Clicked="BSimpan_Clicked" Grid.Column="1"
+                    BackgroundColor="DarkCyan"></Button>
+        </Grid>
+    </Grid>
+</ContentPage>

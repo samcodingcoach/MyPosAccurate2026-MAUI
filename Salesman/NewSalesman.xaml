@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+             BackgroundColor="White"
+             HasHandle="True"
+             HasBackdrop="True"
+             HandleColor="LightGray"
+             x:Class="MyPosAccurate2026.Salesman.NewSalesman" >
+
+    <the49:BottomSheet.Detents>
+        <the49:RatioDetent Ratio="0.70" />
+    </the49:BottomSheet.Detents>
+
+    
+   
+        <Grid RowDefinitions="*,Auto">
+            <ActivityIndicator x:Name="LoadingFetch" IsRunning="False" IsVisible="False" VerticalOptions="Start" HorizontalOptions="Center" Margin="0,10,0,0" Color="DarkCyan" Grid.RowSpan="2" ZIndex="10"/>
+            <ScrollView>
+                <StackLayout Padding="15,10" Spacing="2" Margin="0,20,0,0">
+                    <Label Text="Nama Salesman" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
+                    <Border Padding="10,5" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                                BackgroundColor="WhiteSmoke" >
+
+                        <StackLayout Orientation="Horizontal" Spacing="10">
+                            <Picker x:Name="PickerPanggilan" Title="Panggilan" VerticalTextAlignment="Center"></Picker>
+                            <Entry x:Name="EntryNameSales" TranslationY="4" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start" Placeholder="Nama Lengkap"></Entry>
+                        </StackLayout>
+
+                    </Border>
+
+                    <Label Text="Kode Sales" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
+                    <Border Padding="10,5" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                                BackgroundColor="WhiteSmoke" >
+
+                        <Entry x:Name="EntryNumber" ClearButtonVisibility="WhileEditing" VerticalTextAlignment="Start" Placeholder="Nomor Induk Karyawan"></Entry>
+
+                    </Border>
+                    <Label Text="Email" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
+                    <Border Padding="10,5" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                                BackgroundColor="WhiteSmoke" >
+
+                        <Entry x:Name="EntryEmail" ClearButtonVisibility="WhileEditing" 
+                                   Keyboard="Email" VerticalTextAlignment="Start" Placeholder="Email @gmail.com"></Entry>
+
+                    </Border>
+
+                    <Label Text="Nomor Handphone" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
+                    <Border Padding="10,5" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                                BackgroundColor="WhiteSmoke" >
+
+                        <Entry x:Name="EntryHP" ClearButtonVisibility="WhileEditing" 
+                                   Keyboard="Telephone" VerticalTextAlignment="Start" Placeholder="0852XXXXXXXX"></Entry>
+                    </Border>
+
+                    <Label Text="Nomor Rekening" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
+                    <Border Padding="10,5" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                            BackgroundColor="WhiteSmoke" >
+
+                        <Entry x:Name="EntryBankAccount" ClearButtonVisibility="WhileEditing" Keyboard="Numeric" VerticalTextAlignment="Start" Placeholder="Nomor Rekening"></Entry>
+
+                    </Border>
+
+                    <Label Text="Pemilik Rekening" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
+                    <Border Padding="10,5" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                                BackgroundColor="WhiteSmoke" >
+                        <Entry x:Name="EntryBankAccountName" ClearButtonVisibility="WhileEditing"
+                                   VerticalTextAlignment="Start" Placeholder="Atas Nama Rekening"></Entry>
+                    </Border>
+
+                    <Label Text="Bank" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
+                    <Border Padding="10,5" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                                BackgroundColor="WhiteSmoke" >
+                        <Picker x:Name="PickerBank" Title="Pilih Bank" VerticalTextAlignment="Center"></Picker>
+                    </Border>
+                </StackLayout>
+            </ScrollView>
+        <Grid ColumnDefinitions="*,*" Grid.Row="1"  Margin="10" ColumnSpacing="10">
+            <Button x:Name="BBatal" Clicked="BBatal_Clicked" Text="BATAL" BackgroundColor="Transparent" BorderColor="Grey" BorderWidth="0.5" TextColor="Grey" Grid.Column="0"></Button>
+            <Button x:Name="BSimpan" Clicked="BSimpan_Clicked" Text="SIMPAN" Grid.Column="1" BackgroundColor="DarkCyan" FontAttributes="Bold" 
+                            TextColor="White">
+            </Button>
+
+        </Grid>
+    </Grid>
+
+</the49:BottomSheet>

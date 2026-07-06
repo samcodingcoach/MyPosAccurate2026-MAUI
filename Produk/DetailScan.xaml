@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Produk.DetailScan"
+             Title="Detail Produk"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa">
+
+    <Grid>
+
+        <ScrollView>
+            <VerticalStackLayout Spacing="16" Padding="0,0,0,32">
+                <!-- Image -->
+                <Grid BackgroundColor="#ffffff" HeightRequest="300">
+                    <Image x:Name="ProductImage" Source="nophotoproduct150.jpg" Aspect="AspectFit" Margin="24" />
+                </Grid>
+
+                <VerticalStackLayout Spacing="16" Padding="16,0">
+                    
+                    <!-- Main Info -->
+                    <Border Stroke="#bcc9c8" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#ffffff" Padding="16">
+                        <Border.Shadow>
+                            <Shadow Brush="#000000" Opacity="0.05" Radius="4" Offset="0,2" />
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Border Stroke="#bcc9c8" StrokeThickness="1" StrokeShape="RoundRectangle 8" BackgroundColor="#dfe0e0" HorizontalOptions="Start" Padding="8,4">
+                                    <Label x:Name="LblCategory" Text="Mouse" FontSize="12" TextColor="#616363" FontAttributes="Bold" />
+                                </Border>
+                                <Label x:Name="LblName" Text="Rexus Mouse Office Wireless Q30" FontSize="20" FontAttributes="Bold" TextColor="#191c1d" Margin="0,8,0,0" />
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="SKU:" FontSize="12" TextColor="#3d4949" />
+                                    <Label x:Name="LblSKU" Text="100007" FontSize="12" FontAttributes="Bold" TextColor="#191c1d" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="0">
+                                <Label Text="Harga Unit" FontSize="11" TextColor="#3d4949" HorizontalOptions="End" />
+                                <Label x:Name="LblUnitPrice" Text="Rp 70.000" FontSize="20" FontAttributes="Bold" TextColor="#006767" HorizontalOptions="End" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- Stock & Warehouse -->
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="16">
+                        <!-- Stock -->
+                        <Border Grid.Column="0" Stroke="#bcc9c8" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#ffffff" Padding="16">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Opacity="0.05" Radius="4" Offset="0,2" />
+                            </Border.Shadow>
+                            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="48" HeightRequest="48" StrokeShape="RoundRectangle 24" BackgroundColor="#e6f0f0" StrokeThickness="0" VerticalOptions="Center">
+                                    <Image Source="stok64green.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="Stok Tersedia" FontSize="11" TextColor="#3d4949" />
+                                    <Label x:Name="LblStock" Text="9 PCS" FontSize="16" FontAttributes="Bold" TextColor="#191c1d" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <!-- Warehouse -->
+                        <Border Grid.Column="1" Stroke="#bcc9c8" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#ffffff" Padding="16">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Opacity="0.05" Radius="4" Offset="0,2" />
+                            </Border.Shadow>
+                            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="48" HeightRequest="48" StrokeShape="RoundRectangle 24" BackgroundColor="#eceeee" StrokeThickness="0" VerticalOptions="Center">
+                                    <Image Source="gudang100green.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label x:Name="LblWarehouseName" Text="Gudang Utama" FontSize="11" TextColor="#3d4949" />
+                                    <Label x:Name="LblWarehousePIC" Text="PIC: Bp. Samsu" FontSize="14" FontAttributes="Bold" TextColor="#191c1d" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <!-- Harga Jual -->
+                    <VerticalStackLayout Spacing="8" x:Name="PriceListContainer">
+                        <Label Text="Daftar Harga Jual" FontSize="16" FontAttributes="Bold" TextColor="#191c1d" Margin="4,0,0,0" />
+                        <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="8" RowSpacing="8">
+                            <!-- Umum -->
+                            <Border Grid.Row="0" Grid.Column="0" Stroke="#bcc9c8" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#ffffff" Padding="16">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="Umum" FontSize="12" TextColor="#3d4949" />
+                                    <Label x:Name="LblPriceUmum" Text="Rp 75.900" FontSize="18" FontAttributes="Bold" TextColor="#191c1d" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Shopee -->
+                            <Border Grid.Row="0" Grid.Column="1" Stroke="#bcc9c8" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#ffffff" Padding="16">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="Shopee" FontSize="12" TextColor="#3d4949" />
+                                    <Label x:Name="LblPriceShopee" Text="Rp 99.000" FontSize="18" FontAttributes="Bold" TextColor="#191c1d" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Membership -->
+                            <Border Grid.Row="1" Grid.Column="0" Stroke="#008282" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#e6f0f0" Padding="16">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="Membership" FontSize="12" TextColor="#006767" />
+                                    <Label x:Name="LblPriceMembership" Text="Rp 70.000" FontSize="18" FontAttributes="Bold" TextColor="#006767" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Free -->
+                            <Border Grid.Row="1" Grid.Column="1" Stroke="#bcc9c8" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#ffffff" Padding="16">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="Free" FontSize="12" TextColor="#3d4949" />
+                                    <Label x:Name="LblPriceFree" Text="Rp 70.000" FontSize="18" FontAttributes="Bold" TextColor="#191c1d" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- Spesifikasi -->
+                    <Border Stroke="#bcc9c8" StrokeThickness="1" StrokeShape="RoundRectangle 12" BackgroundColor="#ffffff">
+                        <VerticalStackLayout>
+                            <Grid BackgroundColor="#e6e8e9" Padding="16,8">
+                                <Label Text="SPESIFIKASI DETAIL" FontSize="12" FontAttributes="Bold" TextColor="#3d4949" />
+                            </Grid>
+                            
+                            <Grid Padding="16,12" ColumnDefinitions="*, Auto">
+                                <Label Grid.Column="0" Text="Berat" TextColor="#3d4949" VerticalOptions="Center" />
+                                <Label Grid.Column="1" x:Name="LblWeight" Text="250 gram" FontSize="16" FontAttributes="Bold" TextColor="#191c1d" VerticalOptions="Center" />
+                            </Grid>
+                            <BoxView HeightRequest="1" Color="#bcc9c8" />
+                            
+                            <Grid Padding="16,12" ColumnDefinitions="*, Auto">
+                                <Label Grid.Column="0" Text="Pajak" TextColor="#3d4949" VerticalOptions="Center" />
+                                <Label Grid.Column="1" x:Name="LblTax" Text="PPN 12%" FontSize="16" FontAttributes="Bold" TextColor="#191c1d" VerticalOptions="Center" />
+                            </Grid>
+                            <BoxView HeightRequest="1" Color="#bcc9c8" />
+                            
+                            <Grid Padding="16,12" ColumnDefinitions="*, Auto">
+                                <Label Grid.Column="0" Text="Kedaluwarsa" TextColor="#3d4949" VerticalOptions="Center" />
+                                <Label Grid.Column="1" x:Name="LblExpired" Text="Tidak dikelola" FontAttributes="Italic" TextColor="#3d4949" VerticalOptions="Center" />
+                            </Grid>
+                            
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

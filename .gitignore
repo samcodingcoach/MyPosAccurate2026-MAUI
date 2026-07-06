@@ -1,0 +1,25 @@
+# File tertentu
+App.xaml.cs
+agy.txt
+
+# Platform
+Platforms/iOS/
+Platforms/MacCatalyst/
+Platforms/Windows/
+
+# Android DIKECUALIKAN (tetap di-track)
+# Platforms/Android/
+
+# Build
+bin/
+obj/
+
+# Resources
+Resources/
+
+# IDE
+.vs/
+.vscode/
+
+# Properties
+Properties/

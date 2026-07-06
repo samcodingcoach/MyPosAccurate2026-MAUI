@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Sales.Maps"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#d2dae2"
+             Title="Pilih Lokasi">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header + kontrol pemilih kota / pencarian -->
+        <Border Grid.Row="0" Padding="20,10,20,20"  StrokeShape="RoundRectangle 0,0,20,20"  Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <toolkit:Expander IsExpanded="False" Grid.Row="0">
+                <toolkit:Expander.Header>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Pencarian Alamat" HorizontalOptions="FillAndExpand" FontSize="Large" FontAttributes="Bold"  Padding="5"/>
+                        <Image Source="chevron100.png" TranslationY="-3" HeightRequest="24"></Image>
+                    </StackLayout>
+
+                </toolkit:Expander.Header>
+
+                <StackLayout Spacing="10">
+                    <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Entry x:Name="CitySearch" Grid.Column="0"  Placeholder="Pilih / cari kota..." TextColor="#1A1A1A"
+                               PlaceholderColor="Grey" Focused="CitySearch_Focused" TextChanged="CitySearch_TextChanged" />
+                            <Image Source="gps100.png" HeightRequest="18" Grid.Column="1" Opacity="0.5">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="Tap_BGPS" Tapped="Tap_BGPS_Tapped"></TapGestureRecognizer>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+                    </Border>
+
+                    <Border x:Name="CityListBorder" IsVisible="False" Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                        <CollectionView x:Name="CityList" HeightRequest="180" SelectionMode="Single"
+                                SelectionChanged="CityList_SelectionChanged">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="14,11" ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0" Text="{Binding Nama}" TextColor="#1A1A1A" FontSize="15" />
+                                        <Label Grid.Column="1" Text="Utama" TextColor="#0E6E6E" FontSize="11" FontAttributes="Bold"
+                                        IsVisible="{Binding IsMain}" VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Border>
+
+                    <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Entry x:Name="SearchEntry" Placeholder="Cari alamat / tempat..." TextColor="#1A1A1A"
+                                PlaceholderColor="Grey" ReturnType="Search" Focused="SearchEntry_Focused"/>
+
+
+                            <Image Source="search32.png" HeightRequest="18" Opacity="0.5" Grid.Column="1">
+
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer x:Name="TapCari" NumberOfTapsRequired="1" Tapped="TapCari_Tapped"></TapGestureRecognizer>
+                                </Image.GestureRecognizers>
+
+                            </Image>
+                        </Grid>
+                    </Border>
+
+                </StackLayout>
+
+            </toolkit:Expander>
+        </Border>
+
+        <!-- Peta OpenStreetMap (Leaflet di dalam WebView) -->
+        <Grid Grid.Row="1">
+            <WebView x:Name="MapWebView" Navigating="MapWebView_Navigating" />
+            <ActivityIndicator x:Name="Loading" IsRunning="False" IsVisible="False"
+                               Color="DarkCyan" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label Text="Ketuk peta atau geser pin untuk memilih titik"
+                   TextColor="#333" BackgroundColor="#CCFFFFFF" Padding="10,6" FontSize="12"
+                   HorizontalOptions="Center" VerticalOptions="Start" Margin="0,10,0,0" />
+        </Grid>
+
+        <!-- Hasil ekstraksi: alamat, lat, long -->
+        <Border Grid.Row="2" Padding="0" StrokeShape="Rectangle" Stroke="Transparent" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+            <VerticalStackLayout Padding="16,12,16,16" Spacing="8">
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0" Text="ALAMAT TERPILIH" TextColor="#999" FontSize="12" FontAttributes="Bold" CharacterSpacing="1" />
+                    <Label Grid.Column="1" x:Name="LabelSumber" Text="" TextColor="#0E6E6E" FontSize="12" FontAttributes="Bold" />
+                </Grid>
+                <Label x:Name="LabelAlamat" Text="-" TextColor="#1A1A1A" FontSize="14" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,4,0,0">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="Latitude" TextColor="Grey" FontSize="12" />
+                        <Label x:Name="LabelLat" Text="-" TextColor="#0E6E6E" FontSize="15" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                        <Label Text="Longitude" TextColor="Grey" FontSize="12" />
+                        <Label x:Name="LabelLng" Text="-" TextColor="#0E6E6E" FontSize="15" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,8,0,0">
+                    <Button Grid.Column="0" x:Name="B_Salin" Text="SALIN" Clicked="B_Salin_Clicked"
+                            BackgroundColor="#9E9E9E" TextColor="White" CornerRadius="12" HeightRequest="50"
+                            FontAttributes="Bold" />
+                    <Button Grid.Column="1" x:Name="B_Gunakan" Text="GUNAKAN LOKASI" Clicked="B_Gunakan_Clicked"
+                            BackgroundColor="#0E6E6E" TextColor="White" CornerRadius="12" HeightRequest="50"
+                            FontAttributes="Bold" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </Border>
+
+    </Grid>
+</ContentPage>
