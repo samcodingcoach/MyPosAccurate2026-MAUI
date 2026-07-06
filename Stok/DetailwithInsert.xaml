@@ -2,11 +2,99 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyPosAccurate2026.Stok.DetailwithInsert"
-             Title="DetailwithInsert">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+        <!--navigation-->
+
+        <Grid Grid.Row="0" Padding="20" RowDefinitions="Auto" VerticalOptions="Start" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+            <Grid.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="10" Offset="0,-3" />
+            </Grid.Shadow>
+            <!--navigation-->
+            <Image Source="backgreen1.png" HeightRequest="28" Grid.Column="0"></Image>
+            <Label Text="Detail Hasil Stok Opname" TranslationX="5" FontAttributes="Bold" VerticalTextAlignment="Center" TextColor="DarkCyan" 
+                   FontSize="20" Grid.Column="1"></Label>
+            <Image Source="searchgreen100.png" Grid.Column="2" HeightRequest="22"></Image>
+        </Grid>
+
+        <BoxView HeightRequest="0.5" Grid.Row="1" Color="#E0E0E0" HorizontalOptions="Fill" >
+        </BoxView>
+        
+        <!--master transaksi-->
+
+        <StackLayout Grid.Row="2" Margin="10">
+            <Border Padding="0" StrokeShape="RoundRectangle 20"  
+                    Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
+                <Grid RowDefinitions="Auto,Auto,Auto">
+                    <StackLayout BackgroundColor="WhiteSmoke" Padding="20,20,20,0">
+                        <Label Text="NOMOR DETAIL SO." FontAttributes="Bold" TextColor="Grey" Opacity="0.5"></Label>
+                        <Label Text="INO-239912" FontAttributes="Bold" TextColor="#444" FontSize="18" CharacterSpacing="1"></Label>
+                        <BoxView HeightRequest="0.5" Margin="-15,10,-15,0" Color="#E0E0E0" HorizontalOptions="Fill" >
+                        </BoxView>
+                    </StackLayout>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" Grid.Row="1">
+                        <StackLayout Padding="20,20,20,0" Grid.Column="0">
+                            <Label Text="NOMOR PERINTAH SO." FontAttributes="Bold" TextColor="Grey" Opacity="0.5"></Label>
+                            <Label Text="INO-239912" FontAttributes="Bold" TextColor="#444" FontSize="18" CharacterSpacing="1"></Label>
+                        </StackLayout>
+                        <StackLayout Padding="20" Grid.Column="1">
+                            <Label Text="TANGGAL PENGERJAAN." FontAttributes="Bold" TextColor="Grey" Opacity="0.5"></Label>
+                            <Label Text="06 June 2026" FontAttributes="Bold" TextColor="#444" FontSize="18" CharacterSpacing="1"></Label>
+                        </StackLayout>
+                        <BoxView HeightRequest="0.5" Margin="20,0,20,10" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"  Color="#E0E0E0" HorizontalOptions="Fill" >
+                        </BoxView>
+                    </Grid>
+
+                    <StackLayout Grid.Row="2" Padding="20,0,20,20">
+                        <Label Text="KETERANGAN" FontAttributes="Bold" TextColor="Grey" Opacity="0.5"></Label>
+                        <Label TextColor="#444" FontSize="Caption" MaxLines="2" LineBreakMode="TailTruncation" Text="Ini berupa keterangan contoh mohon untuk disimak ada beberapa baris disini"></Label>
+                    </StackLayout>
+                </Grid>
+            </Border>
+        </StackLayout>
+        
+        <!--detail-->
+        <Grid Grid.Row="3" Padding="20,0" RowDefinitions="Auto" VerticalOptions="Start" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+            <Image Source="detailgreen100.png" HeightRequest="20" Grid.Column="0"></Image>
+            <Label Text="Daftar Produk" TranslationX="5" FontAttributes="Bold" VerticalTextAlignment="Center" TextColor="DarkCyan" 
+                   FontSize="18" Grid.Column="1"></Label>
+            <Label Text="100 ITEMS" FontSize="Caption" VerticalTextAlignment="Center" Grid.Column="2" TextColor="Grey"></Label>
+        </Grid>
+
+        <Border Grid.Row="4"  Padding="20,15" StrokeShape="RoundRectangle 10" 
+                Margin="10" Stroke="LightGrey" StrokeThickness="0.5" BackgroundColor="White">
+           
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" RowDefinitions="Auto,Auto" VerticalOptions="Start" RowSpacing="10">
+                <StackLayout Grid.Column="0">
+                    <Label Text="NAMA PRODUK BARANG YANG DICEK STOKNYA DISEBUT STOK OPNAME" MaxLines="2" 
+                           LineBreakMode="TailTruncation" FontAttributes="Bold"></Label>
+                    <Label Text="ID: 100-00212" FontSize="Caption" TextColor="Grey"></Label>
+                </StackLayout>
+                <StackLayout Grid.Column="1">
+                    <Label Text="1000" FontAttributes="Bold" TextColor="DarkCyan" HorizontalTextAlignment="Center" FontSize="20"></Label>
+                    <Label Text="UNIT" HorizontalTextAlignment="Center" FontSize="Caption" TextColor="Grey"></Label>
+                </StackLayout>
+
+                <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Spacing="5">
+                    <Label Text="SERIAL NUMBER" TextColor="Grey" ></Label>
+                    <BoxView HeightRequest="0.5" Grid.Row="1" Color="#E0E0E0" HorizontalOptions="Fill" >
+                    </BoxView>
+                    
+                    <!--tampilkan serial number disini 2 
+                    kolom maksimal 10 data baris, sisanya di hide dengan tombol "Lihat Semua" untuk menampilkan semua serial number-->
+
+                    <!--jika tidak ada serial number tampilkan label "Tidak ada serial number" dengan warna grey dan font italic-->
+                </StackLayout>
+
+               
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
 </ContentPage>
