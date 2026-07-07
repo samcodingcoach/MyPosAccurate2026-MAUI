@@ -1,6 +1,10 @@
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Extensions;
 
 namespace MyPosAccurate2026.Stok;
 
@@ -194,7 +198,7 @@ public partial class SO_List : ContentPage
 
     private async void FABNew_Tapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PushAsync(new SO_New());
+        await this.ShowPopupAsync(new SO_New());
     }
 
     private async void FilterDate_DateSelected(object sender, DateChangedEventArgs e)

@@ -1,9 +1,10 @@
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using CommunityToolkit.Maui.Views;
 
 namespace MyPosAccurate2026.Stok;
 
-public partial class SO_New : ContentPage
+public partial class SO_New : Popup
 {
     private List<WarehouseItem> _warehouses = new List<WarehouseItem>();
     private List<string> _users = new List<string>();
@@ -13,19 +14,19 @@ public partial class SO_New : ContentPage
 	{
 		InitializeComponent();
         HiddenDatePicker.MinimumDate = DateTime.Today; // Kunci agar tidak boleh kurang dari sekarang
-	}
 
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        
-        var loadTasks = new List<Task>();
-        if (_warehouses.Count == 0) loadTasks.Add(LoadWarehouses());
-        if (_users.Count == 0) loadTasks.Add(LoadUsers());
-        if (_categories.Count == 0) loadTasks.Add(LoadCategories());
+        this.Opened += async (s, e) => 
+        {
+            var loadTasks = new List<Task>();
+            if (_warehouses.Count == 0) loadTasks.Add(LoadWarehouses());
+            if (_users.Count == 0) loadTasks.Add(LoadUsers());
+            if (_categories.Count == 0) loadTasks.Add(LoadCategories());
 
-        await Task.WhenAll(loadTasks);
+            await Task.WhenAll(loadTasks);
+        };
     }
+
+   
 
     private async Task LoadWarehouses()
     {
@@ -139,7 +140,7 @@ public partial class SO_New : ContentPage
             var selectedWarehouse = _warehouses[index];
             if (!string.IsNullOrWhiteSpace(selectedWarehouse.pic))
             {
-                bool answer = await DisplayAlert("Penanggung Jawab", 
+                bool answer = await Application.Current.MainPage.DisplayAlertAsync("Penanggung Jawab", 
                     $"Apakah Penanggung Jawabnya adalah Kepala Gudang ({selectedWarehouse.pic})?", 
                     "Ya", "Tidak");
                 
@@ -156,9 +157,9 @@ public partial class SO_New : ContentPage
         FormStartDate.Text = $"{e.NewDate:dd/MM/yyyy}";
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
     {
-
+        await CloseAsync();
     }
 }
 

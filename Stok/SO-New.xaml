@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyPosAccurate2026.Stok.SO_New"
-             
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             CanBeDismissedByTappingOutsideOfPopup="False" Padding="0"
              >
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="20,0" RowSpacing="15">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="0,0" RowSpacing="15" WidthRequest="290" HeightRequest="690">
 
         <Grid Grid.Row="0" RowDefinitions="Auto" VerticalOptions="Start" ColumnDefinitions="Auto,*" ColumnSpacing="10">
 
@@ -88,9 +89,9 @@
         <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Grid.Row="2">
             <Button Text="BATAL" Grid.Column="0" FontAttributes="Bold" BackgroundColor="Transparent" 
                     BorderWidth="0.5"
-                    BorderColor="LightGrey" TextColor="LightGrey"></Button>
+                    BorderColor="LightGrey" TextColor="LightGrey" Clicked="TapGestureRecognizer_Tapped"></Button>
             <Button Text="SIMPAN" Grid.Column="1" FontAttributes="Bold" BackgroundColor="DarkCyan"></Button>
         </Grid>
     </Grid>
     
-</ContentPage>
+</mct:Popup>
