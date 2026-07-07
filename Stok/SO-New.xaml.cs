@@ -7,6 +7,7 @@ public partial class SO_New : ContentPage
 {
     private List<WarehouseItem> _warehouses = new List<WarehouseItem>();
     private List<string> _users = new List<string>();
+    private List<string> _categories = new List<string>();
 
 	public SO_New()
 	{
@@ -21,6 +22,7 @@ public partial class SO_New : ContentPage
         var loadTasks = new List<Task>();
         if (_warehouses.Count == 0) loadTasks.Add(LoadWarehouses());
         if (_users.Count == 0) loadTasks.Add(LoadUsers());
+        if (_categories.Count == 0) loadTasks.Add(LoadCategories());
 
         await Task.WhenAll(loadTasks);
     }
@@ -96,6 +98,39 @@ public partial class SO_New : ContentPage
         }
     }
 
+    private async Task LoadCategories()
+    {
+        try
+        {
+            string cleanToken = Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cleanToken);
+
+            string apiUrl = $"{App.API_HOST}item-category/list.php?lvl=1";
+            var response = await client.GetAsync(apiUrl);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<CategoryResponse>(content);
+                
+                if (result?.data != null)
+                {
+                    _categories = result.data.Where(c => c.name != null).Select(c => c.name).ToList();
+                    
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        FormitemCategoryListName.ItemsSource = _categories;
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error LoadCategories: {ex.Message}");
+        }
+    }
+
     private async void FormwarehouseName_SelectedIndexChanged(object sender, EventArgs e)
     {
         int index = FormwarehouseName.SelectedIndex;
@@ -119,6 +154,11 @@ public partial class SO_New : ContentPage
     private void HiddenDatePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
         FormStartDate.Text = $"{e.NewDate:dd/MM/yyyy}";
+    }
+
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+
     }
 }
 
@@ -152,4 +192,14 @@ public class AksesData
 public class AksesUser
 {
     public string email { get; set; }
+}
+
+public class CategoryResponse
+{
+    public List<CategoryItem> data { get; set; }
+}
+
+public class CategoryItem
+{
+    public string name { get; set; }
 }

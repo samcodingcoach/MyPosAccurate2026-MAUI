@@ -2,12 +2,23 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyPosAccurate2026.Stok.SO_New"
-            
-             Title="SO_New">
+             
+             >
 
-    <Grid RowDefinitions="*,Auto" Padding="15,0">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20,0" RowSpacing="15">
 
-        <StackLayout Grid.Row="0">
+        <Grid Grid.Row="0" RowDefinitions="Auto" VerticalOptions="Start" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+
+            <Image Source="backgreen1.png" HeightRequest="28" Grid.Column="0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Text="Tambahkan Perintah Stok Opname" TranslationX="5" 
+                   FontAttributes="Bold" VerticalTextAlignment="Center" TextColor="DarkCyan" 
+                   FontSize="20" Grid.Column="1"></Label>
+        </Grid>
+        <StackLayout Grid.Row="1">
 
             <Label Text="Tanggal Stock Opname" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
             <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
@@ -53,10 +64,33 @@
 
             </Border>
             
+            <Label Text="Kategori Barang" FontAttributes="Bold" TextColor="#444" Margin="0,15,0,5"></Label>
+            <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
+                
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Picker x:Name="FormitemCategoryListName" Title="Pilih Kategori (Opsional)" HorizontalOptions="FillAndExpand"></Picker>
+                    <Image Source="chevron100.png" HeightRequest="20" Opacity="0.5" HorizontalOptions="EndAndExpand"></Image>
+                </StackLayout>
+
+            </Border>
+            <Label Text="Keterangan" FontAttributes="Bold" TextColor="#444" Margin="0,15,0,5"></Label>
+            <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
+
+                <Editor x:Name="FormDescription" Placeholder="Deskripsi tambahan (Opsional)" HeightRequest="60"></Editor>
+                
+            </Border>
+            
             
 
         </StackLayout>
-        
+
+
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Grid.Row="2">
+            <Button Text="BATAL" Grid.Column="0" FontAttributes="Bold" BackgroundColor="Transparent" 
+                    BorderWidth="0.5"
+                    BorderColor="LightGrey" TextColor="LightGrey"></Button>
+            <Button Text="SIMPAN" Grid.Column="1" FontAttributes="Bold" BackgroundColor="DarkCyan"></Button>
+        </Grid>
     </Grid>
     
 </ContentPage>
