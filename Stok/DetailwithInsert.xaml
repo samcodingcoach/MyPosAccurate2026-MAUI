@@ -21,7 +21,11 @@
             </Image>
             <Label Text="Detail Hasil Stok Opname" TranslationX="5" FontAttributes="Bold" VerticalTextAlignment="Center" TextColor="DarkCyan" 
                    FontSize="20" Grid.Column="1"></Label>
-            <Image Source="searchgreen100.png" Grid.Column="2" HeightRequest="22"></Image>
+            <Image Source="searchgreen100.png" Grid.Column="2" HeightRequest="22">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="BtnSearch_Tapped" />
+                </Image.GestureRecognizers>
+            </Image>
         </Grid>
 
         <BoxView HeightRequest="0.5" Grid.Row="1" Color="#E0E0E0" HorizontalOptions="Fill" >
@@ -94,7 +98,7 @@
                                 <Label Text="{Binding ItemNo}" FontSize="Caption" TextColor="Grey"></Label>
                             </StackLayout>
                             <StackLayout Grid.Column="1">
-                                <Label Text="{Binding quantity}" FontAttributes="Bold" TextColor="DarkCyan" HorizontalTextAlignment="Center" FontSize="20"></Label>
+                                <Label Text="{Binding quantity}" FontAttributes="Bold" TextColor="{Binding QuantityColor}" HorizontalTextAlignment="Center" FontSize="20"></Label>
                                 <Label Text="{Binding UnitName}" HorizontalTextAlignment="Center" FontSize="Caption" TextColor="Grey"></Label>
                             </StackLayout>
 

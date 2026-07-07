@@ -8,6 +8,7 @@ namespace MyPosAccurate2026.Stok;
 public partial class DetailwithInsert : ContentPage
 {
     public string TransNumber { get; set; } = ""; 
+    private List<StokOpnameDetailItem> _allItems = new List<StokOpnameDetailItem>();
 
     public DetailwithInsert()
     {
@@ -86,7 +87,8 @@ public partial class DetailwithInsert : ContentPage
                             LblDescription.Text = data.description ?? "-";
                             LblTotalItems.Text = $"{(data.detailItem?.Count ?? 0)} ITEMS";
 
-                            CV_Items.ItemsSource = data.detailItem;
+                            _allItems = data.detailItem ?? new List<StokOpnameDetailItem>();
+                            CV_Items.ItemsSource = _allItems;
                         });
                     }
                     else
@@ -141,6 +143,37 @@ public partial class DetailwithInsert : ContentPage
         if (sender is Button btn && btn.CommandParameter is StokOpnameDetailItem item)
         {
             item.ShowAllSerialNumbers = true;
+        }
+    }
+
+    private async void BtnSearch_Tapped(object sender, TappedEventArgs e)
+    {
+        if (_allItems == null || _allItems.Count == 0) return;
+
+        string searchResult = await DisplayPromptAsync("Pencarian", "Masukkan ID Produk atau Nama", "Cari", "Tampilkan Semua");
+        
+        if (searchResult == null) 
+        {
+            // Null means user pressed Tampilkan Semua / Batal
+            CV_Items.ItemsSource = _allItems;
+            LblTotalItems.Text = $"{_allItems.Count} ITEMS";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(searchResult))
+        {
+            CV_Items.ItemsSource = _allItems;
+            LblTotalItems.Text = $"{_allItems.Count} ITEMS";
+        }
+        else
+        {
+            var filtered = _allItems.Where(x => 
+                (x.ItemName != null && x.ItemName.Contains(searchResult, StringComparison.OrdinalIgnoreCase)) ||
+                (x.ItemNo != null && x.ItemNo.Contains(searchResult, StringComparison.OrdinalIgnoreCase))
+            ).ToList();
+
+            CV_Items.ItemsSource = filtered;
+            LblTotalItems.Text = $"{filtered.Count} ITEMS";
         }
     }
 }
@@ -219,6 +252,7 @@ public class StokOpnameDetailItem : INotifyPropertyChanged
     public string ItemName => item?.name ?? "-";
     public string ItemNo => $"ID: {item?.no ?? "-"}";
     public string UnitName => item?.unit1?.name ?? "-";
+    public Color QuantityColor => quantity == 0 ? Colors.Red : Colors.DarkCyan;
     public bool HasSerialNumbers => detailSerialNumber != null && detailSerialNumber.Count > 0;
     public bool HasNoSerialNumbers => !HasSerialNumbers;
 
