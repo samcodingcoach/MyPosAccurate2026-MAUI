@@ -7,6 +7,7 @@ namespace MyPosAccurate2026.Stok;
 public partial class SO_List : ContentPage
 {
     ObservableCollection<SOItem> _soList = new ObservableCollection<SOItem>();
+    List<SOItem> _allLoadedItems = new List<SOItem>();
     const int _limit = 100;
     int _currentPage = 1;
     bool _hasMoreData = true;
@@ -35,13 +36,22 @@ public partial class SO_List : ContentPage
     {
         if (_isFetching) return;
 
+        Task delayTask = Task.CompletedTask;
+
         if (reset)
         {
+            MainThread.BeginInvokeOnMainThread(() => OverlayLoading.IsVisible = true);
+            delayTask = Task.Delay(3000);
+
             _currentPage = 1;
             _hasMoreData = true;
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 _soList.Clear();
+                if (string.IsNullOrWhiteSpace(T_Search.Text))
+                {
+                    _allLoadedItems.Clear();
+                }
             });
         }
 
@@ -95,11 +105,17 @@ public partial class SO_List : ContentPage
                 }
                 else
                 {
+                    string currentSearch = (T_Search.Text ?? "").Trim();
+                    
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
                         foreach (var item in result.data)
                         {
                             _soList.Add(item);
+                            if (string.IsNullOrWhiteSpace(currentSearch))
+                            {
+                                _allLoadedItems.Add(item);
+                            }
                         }
                     });
 
@@ -115,7 +131,12 @@ public partial class SO_List : ContentPage
         finally
         {
             _isFetching = false;
-            MainThread.BeginInvokeOnMainThread(() => RV_SO.IsRefreshing = false);
+            await delayTask;
+            MainThread.BeginInvokeOnMainThread(() => 
+            {
+                RV_SO.IsRefreshing = false;
+                OverlayLoading.IsVisible = false;
+            });
         }
     }
 
@@ -139,7 +160,32 @@ public partial class SO_List : ContentPage
         try
         {
             await Task.Delay(500, _searchCts.Token);
-            await LoadData(true);
+            
+            string search = (T_Search.Text ?? "").Trim();
+            if (string.IsNullOrEmpty(search))
+            {
+                _soList.Clear();
+                foreach (var item in _allLoadedItems)
+                {
+                    _soList.Add(item);
+                }
+                return;
+            }
+
+            var localResults = _allLoadedItems.Where(x => x.number != null && x.number.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            
+            if (localResults.Count > 0)
+            {
+                _soList.Clear();
+                foreach (var item in localResults)
+                {
+                    _soList.Add(item);
+                }
+            }
+            else
+            {
+                await LoadData(true);
+            }
         }
         catch (TaskCanceledException)
         {
@@ -184,6 +230,26 @@ public class SOItem
     public Warehouse warehouse { get; set; }
     public string transDateView { get; set; }
     public string startDate { get; set; }
+
+    public Color StatusBackgroundColor
+    {
+        get
+        {
+            if (statusName == "Menunggu Eksekusi") return Color.FromArgb("#C6E2E2");
+            if (statusName == "Selesai") return Color.FromArgb("#DCFCE7");
+            return Color.FromArgb("#fff4c7"); // Default: Dalam Perhitungan
+        }
+    }
+
+    public Color StatusTextColor
+    {
+        get
+        {
+            if (statusName == "Menunggu Eksekusi") return Color.FromArgb("#006767");
+            if (statusName == "Selesai") return Color.FromArgb("#166534");
+            return Color.FromArgb("#a0400e"); // Default: Dalam Perhitungan
+        }
+    }
 }
 
 public class Warehouse

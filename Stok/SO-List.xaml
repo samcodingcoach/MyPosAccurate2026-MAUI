@@ -44,9 +44,9 @@
                                     <Label Text="{Binding transDateView}" TextColor="Grey" FontSize="Caption"></Label>
                                 </StackLayout>
 
-                                <Border Grid.Row="0" Grid.Column="1"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Padding="15,5" StrokeShape="RoundRectangle 20"  Stroke="Transparent" StrokeThickness="0" BackgroundColor="#fff4c7">
+                                <Border Grid.Row="0" Grid.Column="1"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Padding="15,5" StrokeShape="RoundRectangle 20"  Stroke="Transparent" StrokeThickness="0" BackgroundColor="{Binding StatusBackgroundColor}">
                                     <!--statusName-->
-                                    <Label Text="{Binding statusName}" TextColor="#a0400e" FontAttributes="Bold" FontSize="Caption"></Label>
+                                    <Label Text="{Binding statusName}" TextColor="{Binding StatusTextColor}" FontAttributes="Bold" FontSize="Caption"></Label>
                                 </Border>
 
                                 <StackLayout Grid.Row="1" Grid.Column="0">
@@ -86,5 +86,13 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
+
+        <!-- Overlay Loading -->
+        <Grid x:Name="OverlayLoading" Grid.Row="0" Grid.RowSpan="2" BackgroundColor="#80000000" IsVisible="True" ZIndex="999">
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding Source={x:Reference OverlayLoading}, Path=IsVisible}" Color="White" WidthRequest="50" HeightRequest="50" />
+                <Label Text="Mohon Tunggu..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>
