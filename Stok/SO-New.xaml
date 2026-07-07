@@ -37,7 +37,17 @@
             <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
                 
                 <StackLayout Orientation="Horizontal" Spacing="10">
-                    <Picker x:Name="FormwarehouseName" Title="Pilih Gudang"></Picker>
+                    <Picker x:Name="FormwarehouseName" Title="Pilih Gudang" HorizontalOptions="FillAndExpand" SelectedIndexChanged="FormwarehouseName_SelectedIndexChanged"></Picker>
+                    <Image Source="chevron100.png" HeightRequest="20" Opacity="0.5" HorizontalOptions="EndAndExpand"></Image>
+                </StackLayout>
+
+            </Border>
+            
+            <Label Text="Karyawan yang di tugaskan" FontAttributes="Bold" TextColor="#444" Margin="0,15,0,5"></Label>
+            <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
+                
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Picker x:Name="FormUserListAccount" Title="Pilih Karyawan" HorizontalOptions="FillAndExpand"></Picker>
                     <Image Source="chevron100.png" HeightRequest="20" Opacity="0.5" HorizontalOptions="EndAndExpand"></Image>
                 </StackLayout>
 
