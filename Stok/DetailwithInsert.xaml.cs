@@ -22,6 +22,8 @@ public partial class DetailwithInsert : ContentPage
 
     private async Task LoadData()
     {
+        var delayTask = Task.Delay(3000);
+        
         try
         {
             string cleanToken = Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
@@ -117,6 +119,14 @@ public partial class DetailwithInsert : ContentPage
             MainThread.BeginInvokeOnMainThread(async () =>
             {
                 await DisplayAlert("Exception", ex.Message, "OK");
+            });
+        }
+        finally
+        {
+            await delayTask;
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                OverlayLoading.IsVisible = false;
             });
         }
     }

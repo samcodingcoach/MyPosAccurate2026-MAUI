@@ -1,0 +1,60 @@
+=====================================================
+PANDUAN IMPLEMENTASI OVERLAY LOADING MAUI (3 DETIK)
+=====================================================
+
+1. KODE XAML
+Tambahkan kode Grid ini di bagian paling bawah dari layout utama halaman Anda (misalnya tepat sebelum penutup tag `<Grid>`). Pastikan untuk menyesuaikan atribut `Grid.RowSpan` dengan jumlah baris pada layout Anda agar menutupi seluruh layar.
+
+```xml
+<!-- Overlay Loading -->
+<Grid x:Name="OverlayLoading" Grid.Row="0" Grid.RowSpan="5" BackgroundColor="#80000000" IsVisible="True" ZIndex="999">
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+        <ActivityIndicator IsRunning="{Binding Source={x:Reference OverlayLoading}, Path=IsVisible}" Color="White" WidthRequest="50" HeightRequest="50" />
+        <Label Text="Mohon Tunggu..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</Grid>
+```
+
+Catatan Penting XAML:
+- `Grid.RowSpan="5"`: Ubah angkanya sesuai dengan jumlah `RowDefinitions` yang ada di halaman tujuan Anda (misal jika ada 3 row, ubah menjadi 3).
+- `ZIndex="999"`: Memastikan posisi overlay ini dipaksa selalu berada pada tumpukan paling depan menutupi UI lainnya.
+- `IsVisible="True"`: Biarkan bernilai True di XAML agar begitu halaman dibuka, loading langsung tampil menutupi proses awal.
+
+-----------------------------------------------------
+
+2. KODE C# (CODE-BEHIND)
+Gunakan pola try-catch-finally berikut pada fungsi pemuatan data Anda (misalnya `LoadData()`). Pola ini menjamin indikator minimal terlihat 3 detik ditambah waktu pemrosesan data, sehingga transisi layar akan terasa lebih halus dan rapi.
+
+```csharp
+private async Task LoadData()
+{
+    // 1. Mulai timer 3 detik sejak awal pemuatan
+    var delayTask = Task.Delay(3000);
+    
+    try
+    {
+        // ==========================================
+        // TULIS KODE PROSES API / AMBIL DATA DI SINI
+        // ==========================================
+    }
+    catch (Exception ex)
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        });
+    }
+    finally
+    {
+        // 2. Tahan eksekusi di blok finally jika 3 detik belum berlalu.
+        // Jika API lebih lama dari 3 detik, ia tidak akan terhambat dan langsung lanjut ke baris bawahnya.
+        await delayTask;
+        
+        // 3. Matikan overlay pada MainThread agar tidak memicu error thread.
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            OverlayLoading.IsVisible = false;
+        });
+    }
+}
+```
