@@ -7,7 +7,7 @@ namespace MyPosAccurate2026.Stok;
 
 public partial class DetailwithInsert : ContentPage
 {
-    public int DetailId { get; set; } = 50; 
+    public string TransNumber { get; set; } = ""; 
 
     public DetailwithInsert()
     {
@@ -34,8 +34,36 @@ public partial class DetailwithInsert : ContentPage
             using var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cleanToken);
 
-            // Per user correction: stokopname-result
-            string apiUrl = $"{App.API_HOST}stokopname-result/detail.php?id={DetailId}";
+            // Step 1: Hit stokopname-result/list.php?search={TransNumber}
+            string searchUrl = $"{App.API_HOST}stokopname-result/list.php?search={Uri.EscapeDataString(TransNumber)}";
+            var searchResponse = await client.GetAsync(searchUrl);
+            
+            if (!searchResponse.IsSuccessStatusCode)
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await DisplayAlert("HTTP Error", $"Gagal mengambil daftar hasil (Status {searchResponse.StatusCode}).", "OK");
+                });
+                return;
+            }
+
+            var searchContent = await searchResponse.Content.ReadAsStringAsync();
+            var searchResult = JsonConvert.DeserializeObject<StokOpnameResultListResponse>(searchContent);
+
+            if (searchResult?.status != "success" || searchResult.data == null || searchResult.data.Count == 0)
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await DisplayAlert("Tidak Ditemukan", "Belum ada Hasil Stok Opname untuk perintah ini.", "OK");
+                });
+                return;
+            }
+
+            // Ambil number dari hasil pertama (OPR.xxxxx)
+            string resultNumber = searchResult.data[0].number;
+
+            // Step 2: Hit stokopname-result/detail.php?number={resultNumber}
+            string apiUrl = $"{App.API_HOST}stokopname-result/detail.php?number={Uri.EscapeDataString(resultNumber)}";
             var response = await client.GetAsync(apiUrl);
             
             if (response.IsSuccessStatusCode)
@@ -108,6 +136,21 @@ public partial class DetailwithInsert : ContentPage
 }
 
 // Models
+public class StokOpnameResultListResponse
+{
+    public string status { get; set; }
+    public string message { get; set; }
+    public List<StokOpnameResultListItem> data { get; set; }
+}
+
+public class StokOpnameResultListItem
+{
+    public string number { get; set; }
+    public string transDate { get; set; }
+    public string description { get; set; }
+    public int id { get; set; }
+}
+
 public class StokOpnameDetailResponse
 {
     public string status { get; set; }
