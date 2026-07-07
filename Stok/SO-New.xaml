@@ -2,11 +2,51 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyPosAccurate2026.Stok.SO_New"
+            
              Title="SO_New">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <Grid RowDefinitions="*,Auto" Padding="15,0">
+
+        <StackLayout Grid.Row="0">
+
+            <Label Text="Tanggal Stock Opname" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
+            <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
+                
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Entry Placeholder="Pilih Tanggal" Keyboard="Date" x:Name="FormStartDate" HorizontalOptions="FillAndExpand"></Entry>
+                    <Grid WidthRequest="30" HeightRequest="30" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                        <!-- DatePicker transparan, mengambil klik dan men-trigger kalender -->
+                        <DatePicker x:Name="HiddenDatePicker" Opacity="0" DateSelected="HiddenDatePicker_DateSelected" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                        <Image Source="date100.png" HeightRequest="22" Opacity="0.5" InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Grid>
+                </StackLayout>
+
+            </Border>
+            
+            <Label Text="Penanggung Jawab" FontAttributes="Bold" TextColor="#444" Margin="0,15,0,5"></Label>
+            <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
+                
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Entry Placeholder="ex. Manager Audit Stok" x:Name="FormPersonCharged" HorizontalOptions="FillAndExpand"></Entry>
+                    <Image Source="manager50.png" HeightRequest="20" Opacity="0.5" HorizontalOptions="EndAndExpand"></Image>
+                </StackLayout>
+
+            </Border>
+            
+            <Label Text="Gudang" FontAttributes="Bold" TextColor="#444" Margin="0,15,0,5"></Label>
+            <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
+                
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Picker x:Name="FormwarehouseName" Title="Pilih Gudang"></Picker>
+                    <Image Source="chevron100.png" HeightRequest="20" Opacity="0.5" HorizontalOptions="EndAndExpand"></Image>
+                </StackLayout>
+
+            </Border>
+            
+            
+
+        </StackLayout>
+        
+    </Grid>
+    
 </ContentPage>
