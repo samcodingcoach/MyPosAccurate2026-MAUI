@@ -192,6 +192,11 @@ public partial class SO_List : ContentPage
         }
     }
 
+    private async void FABNew_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new SO_New());
+    }
+
     private async void FilterDate_DateSelected(object sender, DateChangedEventArgs e)
     {
         // Parameter date dalam format DD/MM/YYYY

@@ -94,5 +94,25 @@
                 <Label Text="Mohon Tunggu..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
             </VerticalStackLayout>
         </Grid>
+
+        <!-- Floating Action Button -->
+        <Border Grid.Row="1" 
+                HorizontalOptions="End" 
+                VerticalOptions="End" 
+                Margin="0,0,20,20" 
+                WidthRequest="60" 
+                HeightRequest="60" 
+                StrokeShape="RoundRectangle 30" 
+                BackgroundColor="DarkCyan" 
+                StrokeThickness="0"
+                ZIndex="998">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.3" Radius="10" Offset="0,5" />
+            </Border.Shadow>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FABNew_Tapped" />
+            </Border.GestureRecognizers>
+            <Image Source="newwhite100.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="Center" VerticalOptions="Center" />
+        </Border>
     </Grid>
 </ContentPage>
