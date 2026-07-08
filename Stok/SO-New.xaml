@@ -91,7 +91,7 @@
             <Button Text="BATAL" Grid.Column="0" FontAttributes="Bold" BackgroundColor="Transparent" 
                     BorderWidth="0.5"
                     BorderColor="LightGrey" TextColor="LightGrey" Clicked="TapGestureRecognizer_Tapped"></Button>
-            <Button Text="SIMPAN" Grid.Column="1" FontAttributes="Bold" BackgroundColor="DarkCyan"></Button>
+            <Button x:Name="BtnSimpan" Text="SIMPAN" Grid.Column="1" FontAttributes="Bold" BackgroundColor="DarkCyan" Clicked="BtnSimpan_Clicked"></Button>
         </Grid>
         </Grid>
     </Border>

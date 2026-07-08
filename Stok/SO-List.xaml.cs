@@ -199,8 +199,13 @@ public partial class SO_List : ContentPage
 
     private async void FABNew_Tapped(object sender, TappedEventArgs e)
     {
-       
-        await this.ShowPopupAsync(new SO_New(), new PopupOptions
+        var popup = new SO_New();
+        popup.OnSaved = async () =>
+        {
+            await LoadData(true);
+        };
+
+        await this.ShowPopupAsync(popup, new PopupOptions
         {
             Shape = new RoundRectangle
             {

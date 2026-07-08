@@ -6,6 +6,7 @@ namespace MyPosAccurate2026.Stok;
 
 public partial class SO_New : Popup
 {
+    public Action OnSaved { get; set; }
     private List<WarehouseItem> _warehouses = new List<WarehouseItem>();
     private List<string> _users = new List<string>();
     private List<string> _categories = new List<string>();
@@ -160,6 +161,96 @@ public partial class SO_New : Popup
     private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
     {
         await CloseAsync();
+    }
+
+    private async void BtnSimpan_Clicked(object sender, EventArgs e)
+    {
+        // Validasi
+        if (string.IsNullOrWhiteSpace(FormPersonCharged.Text))
+        {
+            await Application.Current.MainPage.DisplayAlertAsync("Validasi", "Penanggung Jawab harus diisi", "OK");
+            return;
+        }
+        if (FormwarehouseName.SelectedIndex < 0)
+        {
+            await Application.Current.MainPage.DisplayAlertAsync("Validasi", "Gudang harus dipilih", "OK");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(FormStartDate.Text))
+        {
+            await Application.Current.MainPage.DisplayAlertAsync("Validasi", "Tanggal mulai harus diisi", "OK");
+            return;
+        }
+        
+        BtnSimpan.IsEnabled = false;
+        BtnSimpan.Text = "MENYIMPAN...";
+
+        try 
+        {
+            var payload = new Dictionary<string, object>
+            {
+                { "personCharged", FormPersonCharged.Text },
+                { "warehouseName", _warehouses[FormwarehouseName.SelectedIndex].name },
+                { "startDate", FormStartDate.Text }
+            };
+
+            if (FormitemCategoryListName.SelectedIndex >= 0)
+            {
+                payload["itemCategoryListName"] = new List<string> { _categories[FormitemCategoryListName.SelectedIndex] };
+            }
+            
+            if (FormUserListAccount.SelectedIndex >= 0)
+            {
+                payload["userListAccount"] = new List<string> { _users[FormUserListAccount.SelectedIndex] };
+            }
+
+            if (!string.IsNullOrWhiteSpace(FormDescription.Text))
+            {
+                payload["description"] = FormDescription.Text;
+            }
+
+            string jsonPayload = JsonConvert.SerializeObject(payload);
+            
+            string cleanToken = Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cleanToken);
+
+            string apiUrl = $"{App.API_HOST}stokopname-order/save.php";
+            var content = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync(apiUrl, content);
+            var responseString = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = JsonConvert.DeserializeObject<dynamic>(responseString);
+                if (result?.status == "success")
+                {
+                    await Application.Current.MainPage.DisplayAlertAsync("Sukses", "Data perintah stok opname berhasil disimpan", "OK");
+                    OnSaved?.Invoke();
+                    await CloseAsync(); // Return nothing, trigger event instead
+                }
+                else
+                {
+                    string msg = result?.message != null ? result.message.ToString() : "Gagal menyimpan data";
+                    await Application.Current.MainPage.DisplayAlertAsync("Gagal", msg, "OK");
+                }
+            }
+            else
+            {
+                string errorBody = await response.Content.ReadAsStringAsync();
+                await Application.Current.MainPage.DisplayAlertAsync($"Error {(int)response.StatusCode}", errorBody, "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlertAsync("Error", $"Terjadi kesalahan: {ex.Message}", "OK");
+        }
+        finally
+        {
+            BtnSimpan.IsEnabled = true;
+            BtnSimpan.Text = "SIMPAN";
+        }
     }
 }
 
