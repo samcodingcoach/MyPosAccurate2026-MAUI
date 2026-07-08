@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyPosAccurate2026.Stok.SO_New"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             
              CanBeDismissedByTappingOutsideOfPopup="False" Padding="0">
 
-    <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 20" WidthRequest="290" HeightRequest="690" Padding="0">
+    <Border BackgroundColor="White" StrokeThickness="0" Stroke="Transparent" StrokeShape="RoundRectangle 20" WidthRequest="300" HeightRequest="650" Padding="10">
         <Grid RowDefinitions="Auto,*,Auto" RowSpacing="15">
 
         <Grid Grid.Row="0" RowDefinitions="Auto" VerticalOptions="Start" ColumnDefinitions="Auto,*" ColumnSpacing="10">
@@ -17,7 +18,7 @@
             </Image>
             <Label Text="Tambahkan Perintah Stok Opname" TranslationX="5" 
                    FontAttributes="Bold" VerticalTextAlignment="Center" TextColor="DarkCyan" 
-                   FontSize="20" Grid.Column="1"></Label>
+                   FontSize="16" Grid.Column="1"></Label>
         </Grid>
         <StackLayout Grid.Row="1">
 

@@ -1,10 +1,11 @@
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
+using Microsoft.Maui.Controls.Shapes;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Extensions;
 
 namespace MyPosAccurate2026.Stok;
 
@@ -198,7 +199,16 @@ public partial class SO_List : ContentPage
 
     private async void FABNew_Tapped(object sender, TappedEventArgs e)
     {
-        await this.ShowPopupAsync(new SO_New());
+       
+        await this.ShowPopupAsync(new SO_New(), new PopupOptions
+        {
+            Shape = new RoundRectangle
+            {
+                CornerRadius = new CornerRadius(10),
+                Stroke = Colors.Transparent,
+                StrokeThickness = 0
+            }
+        });
     }
 
     private async void FilterDate_DateSelected(object sender, DateChangedEventArgs e)
