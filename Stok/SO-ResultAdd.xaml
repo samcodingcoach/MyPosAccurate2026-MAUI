@@ -29,18 +29,54 @@
         </BoxView>
 
         <!--tanggal, number so dan keterangan-->
-        <StackLayout Grid.Row="2" Margin="10">
+        <StackLayout Grid.Row="2" Margin="15">
+            <Label Text="Tanggal Stock Opname" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
             <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
                 <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
                     <!-- DatePicker transparan, mengambil klik dan men-trigger kalender -->
-                    <Entry Placeholder="Pilih Tanggal" Grid.Column="0" Keyboard="Date" x:Name="FormStartDate" 
+                    <Entry Placeholder="Pilih Tanggal" Grid.Column="0" Keyboard="Date" x:Name="FormtransDate" 
                            ></Entry>
-                    <DatePicker x:Name="HiddenDatePicker" Grid.Column="1" IsVisible="False"  Opacity="0" 
+                    <DatePicker x:Name="HiddenDatePicker" Grid.Column="1" Opacity="0" 
                                 DateSelected="HiddenDatePicker_DateSelected" HorizontalOptions="Fill" VerticalOptions="Fill" />
-                    <Image Source="date100.png" Grid.Column="1" HeightRequest="22" Opacity="0.5" InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Image Source="date100.png" Grid.Column="1" TranslationX="2" HeightRequest="22" Opacity="0.5" InputTransparent="True" 
+                           HorizontalOptions="Center" VerticalOptions="Center" />
                 </Grid>
             </Border>
+
+            <Label Text="Perintah Opname" FontAttributes="Bold" TextColor="#444" Margin="0,10,0,5"></Label>
+            <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+
+                    <Picker x:Name="PickerorderNumber" Title="Pilih Nomor Perintah Opname"></Picker>
+                   
+                    <Image Source="search100.png" Grid.Column="1" HeightRequest="22" Opacity="0.5" InputTransparent="True" 
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <Button Text="LOAD BARANG" Margin="0,25,0,0" FontAttributes="Bold" BackgroundColor="DarkCyan"></Button>
         </StackLayout>
+
+        <Border Grid.Row="3"  StrokeShape="RoundRectangle 10"  Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White" Margin="15,0">
+            <Grid ColumnDefinitions="Auto,*,Auto" Padding="15,12" ColumnSpacing="13">
+
+                <Border Grid.Column="0" StrokeShape="RoundRectangle 10" Padding="0" StrokeThickness="0" HeightRequest="60" WidthRequest="60">
+                    <Image Source="pp100.jpg" Aspect="AspectFill" />
+                </Border>
+
+                <StackLayout Grid.Column="1" VerticalOptions="Center">
+                    <Label Text="Nama Barang Taruh Disini Agak Panjang Line Max 2 dan Tail Traunced" LineBreakMode="TailTruncation" FontAttributes="Bold" TextColor="#444" MaxLines="2"></Label>
+                    <Label Text="No. 00121031599" FontSize="Caption" TextColor="Grey" Margin="0,5,0,0"></Label>
+                </StackLayout>
+                
+                <StackLayout Grid.Column="2" VerticalOptions="Center">
+                    <Label Text="150" FontSize="32" TextColor="DarkCyan" FontAttributes="Bold"></Label>
+                    <Label Text="UNIT" FontSize="Caption" TextColor="DarkCyan" HorizontalTextAlignment="Center" ></Label>
+                </StackLayout>
+            </Grid>
+        </Border>
+
+       
     </Grid>
 
 </ContentPage>
