@@ -5,7 +5,7 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#f8fafa">
 
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
+    <Grid RowDefinitions="Auto,Auto,Auto,*">
         <!--navigation-->
 
         <Grid Grid.Row="0" Padding="20" RowDefinitions="Auto" VerticalOptions="Start" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
@@ -54,29 +54,42 @@
                 </Grid>
             </Border>
 
-            <Button Text="LOAD BARANG" Margin="0,25,0,0" FontAttributes="Bold" BackgroundColor="DarkCyan"></Button>
+            <Button Text="LOAD BARANG" Margin="0,25,0,0" FontAttributes="Bold" BackgroundColor="DarkCyan" Clicked="BtnLoad_Clicked"></Button>
         </StackLayout>
 
         <!--muat data collection view-->
-        <Border Grid.Row="3"  StrokeShape="RoundRectangle 10"  Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White" Margin="15,0">
-            <Grid ColumnDefinitions="Auto,*,Auto" Padding="15,12" ColumnSpacing="13">
+        <CollectionView x:Name="CV_Barang" Grid.Row="3" Margin="15,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border StrokeShape="RoundRectangle 10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White" Margin="0,0,0,10">
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="15,12" ColumnSpacing="13">
 
-                <Border Grid.Column="0" StrokeShape="RoundRectangle 10" Padding="0" StrokeThickness="0" HeightRequest="60" WidthRequest="60">
-                    <Image Source="pp100.jpg" Aspect="AspectFill" />
-                </Border>
+                            <Border Grid.Column="0" StrokeShape="RoundRectangle 10" Padding="0" StrokeThickness="0" HeightRequest="60" WidthRequest="60">
+                                <Image Source="{Binding DisplayImage}" Aspect="AspectFill" />
+                            </Border>
 
-                <StackLayout Grid.Column="1" VerticalOptions="Center">
-                    <Label Text="Nama Barang Taruh Disini Agak Panjang Line Max 2 dan Tail Traunced" LineBreakMode="TailTruncation" FontAttributes="Bold" TextColor="#444" MaxLines="2"></Label>
-                    <Label Text="No. 00121031599" FontSize="Caption" TextColor="Grey" Margin="0,5,0,0"></Label>
-                </StackLayout>
-                
-                <StackLayout Grid.Column="2" VerticalOptions="Center">
-                    <Label Text="150" FontSize="32" TextColor="DarkCyan" FontAttributes="Bold"></Label>
-                    <Label Text="UNIT" FontSize="Caption" TextColor="DarkCyan" HorizontalTextAlignment="Center" ></Label>
-                </StackLayout>
-            </Grid>
-        </Border>
+                            <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="{Binding item.name}" LineBreakMode="TailTruncation" FontAttributes="Bold" TextColor="#444" MaxLines="2"></Label>
+                                <Label Text="{Binding item.no, StringFormat='No. {0}'}" FontSize="Caption" TextColor="Grey" Margin="0,5,0,0"></Label>
+                            </StackLayout>
+                            
+                            <StackLayout Grid.Column="2" VerticalOptions="Center">
+                                <Label Text="{Binding quantity}" FontSize="32" TextColor="DarkCyan" FontAttributes="Bold" HorizontalTextAlignment="Center"></Label>
+                                <Label Text="{Binding itemUnit.name}" FontSize="Caption" TextColor="DarkCyan" HorizontalTextAlignment="Center"></Label>
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
+        <!-- Overlay Loading -->
+        <Grid x:Name="OverlayLoading" Grid.Row="0" Grid.RowSpan="4" BackgroundColor="#80000000" IsVisible="False" ZIndex="999">
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding Source={x:Reference OverlayLoading}, Path=IsVisible}" Color="White" WidthRequest="50" HeightRequest="50" />
+                <Label Text="Mohon Tunggu..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
        
     </Grid>
 
