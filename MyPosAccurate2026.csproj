@@ -195,6 +195,9 @@
 	  <MauiXaml Update="Stok\SO-New.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Stok\SO-ResultAdd.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
