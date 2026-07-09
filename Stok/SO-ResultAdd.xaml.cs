@@ -133,6 +133,10 @@ public partial class SO_ResultAdd : ContentPage
 
         else
         {
+            //Kosongkan data collection view dan reset form
+            FormCari.IsVisible = true;
+            BtnLoad.Text = "LOAD BARANG";
+            CV_Barang.ItemsSource = null;
 
         }
     }
