@@ -5,7 +5,7 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#f8fafa">
 
-    <Grid RowDefinitions="Auto,Auto,Auto,*">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
         <!--navigation-->
 
         <Grid Grid.Row="0" Padding="20" RowDefinitions="Auto" VerticalOptions="Start" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
@@ -29,7 +29,7 @@
         </BoxView>
 
         <!--tanggal, number so dan keterangan-->
-        <StackLayout Grid.Row="2" Margin="15">
+        <StackLayout Grid.Row="2" Margin="15" x:Name="FormCari" IsVisible="True">
             <Label Text="Tanggal Stock Opname" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
             <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
                 <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
@@ -54,11 +54,13 @@
                 </Grid>
             </Border>
 
-            <Button Text="LOAD BARANG" Margin="0,25,0,0" FontAttributes="Bold" BackgroundColor="DarkCyan" Clicked="BtnLoad_Clicked"></Button>
+           
         </StackLayout>
 
+        <Button Text="LOAD BARANG" x:Name="BtnLoad" Grid.Row="3"  Margin="15,5,15,0" FontAttributes="Bold" BackgroundColor="DarkCyan" Clicked="BtnLoad_Clicked"></Button>
+
         <!--muat data collection view-->
-        <CollectionView x:Name="CV_Barang" Grid.Row="3" Margin="15,0">
+        <CollectionView x:Name="CV_Barang" Grid.Row="4" Margin="15,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border StrokeShape="RoundRectangle 10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White" Margin="0,0,0,10">

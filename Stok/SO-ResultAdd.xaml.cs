@@ -59,69 +59,81 @@ public partial class SO_ResultAdd : ContentPage
 
     private async void BtnLoad_Clicked(object sender, EventArgs e)
     {
-        if (PickerorderNumber.SelectedIndex < 0)
+        if(BtnLoad.Text == "LOAD BARANG")
         {
-            await DisplayAlert("Validasi", "Pilih Perintah Opname terlebih dahulu", "OK");
-            return;
-        }
-
-        string orderNumber = (string)PickerorderNumber.SelectedItem;
-
-        MainThread.BeginInvokeOnMainThread(() => OverlayLoading.IsVisible = true);
-        var delayTask = Task.Delay(3000);
-
-        try
-        {
-            string cleanToken = Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
-            using var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cleanToken);
-
-            string apiUrl = $"{App.API_HOST}stokopname-order/detail.php?number={Uri.EscapeDataString(orderNumber)}";
-            var response = await client.GetAsync(apiUrl);
-            
-            if (response.IsSuccessStatusCode)
+            if (PickerorderNumber.SelectedIndex < 0)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<SODetailResponse>(content);
-                
-                if (result?.status == "success" && result.data?.detailItem != null)
+                await DisplayAlertAsync("Validasi", "Pilih Perintah Opname terlebih dahulu", "OK");
+                return;
+            }
+
+            string orderNumber = (string)PickerorderNumber.SelectedItem;
+
+            MainThread.BeginInvokeOnMainThread(() => OverlayLoading.IsVisible = true);
+            var delayTask = Task.Delay(3000);
+
+            try
+            {
+                string cleanToken = Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cleanToken);
+
+                string apiUrl = $"{App.API_HOST}stokopname-order/detail.php?number={Uri.EscapeDataString(orderNumber)}";
+                var response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    MainThread.BeginInvokeOnMainThread(() =>
+                    var content = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<SODetailResponse>(content);
+
+                    if (result?.status == "success" && result.data?.detailItem != null)
                     {
-                        CV_Barang.ItemsSource = result.data.detailItem;
-                    });
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            CV_Barang.ItemsSource = result.data.detailItem;
+                        });
+                        FormCari.IsVisible = false;
+                        BtnLoad.Text = "Pencarian Lain";
+
+
+                    }
+                    else
+                    {
+                        MainThread.BeginInvokeOnMainThread(async () =>
+                        {
+                            await DisplayAlertAsync("Gagal", result?.message ?? "Gagal memuat data barang", "OK");
+                        });
+                    }
                 }
                 else
                 {
+                    string err = await response.Content.ReadAsStringAsync();
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await DisplayAlert("Gagal", result?.message ?? "Gagal memuat data barang", "OK");
+                        await DisplayAlertAsync($"Error {(int)response.StatusCode}", err, "OK");
                     });
                 }
             }
-            else
+            catch (Exception ex)
             {
-                string err = await response.Content.ReadAsStringAsync();
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await DisplayAlert($"Error {(int)response.StatusCode}", err, "OK");
+                    await DisplayAlertAsync("Error", $"Terjadi kesalahan: {ex.Message}", "OK");
+                });
+            }
+            finally
+            {
+                await delayTask;
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    OverlayLoading.IsVisible = false;
                 });
             }
         }
-        catch (Exception ex)
+
+        else
         {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await DisplayAlert("Error", $"Terjadi kesalahan: {ex.Message}", "OK");
-            });
-        }
-        finally
-        {
-            await delayTask;
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                OverlayLoading.IsVisible = false;
-            });
+
         }
     }
 }
