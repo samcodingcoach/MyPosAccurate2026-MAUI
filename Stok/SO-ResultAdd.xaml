@@ -57,6 +57,7 @@
             <Button Text="LOAD BARANG" Margin="0,25,0,0" FontAttributes="Bold" BackgroundColor="DarkCyan"></Button>
         </StackLayout>
 
+        <!--muat data collection view-->
         <Border Grid.Row="3"  StrokeShape="RoundRectangle 10"  Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White" Margin="15,0">
             <Grid ColumnDefinitions="Auto,*,Auto" Padding="15,12" ColumnSpacing="13">
 
