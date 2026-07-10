@@ -33,12 +33,12 @@
             </Border.Shadow>
 
             <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
-                <Image Source="pp100.jpg" HeightRequest="60" Grid.Column="0" VerticalOptions="Start"></Image>
+                <Image Source="pp100.jpg" HeightRequest="60" Grid.Column="0" VerticalOptions="Start" x:Name="itemImage"></Image>
                 <StackLayout Grid.Column="1" Spacing="2">
-                    <Label Text="NAMA BARANG YANG DI CATAT STOK OPNAMENYA GUYS" TextColor="#444"
+                    <Label Text="NAMA BARANG YANG DI CATAT STOK OPNAMENYA GUYS" TextColor="#444" x:Name="itemNamaBarang"
                            FontAttributes="Bold" MaxLines="2" LineBreakMode="TailTruncation"
                            TextTransform="Uppercase"></Label>
-                    <Label Text="No. 12345567890" TextColor="Grey" FontSize="Caption"></Label>
+                    <Label Text="No. 12345567890" TextColor="Grey" FontSize="Caption" x:Name="itemNo"></Label>
 
                     <Border Padding="15,0" Margin="0,5,0,0" StrokeShape="RoundRectangle 2" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
                         <Grid ColumnDefinitions="Auto,*,Auto">
@@ -84,8 +84,8 @@
                
 
                 <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*" ColumnSpacing="10">
-                    <Button Text="INPUT NO.SERIAL" Grid.Column="0" x:Name="BtnViewSerial" Clicked="BtnViewSerial_Clicked"  TextColor="DarkCyan" FontAttributes="Bold"  BackgroundColor="Transparent" BorderColor="DarkCyan" BorderWidth="0.5"></Button>
-                    <Button Text="SIMPAN OPNAME" Grid.Column="1" x:Name="BtnSimpan" Clicked="BtnSimpan_Clicked"  FontAttributes="Bold"  BackgroundColor="DarkCyan" BorderWidth="0.5"></Button>
+                    <Button Text="INPUT NO.SERIAL" IsEnabled="False" Grid.Column="0" x:Name="BtnViewSerial" Clicked="BtnViewSerial_Clicked"  TextColor="DarkCyan" FontAttributes="Bold"  BackgroundColor="Transparent" BorderColor="DarkCyan" BorderWidth="0.5"></Button>
+                    <Button Text="SIMPAN OPNAME" IsEnabled="False" Grid.Column="1" x:Name="BtnSimpan" Clicked="BtnSimpan_Clicked"  FontAttributes="Bold"  BackgroundColor="DarkCyan" BorderWidth="0.5"></Button>
                 </Grid>
 
                 
