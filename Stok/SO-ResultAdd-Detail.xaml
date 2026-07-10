@@ -3,9 +3,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyPosAccurate2026.Stok.SO_ResultAdd_Detail"
              Title="SO_ResultAdd_Detail">
-    <StackLayout>
+    <Grid RowDefinitions="*,Auto" RowSpacing="0" ColumnDefinitions="*" ColumnSpacing="10" Padding="0">
+
+        <!--scan area : -ikutin desain SCANQR.xaml -->
+      
         
-        
-       
-    </StackLayout>
+        <!--input data-->
+
+        <Border Grid.Row="1" Padding="20" StrokeShape="RoundRectangle 20,20,0,0"  Stroke="Transparent" 
+                StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="5" Offset="0,-1" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                <Image Source="pp100.jpg" HeightRequest="60" Grid.Column="0" VerticalOptions="Start"></Image>
+                <StackLayout Grid.Column="1" Spacing="2">
+                    <Label Text="NAMA BARANG YANG DI CATAT STOK OPNAMENYA GUYS" TextColor="#444"
+                           FontAttributes="Bold" MaxLines="2" LineBreakMode="TailTruncation"
+                           TextTransform="Uppercase"></Label>
+                    <Label Text="No. 12345567890" TextColor="Grey" FontSize="Caption"></Label>
+
+                    <Border Padding="15,0" Margin="0,5,0,0" StrokeShape="RoundRectangle 2" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="WhiteSmoke" >
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <Label Text="Kuantitas Pemeriksaan" FontAttributes="Bold" Grid.Column="0" 
+                                   VerticalTextAlignment="Center" TextColor="Grey"></Label>
+
+                            <Entry Text="0" TextColor="Red" FontSize="28" HorizontalTextAlignment="End" Keyboard="Numeric" Grid.Column="1"></Entry>
+
+                            <Label Text="UNIT" Grid.Column="2" VerticalTextAlignment="Center" FontAttributes="Bold" Opacity="0.2"></Label>
+
+                        </Grid>
+                    </Border>
+
+                </StackLayout>
+
+               
+
+                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Button Text="INPUT NO.SERIAL" Grid.Column="0"  TextColor="DarkCyan" FontAttributes="Bold"  BackgroundColor="Transparent" BorderColor="DarkCyan" BorderWidth="0.5"></Button>
+                    <Button Text="SIMPAN OPNAME" Grid.Column="1"  FontAttributes="Bold"  BackgroundColor="DarkCyan" BorderWidth="0.5"></Button>
+                </Grid>
+
+                
+
+               
+                
+            </Grid>
+            
+            
+        </Border>
+
+    </Grid>
 </ContentPage>
