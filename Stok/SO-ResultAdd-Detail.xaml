@@ -36,7 +36,7 @@
                 <Shadow Brush="#000000" Opacity="0.10" Radius="5" Offset="0,-1" />
             </Border.Shadow>
 
-            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*,Auto" ColumnSpacing="10" RowSpacing="10">
                 <Image Source="pp100.jpg" HeightRequest="60" Grid.Column="0" VerticalOptions="Start" x:Name="itemImage"></Image>
                 <StackLayout Grid.Column="1" Spacing="2">
                     <Label Text="NAMA BARANG YANG DI CATAT STOK OPNAMENYA GUYS" TextColor="#444" x:Name="itemNamaBarang"
@@ -48,20 +48,16 @@
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <Label Text="Kuantitas Pemeriksaan" FontAttributes="Bold" Grid.Column="0" 
                                    VerticalTextAlignment="Center" TextColor="Grey"></Label>
-
-                            
                             <Entry Text="0" TextColor="Red" FontSize="28" HorizontalTextAlignment="End" Keyboard="Numeric" Grid.Column="1"></Entry>
-
                             <Label Text="UNIT" Grid.Column="2" VerticalTextAlignment="Center" FontAttributes="Bold" Opacity="0.2"></Label>
-
                         </Grid>
                     </Border>
-
                 </StackLayout>
 
                 <!--serial input jika ada -->
                 <Grid x:Name="ViewSerialInput" IsVisible="False"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  
-                      ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10">
+                      ColumnDefinitions="*,Auto" RowDefinitions="Auto,*" ColumnSpacing="10">
+                      
                     <Border Padding="15,0" Grid.Column="0" StrokeShape="RoundRectangle 5" Stroke="LightGrey" StrokeThickness="0.5" BackgroundColor="Transparent" >
                         <Entry Placeholder="Nomor Serial" PlaceholderColor="LightGrey"></Entry>
                     </Border>
@@ -72,35 +68,34 @@
                     </Border>
                     
                     <!--Serial Data-->
-                    <Grid Grid.Row="1" Margin="0,15,0,0" ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10" Grid.Column="0" 
-                          RowDefinitions="Auto,Auto" RowSpacing="10"
-                          Grid.ColumnSpan="2">
-                        <!--No, Serial QTY Action Delete-->
-                        <Label Text="1" Grid.Column="0" VerticalTextAlignment="Center"></Label>
-                        <Label Text="SERIAL1234567890" Grid.Column="1" VerticalTextAlignment="Center"></Label>
-                        <Label Text="1 UNIT" Grid.Column="2" VerticalTextAlignment="Center"></Label>
-                        <Image Source="nonactive1.png" HeightRequest="20" Grid.Column="3"></Image>
+                    <CollectionView x:Name="CV_Serial" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10" RowDefinitions="Auto,Auto" RowSpacing="10" Margin="0,0,0,10">
+                                    <!-- Bullet or Number -->
+                                    <Label Text="•" Grid.Column="0" VerticalTextAlignment="Center" TextColor="Grey" FontAttributes="Bold"></Label>
+                                    
+                                    <Label Text="{Binding serialNumber.number}" Grid.Column="1" VerticalTextAlignment="Center"></Label>
+                                    <Label Text="{Binding quantity, StringFormat='{0} UNIT'}" Grid.Column="2" VerticalTextAlignment="Center"></Label>
+                                    
+                                    <Image Source="nonactive1.png" HeightRequest="20" Grid.Column="3">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="BtnDeleteSerial_Tapped" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
 
-                        <Line X2="360" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Stroke="#CFCFCF" StrokeThickness="1.4" StrokeDashArray="3,3" HorizontalOptions="Fill" />
-                    </Grid>
+                                    <Line X2="360" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Stroke="#CFCFCF" StrokeThickness="1.4" StrokeDashArray="3,3" HorizontalOptions="Fill" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </Grid>
-
-               
 
                 <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*" ColumnSpacing="10">
                     <Button Text="INPUT NO.SERIAL" IsEnabled="False" Grid.Column="0" x:Name="BtnViewSerial" Clicked="BtnViewSerial_Clicked"  TextColor="DarkCyan" FontAttributes="Bold"  BackgroundColor="Transparent" BorderColor="DarkCyan" BorderWidth="0.5"></Button>
                     <Button Text="SIMPAN OPNAME" IsEnabled="False" Grid.Column="1" x:Name="BtnSimpan" Clicked="BtnSimpan_Clicked"  FontAttributes="Bold"  BackgroundColor="DarkCyan" BorderWidth="0.5"></Button>
                 </Grid>
-
-                
-
-               
-                
             </Grid>
-            
-            
-            
         </Border>
-
     </Grid>
 </ContentPage>

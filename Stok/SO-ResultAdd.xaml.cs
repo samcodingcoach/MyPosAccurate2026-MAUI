@@ -199,8 +199,8 @@ public partial class SO_ResultAdd : ContentPage
                 if (!answer) return;
             }
             
-            // Pindah ke halaman detail dengan membawa name dan no
-            await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem.item.name, selectedItem.item.no));
+            // Pindah ke halaman detail dengan membawa seluruh objek detail
+            await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem));
         }
     }
 }

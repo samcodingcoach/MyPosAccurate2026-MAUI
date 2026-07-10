@@ -1,26 +1,47 @@
 using ZXing.Net.Maui;
+using System.Collections.ObjectModel;
 
 namespace MyPosAccurate2026.Stok;
 
 public partial class SO_ResultAdd_Detail : ContentPage
 {
     private string _expectedItemNo = "";
+    private ObservableCollection<SOSerialNumberDetail> _serialList;
 
 	public SO_ResultAdd_Detail()
 	{
 		InitializeComponent();
 	}
 
-    public SO_ResultAdd_Detail(string pItemName, string pItemNo)
+    public SO_ResultAdd_Detail(SODetailItem pItem)
     {
         InitializeComponent();
         
-        _expectedItemNo = pItemNo;
-        itemNamaBarang.Text = pItemName;
-        itemNo.Text = $"No. {pItemNo}";
+        _expectedItemNo = pItem.item.no;
+        itemNamaBarang.Text = pItem.item.name;
+        itemNo.Text = $"No. {pItem.item.no}";
         
         string baseHost = App.API_HOST.Replace("api/", "");
-        itemImage.Source = $"{baseHost}images/{pItemNo}.jpg";
+        itemImage.Source = $"{baseHost}images/{pItem.item.no}.jpg";
+
+        if (pItem.HasSerialNumber)
+        {
+            ViewSerialInput.IsVisible = true;
+            _serialList = new ObservableCollection<SOSerialNumberDetail>(pItem.detailSerialNumber);
+            CV_Serial.ItemsSource = _serialList;
+        }
+        else
+        {
+            ViewSerialInput.IsVisible = false;
+        }
+    }
+
+    private void BtnDeleteSerial_Tapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Image image && image.BindingContext is SOSerialNumberDetail selectedSerial)
+        {
+            _serialList.Remove(selectedSerial);
+        }
     }
 
     private void CameraScanner_BarcodesDetected(object sender, BarcodeDetectionEventArgs e)
