@@ -76,7 +76,15 @@
                             </StackLayout>
                             
                             <StackLayout Grid.Column="2" VerticalOptions="Center">
-                                <Label Text="{Binding quantity}" FontSize="24" TextColor="DarkCyan" FontAttributes="Bold" HorizontalTextAlignment="Center"></Label>
+                                <Label FontSize="32" FontAttributes="Bold" HorizontalTextAlignment="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding quantityResult, TargetNullValue='0'}" TextColor="DeepPink" />
+                                            <Span Text="/" TextColor="DarkCyan" />
+                                            <Span Text="{Binding quantity}" TextColor="DarkCyan" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
                                 <Label Text="{Binding itemUnit.name}" FontSize="Caption" TextColor="DarkCyan" HorizontalTextAlignment="Center"></Label>
                             </StackLayout>
                         </Grid>
