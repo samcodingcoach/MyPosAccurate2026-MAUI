@@ -32,10 +32,22 @@ public partial class SO_ResultAdd_Detail : ContentPage
             
             MainThread.BeginInvokeOnMainThread(() =>
             {
+                LblScanStatus.IsVisible = true;
                 if (scannedResult == _expectedItemNo)
                 {
+                    LblScanStatus.Text = "COCOK / SESUAI";
+                    LblScanStatus.BackgroundColor = Colors.DarkGreen;
+                    
                     BtnViewSerial.IsEnabled = true;
                     BtnSimpan.IsEnabled = true;
+                }
+                else
+                {
+                    LblScanStatus.Text = $"TIDAK SESUAI ({scannedResult})";
+                    LblScanStatus.BackgroundColor = Colors.DarkRed;
+                    
+                    BtnViewSerial.IsEnabled = false;
+                    BtnSimpan.IsEnabled = false;
                 }
             });
         }
