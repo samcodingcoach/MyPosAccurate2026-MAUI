@@ -184,6 +184,18 @@ public partial class SO_ResultAdd : ContentPage
             }
         }
     }
+
+    private async void CV_Barang_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is SODetailItem selectedItem)
+        {
+            // Reset selection
+            ((CollectionView)sender).SelectedItem = null;
+            
+            // Pindah ke halaman detail dengan membawa name dan no
+            await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem.item.name, selectedItem.item.no));
+        }
+    }
 }
 
 // ===== DTOs =====
