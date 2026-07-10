@@ -224,6 +224,19 @@ public class SODetailItem
     public double quantity { get; set; }
     public ItemUnit itemUnit { get; set; }
     public double? quantityResult { get; set; }
+    public List<SOSerialNumberDetail> detailSerialNumber { get; set; }
+
+    public bool HasSerialNumber => detailSerialNumber != null && detailSerialNumber.Count > 0;
+
+    public string SerialNumberDisplay
+    {
+        get
+        {
+            if (detailSerialNumber == null || detailSerialNumber.Count == 0) return "";
+            double totalQty = detailSerialNumber.Sum(x => x.quantity);
+            return $"SERIAL NUMBER ({totalQty})";
+        }
+    }
 
     public string DisplayImage
     {
@@ -245,4 +258,15 @@ public class ItemInfo
 public class ItemUnit
 {
     public string name { get; set; }
+}
+
+public class SOSerialNumberDetail
+{
+    public double quantity { get; set; }
+    public SOSerialNumberInfo serialNumber { get; set; }
+}
+
+public class SOSerialNumberInfo
+{
+    public string number { get; set; }
 }

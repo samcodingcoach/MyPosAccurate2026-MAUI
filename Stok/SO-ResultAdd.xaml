@@ -73,6 +73,10 @@
                             <StackLayout Grid.Column="1" VerticalOptions="Center">
                                 <Label Text="{Binding item.name}" LineBreakMode="TailTruncation" FontAttributes="Bold" TextColor="#444" MaxLines="2"></Label>
                                 <Label Text="{Binding item.no, StringFormat='No. {0}'}" FontSize="Caption" TextColor="Grey" Margin="0,5,0,0"></Label>
+                                
+                                <Border IsVisible="{Binding HasSerialNumber}" StrokeShape="RoundRectangle 5" StrokeThickness="0" BackgroundColor="#FFE4E1" Padding="6,3" HorizontalOptions="Start" Margin="0,5,0,0">
+                                    <Label Text="{Binding SerialNumberDisplay}" FontSize="Micro" TextColor="DeepPink" FontAttributes="Bold" />
+                                </Border>
                             </StackLayout>
                             
                             <StackLayout Grid.Column="2" VerticalOptions="Center">
