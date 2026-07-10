@@ -4,7 +4,7 @@
              x:Class="MyPosAccurate2026.Stok.SO_ResultAdd_Detail" NavigationPage.HasNavigationBar="False"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
              Title="SO_ResultAdd_Detail">
-    <Grid RowDefinitions="*,Auto" RowSpacing="0" ColumnDefinitions="*" ColumnSpacing="10" Padding="0">
+    <Grid RowDefinitions="4*,6*" RowSpacing="0" ColumnDefinitions="*" ColumnSpacing="10" Padding="0">
 
         <!--scan area : -ikutin desain SCANQR.xaml -->
         <Grid Grid.Row="0">
