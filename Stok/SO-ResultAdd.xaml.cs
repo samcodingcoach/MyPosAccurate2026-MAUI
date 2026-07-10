@@ -95,7 +95,7 @@ public partial class SO_ResultAdd : ContentPage
                     {
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
-                            _allLoadedDetails = result.data.detailItem;
+                            _allLoadedDetails = result.data.detailItem.OrderByDescending(x => x.quantity).ToList();
                             _detailList.Clear();
                             foreach (var item in _allLoadedDetails)
                                 _detailList.Add(item);
@@ -191,6 +191,13 @@ public partial class SO_ResultAdd : ContentPage
         {
             // Reset selection
             ((CollectionView)sender).SelectedItem = null;
+            
+            // Cek jika quantity adalah 0
+            if (selectedItem.quantity == 0)
+            {
+                bool answer = await DisplayAlert("Konfirmasi", "Apakah anda ingin transaksi opname barang nol (kosong)?", "Ya", "Tidak");
+                if (!answer) return;
+            }
             
             // Pindah ke halaman detail dengan membawa name dan no
             await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem.item.name, selectedItem.item.no));
