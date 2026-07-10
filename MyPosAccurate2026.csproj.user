@@ -6,7 +6,7 @@
     <ActiveDebugProfile>Xiaomi 22071219CG (Android 14.0 - API 34)</ActiveDebugProfile>
     <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
     <DefaultDevice>pixel_6_-_api_33_0</DefaultDevice>
-    <SelectedDevice>pixel_7_-_api_31_0</SelectedDevice>
+    <SelectedDevice>pixel_6_-_api_33_0</SelectedDevice>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

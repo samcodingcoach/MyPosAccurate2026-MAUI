@@ -69,7 +69,7 @@ public partial class SO_ResultAdd : ContentPage
         {
             if (PickerorderNumber.SelectedIndex < 0)
             {
-                await DisplayAlert("Validasi", "Pilih Perintah Opname terlebih dahulu", "OK");
+                await DisplayAlertAsync("Validasi", "Pilih Perintah Opname terlebih dahulu", "OK");
                 return;
             }
 
@@ -107,7 +107,7 @@ public partial class SO_ResultAdd : ContentPage
                     {
                         MainThread.BeginInvokeOnMainThread(async () =>
                         {
-                            await DisplayAlert("Gagal", result?.message ?? "Gagal memuat data barang", "OK");
+                            await DisplayAlertAsync("Gagal", result?.message ?? "Gagal memuat data barang", "OK");
                         });
                     }
                 }
@@ -116,7 +116,7 @@ public partial class SO_ResultAdd : ContentPage
                     string err = await response.Content.ReadAsStringAsync();
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await DisplayAlert($"Error {(int)response.StatusCode}", err, "OK");
+                        await DisplayAlertAsync($"Error {(int)response.StatusCode}", err, "OK");
                     });
                 }
             }
@@ -124,7 +124,7 @@ public partial class SO_ResultAdd : ContentPage
             {
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await DisplayAlert("Error", $"Terjadi kesalahan: {ex.Message}", "OK");
+                    await DisplayAlertAsync("Error", $"Terjadi kesalahan: {ex.Message}", "OK");
                 });
             }
             finally
@@ -151,7 +151,7 @@ public partial class SO_ResultAdd : ContentPage
     {
         if (_allLoadedDetails == null || _allLoadedDetails.Count == 0)
         {
-            await DisplayAlert("Peringatan", "Silakan load barang terlebih dahulu sebelum mencari.", "OK");
+            await DisplayAlertAsync("Peringatan", "Silakan load barang terlebih dahulu sebelum mencari.", "OK");
             return;
         }
 
@@ -179,7 +179,7 @@ public partial class SO_ResultAdd : ContentPage
 
                 if (foundItems.Count == 0)
                 {
-                    await DisplayAlert("Info", "Barang tidak ditemukan pada list. Pastikan nomor item benar.", "OK");
+                    await DisplayAlertAsync("Info", "Barang tidak ditemukan pada list. Pastikan nomor item benar.", "OK");
                 }
             }
         }
@@ -195,7 +195,7 @@ public partial class SO_ResultAdd : ContentPage
             // Cek jika quantity adalah 0
             if (selectedItem.quantity == 0)
             {
-                bool answer = await DisplayAlert("Konfirmasi", "Apakah anda ingin transaksi opname barang nol (kosong)?", "Ya", "Tidak");
+                bool answer = await DisplayAlertAsync("Konfirmasi", "Apakah anda ingin transaksi opname barang nol (kosong)?", "Ya", "Tidak");
                 if (!answer) return;
             }
             

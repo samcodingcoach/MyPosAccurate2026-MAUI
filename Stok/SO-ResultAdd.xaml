@@ -76,7 +76,7 @@
                             </StackLayout>
                             
                             <StackLayout Grid.Column="2" VerticalOptions="Center">
-                                <Label Text="{Binding quantity}" FontSize="32" TextColor="DarkCyan" FontAttributes="Bold" HorizontalTextAlignment="Center"></Label>
+                                <Label Text="{Binding quantity}" FontSize="24" TextColor="DarkCyan" FontAttributes="Bold" HorizontalTextAlignment="Center"></Label>
                                 <Label Text="{Binding itemUnit.name}" FontSize="Caption" TextColor="DarkCyan" HorizontalTextAlignment="Center"></Label>
                             </StackLayout>
                         </Grid>
