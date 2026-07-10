@@ -1,14 +1,20 @@
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Collections.ObjectModel;
 
 namespace MyPosAccurate2026.Stok;
 
 public partial class SO_ResultAdd : ContentPage
 {
     private List<SOItem> _availableOrders = new List<SOItem>();
+    private ObservableCollection<SODetailItem> _detailList = new ObservableCollection<SODetailItem>();
+    private List<SODetailItem> _allLoadedDetails = new List<SODetailItem>();
+    private string _currentOrderNumber = "";
+
 	public SO_ResultAdd()
 	{
 		InitializeComponent();
+        CV_Barang.ItemsSource = _detailList;
 	}
 
     private async void HiddenDatePicker_DateSelected(object sender, DateChangedEventArgs e)
@@ -63,12 +69,11 @@ public partial class SO_ResultAdd : ContentPage
         {
             if (PickerorderNumber.SelectedIndex < 0)
             {
-                await DisplayAlertAsync("Validasi", "Pilih Perintah Opname terlebih dahulu", "OK");
+                await DisplayAlert("Validasi", "Pilih Perintah Opname terlebih dahulu", "OK");
                 return;
             }
 
-            string orderNumber = (string)PickerorderNumber.SelectedItem;
-
+            _currentOrderNumber = (string)PickerorderNumber.SelectedItem;
             MainThread.BeginInvokeOnMainThread(() => OverlayLoading.IsVisible = true);
             var delayTask = Task.Delay(3000);
 
@@ -78,7 +83,7 @@ public partial class SO_ResultAdd : ContentPage
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cleanToken);
 
-                string apiUrl = $"{App.API_HOST}stokopname-order/detail.php?number={Uri.EscapeDataString(orderNumber)}";
+                string apiUrl = $"{App.API_HOST}stokopname-order/detail.php?number={Uri.EscapeDataString(_currentOrderNumber)}";
                 var response = await client.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
@@ -90,18 +95,19 @@ public partial class SO_ResultAdd : ContentPage
                     {
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
-                            CV_Barang.ItemsSource = result.data.detailItem;
+                            _allLoadedDetails = result.data.detailItem;
+                            _detailList.Clear();
+                            foreach (var item in _allLoadedDetails)
+                                _detailList.Add(item);
                         });
                         FormCari.IsVisible = false;
                         BtnLoad.Text = "Pencarian Lain";
-
-
                     }
                     else
                     {
                         MainThread.BeginInvokeOnMainThread(async () =>
                         {
-                            await DisplayAlertAsync("Gagal", result?.message ?? "Gagal memuat data barang", "OK");
+                            await DisplayAlert("Gagal", result?.message ?? "Gagal memuat data barang", "OK");
                         });
                     }
                 }
@@ -110,7 +116,7 @@ public partial class SO_ResultAdd : ContentPage
                     string err = await response.Content.ReadAsStringAsync();
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await DisplayAlertAsync($"Error {(int)response.StatusCode}", err, "OK");
+                        await DisplayAlert($"Error {(int)response.StatusCode}", err, "OK");
                     });
                 }
             }
@@ -118,7 +124,7 @@ public partial class SO_ResultAdd : ContentPage
             {
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await DisplayAlertAsync("Error", $"Terjadi kesalahan: {ex.Message}", "OK");
+                    await DisplayAlert("Error", $"Terjadi kesalahan: {ex.Message}", "OK");
                 });
             }
             finally
@@ -136,8 +142,46 @@ public partial class SO_ResultAdd : ContentPage
             //Kosongkan data collection view dan reset form
             FormCari.IsVisible = true;
             BtnLoad.Text = "LOAD BARANG";
-            CV_Barang.ItemsSource = null;
+            _detailList.Clear();
+            _allLoadedDetails.Clear();
+        }
+    }
 
+    private async void BtnSearch_Tapped(object sender, TappedEventArgs e)
+    {
+        if (_allLoadedDetails == null || _allLoadedDetails.Count == 0)
+        {
+            await DisplayAlert("Peringatan", "Silakan load barang terlebih dahulu sebelum mencari.", "OK");
+            return;
+        }
+
+        string result = await DisplayPromptAsync("Cari Barang", "Masukkan No Item:", "Cari", "Reset/Batal", keyboard: Keyboard.Numeric);
+        
+        if (result != null)
+        {
+            string searchNo = result.Trim();
+            
+            _detailList.Clear();
+            if (string.IsNullOrEmpty(searchNo))
+            {
+                foreach (var item in _allLoadedDetails)
+                {
+                    _detailList.Add(item);
+                }
+            }
+            else
+            {
+                var foundItems = _allLoadedDetails.Where(x => x.item != null && x.item.no != null && x.item.no.Equals(searchNo, StringComparison.OrdinalIgnoreCase)).ToList();
+                foreach (var item in foundItems)
+                {
+                    _detailList.Add(item);
+                }
+
+                if (foundItems.Count == 0)
+                {
+                    await DisplayAlert("Info", "Barang tidak ditemukan pada list. Pastikan nomor item benar.", "OK");
+                }
+            }
         }
     }
 }
