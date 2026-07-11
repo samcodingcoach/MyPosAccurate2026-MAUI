@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" style="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Opname Result - Enterprise ERP</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#616363",
+                        "on-tertiary-container": "#f3fffe",
+                        "surface-tint": "#006a6a",
+                        "secondary-fixed": "#e2e2e2",
+                        "background": "#f8fafa",
+                        "tertiary-fixed-dim": "#b8cac9",
+                        "surface-dim": "#d8dada",
+                        "secondary": "#5d5f5f",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#677877",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#191c1d",
+                        "surface-container": "#eceeee",
+                        "primary-fixed-dim": "#6fd7d6",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eff1f1",
+                        "inverse-surface": "#2e3131",
+                        "on-surface": "#191c1d",
+                        "surface-bright": "#f8fafa",
+                        "tertiary": "#4f5f5f",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-container-low": "#f2f4f4",
+                        "on-primary-fixed": "#002020",
+                        "secondary-container": "#dfe0e0",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "inverse-primary": "#6fd7d6",
+                        "primary-fixed": "#8cf3f3",
+                        "outline": "#6d7979",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "tertiary-fixed": "#d4e6e5",
+                        "primary-container": "#008282",
+                        "surface": "#f8fafa",
+                        "on-tertiary-fixed-variant": "#3a4a49",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#bcc9c8",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e6e8e9",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "on-surface-variant": "#3d4949",
+                        "surface-container-highest": "#e1e3e3",
+                        "surface-variant": "#e1e3e3",
+                        "on-error-container": "#93000a",
+                        "primary": "#006767",
+                        "on-primary-container": "#f3fffe",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#0e1e1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "sm": "8px",
+                        "gutter-mobile": "12px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "margin-mobile": "16px",
+                        "base": "4px"
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-lg": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }],
+                        "title-lg": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0.15px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400" }],
+                        "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen">
+
+    <!-- Mock Background Content -->
+    <div class="fixed inset-0 z-0 overflow-hidden bg-surface-container">
+        <header
+            class="flex items-center justify-between px-margin-mobile h-16 w-full bg-surface border-b border-outline-variant shadow-sm">
+            <div class="flex items-center gap-sm">
+                <span class="material-symbols-outlined text-primary">menu</span>
+                <span class="font-headline-sm text-headline-sm font-bold text-primary">Enterprise ERP</span>
+            </div>
+            <div
+                class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+                <span class="material-symbols-outlined text-sm">person</span>
+            </div>
+        </header>
+        <main class="p-margin-mobile">
+            <div class="flex flex-col gap-md">
+                <div
+                    class="h-40 w-full bg-surface-container-high rounded-xl border border-outline-variant animate-pulse">
+                </div>
+                <div
+                    class="h-64 w-full bg-surface-container-high rounded-xl border border-outline-variant animate-pulse">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="modalOverlay"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-on-background/40 backdrop-blur-sm p-margin-mobile">
+
+        <!-- Modal Container -->
+        <div
+            class="bg-surface w-full max-w-lg max-h-[90vh] flex flex-col rounded-xl shadow-xl overflow-hidden border border-outline-variant">
+
+            <!-- Modal Header -->
+            <header
+                class="flex items-center justify-between px-md py-4 border-b border-outline-variant bg-surface-container-low">
+                <div class="flex items-center gap-sm">
+                    <button id="closeHeader"
+                        class="p-2 -ml-2 hover:bg-surface-container-high rounded-full transition-colors active:scale-95">
+                        <span class="material-symbols-outlined text-on-surface-variant">close</span>
+                    </button>
+                    <h1 class="font-title-lg text-title-lg text-on-surface">Hasil Stok Opname</h1>
+                </div>
+
+            </header>
+
+            <!-- Modal Content Scroll Area -->
+            <div class="flex-1 overflow-y-auto p-md space-y-lg">
+
+                <!-- Summary Section -->
+                <section class="space-y-md">
+                    <div class="p-md rounded-lg bg-surface-container-lowest border border-outline-variant">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p
+                                    class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+                                    NO PERIKSA</p>
+                                <p class="font-title-md text-title-md text-primary font-bold">OPO.00008</p>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <span
+                                    class="px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-lg text-label-lg border border-tertiary-fixed-dim">
+                                    Dalam Penghitungan
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-sm pt-4 border-t border-outline-variant">
+                            <div class="flex justify-between items-center">
+                                <span class="font-body-md text-body-md text-on-surface-variant">Total Rencana SO</span>
+                                <span class="font-title-md text-title-md text-on-surface font-semibold">3 items</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Transaction List Section -->
+                <section class="space-y-md">
+                    <div class="flex items-center justify-between">
+                        <h2 class="font-title-md text-title-md text-on-surface">Daftar Transaksi Hasil (OPR)</h2>
+
+                    </div>
+
+                    <!-- List Card -->
+                    <div
+                        class="group relative overflow-hidden bg-surface-container-low hover:bg-surface-container-high border border-outline-variant rounded-lg transition-all duration-200 cursor-pointer">
+                        <div class="p-md flex flex-col gap-sm">
+                            <div class="flex justify-between items-center">
+                                <span class="font-title-md text-title-md font-bold text-on-surface">OPR.00010</span>
+                                <span class="font-label-lg text-label-lg text-on-surface-variant">11/07/2026</span>
+                            </div>
+
+                            <div class="flex flex-col gap-base">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-body-md text-body-md text-on-surface-variant">Stocker</span>
+                                    <span class="font-body-md text-body-md text-on-surface">Samsu</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-body-md text-body-md text-on-surface-variant">Total
+                                        Pemeriksaan</span>
+                                    <span class="font-body-md text-body-md text-on-surface font-semibold">3 Items</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Active Hover State Accent -->
+                        <div
+                            class="absolute inset-y-0 left-0 w-1 bg-primary transform scale-y-0 group-hover:scale-y-100 transition-transform">
+                        </div>
+                    </div>
+                </section>
+
+
+
+            </div>
+
+            <!-- Modal Footer -->
+            <footer class="p-md border-t border-outline-variant bg-surface flex justify-end gap-sm">
+                <button id="closeFooter"
+                    class="w-full sm:w-auto px-6 py-3 font-title-md text-title-md text-on-primary bg-primary hover:bg-primary-container rounded-lg shadow-sm transition-all active:scale-[0.98]">EXPORT
+                    PDF</button>
+
+                <button id="closeFooter"
+                    class="w-full sm:w-auto px-6 py-3 font-title-md text-title-md text-on-primary bg-primary hover:bg-primary-container rounded-lg shadow-sm transition-all active:scale-[0.98]">
+                    SELESAI</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation (Filtered to show in mock background context) -->
+</body>
+
+</html>
