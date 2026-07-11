@@ -54,8 +54,17 @@
                 </Grid>
             </Border>
 
-           
+            <!--keterangan-->
+            <Label Text="Keterangan" FontAttributes="Bold" TextColor="#444" Margin="0,10,0,5"></Label>
+            <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
+
+                <Editor x:Name="SODescription" Placeholder="Opsional" HeightRequest="60"></Editor>
+            </Border>
+
+
         </StackLayout>
+        
+      
 
         <Button Text="LOAD BARANG" x:Name="BtnLoad" Grid.Row="3"  Margin="15,5,15,0" FontAttributes="Bold" BackgroundColor="DarkCyan" Clicked="BtnLoad_Clicked"></Button>
 
