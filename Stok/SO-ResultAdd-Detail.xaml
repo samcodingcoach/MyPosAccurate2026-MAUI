@@ -48,7 +48,7 @@
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <Label Text="Kuantitas Pemeriksaan" FontAttributes="Bold" Grid.Column="0" 
                                    VerticalTextAlignment="Center" TextColor="Grey"></Label>
-                            <Entry Text="0" TextColor="Red" FontSize="28" HorizontalTextAlignment="End" Keyboard="Numeric" Grid.Column="1"></Entry>
+                            <Entry x:Name="EntryQuantity" Text="0" TextColor="Red" FontSize="28" HorizontalTextAlignment="End" Keyboard="Numeric" Grid.Column="1"></Entry>
                             <Label Text="UNIT" Grid.Column="2" VerticalTextAlignment="Center" FontAttributes="Bold" Opacity="0.2"></Label>
                         </Grid>
                     </Border>

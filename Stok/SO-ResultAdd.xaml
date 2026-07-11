@@ -29,42 +29,47 @@
         </BoxView>
 
         <!--tanggal, number so dan keterangan-->
-        <StackLayout Grid.Row="2" Margin="15" x:Name="FormCari" IsVisible="True">
-            <Label Text="Tanggal Stock Opname" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
-            <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
-                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
-                    <!-- DatePicker transparan, mengambil klik dan men-trigger kalender -->
-                    <Entry Placeholder="Pilih Tanggal" Grid.Column="0" Keyboard="Date" x:Name="FormtransDate" 
-                           ></Entry>
-                    <DatePicker x:Name="HiddenDatePicker" Grid.Column="1" Opacity="0" 
-                                DateSelected="HiddenDatePicker_DateSelected" HorizontalOptions="Fill" VerticalOptions="Fill" />
-                    <Image Source="date100.png" Grid.Column="1" TranslationX="2" HeightRequest="22" Opacity="0.5" InputTransparent="True" 
-                           HorizontalOptions="Center" VerticalOptions="Center" />
-                </Grid>
-            </Border>
+        <Grid Grid.Row="2" Margin="15" RowDefinitions="Auto,Auto,Auto" x:Name="FormCari" IsVisible="True" ColumnDefinitions="*,*" ColumnSpacing="10">
 
-            <Label Text="Perintah Opname" FontAttributes="Bold" TextColor="#444" Margin="0,10,0,5"></Label>
-            <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
-                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+            <StackLayout Grid.Column="0">
+                <Label Text="Tanggal" FontAttributes="Bold" TextColor="#444" Margin="0,5"></Label>
+                <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <!-- DatePicker transparan, mengambil klik dan men-trigger kalender -->
+                        <Entry Placeholder="Pilih Tanggal" Grid.Column="0" Keyboard="Date" x:Name="FormtransDate"></Entry>
+                        <DatePicker x:Name="HiddenDatePicker" Grid.Column="1" Opacity="0" 
+                                    DateSelected="HiddenDatePicker_DateSelected" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                        <Image Source="date100.png" Grid.Column="1" TranslationX="2" HeightRequest="22" Opacity="0.5" InputTransparent="True" 
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </StackLayout>
 
-                    <Picker x:Name="PickerorderNumber" Title="Pilih Nomor Perintah Opname"></Picker>
-                   
-                    <Image Source="search100.png" Grid.Column="1" HeightRequest="22" Opacity="0.5" InputTransparent="True" 
-                           HorizontalOptions="Center" VerticalOptions="Center" />
-                </Grid>
-            </Border>
+            <StackLayout Grid.Column="1" TranslationY="-6">
+                <Label Text="Perintah Opname" FontAttributes="Bold" TextColor="#444" Margin="0,10,0,5"></Label>
+                <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
 
-            <!--keterangan-->
-            <Label Text="Keterangan" FontAttributes="Bold" TextColor="#444" Margin="0,10,0,5"></Label>
-            <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
+                        <Picker x:Name="PickerorderNumber" Title="Pilih Nomor"></Picker>
+                        <Image Source="search100.png" Grid.Column="1" HeightRequest="22" Opacity="0.5" InputTransparent="True" 
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </StackLayout>
 
-                <Editor x:Name="SODescription" Placeholder="Opsional" HeightRequest="60"></Editor>
-            </Border>
+            <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                <!--keterangan-->
+                <Label Text="Keterangan" FontAttributes="Bold" TextColor="#444" Margin="0,10,0,5"></Label>
+                <Border Padding="10,0" StrokeShape="RoundRectangle 10" Stroke="LightGrey" StrokeThickness="1" BackgroundColor="White">
+
+                    <Editor x:Name="SODescription" Placeholder="Opsional" HeightRequest="60"></Editor>
+                </Border>
+            </StackLayout>
+
+            <Label Text="Status: " x:Name="StatusNameLabel" Padding="8,4" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,5,0,0" TextColor="DarkCyan" FontSize="Caption" FontAttributes="Bold" Grid.Column="0" Grid.Row="2"></Label>
 
 
-        </StackLayout>
-        
-      
+        </Grid>
 
         <Button Text="LOAD BARANG" x:Name="BtnLoad" Grid.Row="3"  Margin="15,5,15,0" FontAttributes="Bold" BackgroundColor="DarkCyan" Clicked="BtnLoad_Clicked"></Button>
 

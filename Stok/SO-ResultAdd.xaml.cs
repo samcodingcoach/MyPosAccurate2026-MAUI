@@ -95,6 +95,15 @@ public partial class SO_ResultAdd : ContentPage
                     {
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
+                            string status = result.data.statusName ?? "";
+                            StatusNameLabel.Text = $"Status: {status}";
+                            
+                            Color bgColor = Color.FromArgb("#fff4c7"); // Default: Dalam Penghitungan
+                            if (status == "Menunggu Eksekusi") bgColor = Color.FromArgb("#C6E2E2");
+                            else if (status == "Selesai") bgColor = Color.FromArgb("#DCFCE7");
+                            
+                            StatusNameLabel.BackgroundColor = bgColor;
+
                             _allLoadedDetails = result.data.detailItem.OrderByDescending(x => x.quantity).ToList();
                             _detailList.Clear();
                             foreach (var item in _allLoadedDetails)
@@ -199,8 +208,8 @@ public partial class SO_ResultAdd : ContentPage
                 if (!answer) return;
             }
             
-            // Pindah ke halaman detail dengan membawa seluruh objek detail
-            await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem));
+            // Pindah ke halaman detail dengan membawa seluruh objek detail dan order number
+            await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem, _currentOrderNumber));
         }
     }
 }
@@ -215,6 +224,7 @@ public class SODetailResponse
 
 public class SODetailData
 {
+    public string statusName { get; set; }
     public List<SODetailItem> detailItem { get; set; }
 }
 
