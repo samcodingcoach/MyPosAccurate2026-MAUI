@@ -8,6 +8,7 @@ public partial class SO_ResultAdd_Detail : ContentPage
 {
     private string _expectedItemNo = "";
     private string _orderNumber = "";
+    private string _statusName = "";
     private ObservableCollection<SOSerialNumberDetail> _serialList;
 
 	public SO_ResultAdd_Detail()
@@ -15,11 +16,12 @@ public partial class SO_ResultAdd_Detail : ContentPage
 		InitializeComponent();
 	}
 
-    public SO_ResultAdd_Detail(SODetailItem pItem, string orderNumber)
+    public SO_ResultAdd_Detail(SODetailItem pItem, string orderNumber, string statusName)
     {
         InitializeComponent();
         
         _orderNumber = orderNumber;
+        _statusName = statusName;
         _expectedItemNo = pItem.item.no;
         itemNamaBarang.Text = pItem.item.name;
         itemNo.Text = $"No. {pItem.item.no}";
@@ -87,7 +89,7 @@ public partial class SO_ResultAdd_Detail : ContentPage
         double qty = 0;
         if (!double.TryParse(EntryQuantity.Text, out qty) || qty < 0)
         {
-            await DisplayAlert("Error", "Kuantitas tidak valid.", "OK");
+            await DisplayAlertAsync("Error", "Kuantitas tidak valid.", "OK");
             return;
         }
 
@@ -133,18 +135,18 @@ public partial class SO_ResultAdd_Detail : ContentPage
             if (response.IsSuccessStatusCode)
             {
                 var responseStr = await response.Content.ReadAsStringAsync();
-                await DisplayAlert("Sukses", "Data berhasil disimpan.", "OK");
+                await DisplayAlertAsync("Sukses", "Data berhasil disimpan.", "OK");
                 await Navigation.PopAsync();
             }
             else
             {
                 string err = await response.Content.ReadAsStringAsync();
-                await DisplayAlert("Gagal", $"Error {(int)response.StatusCode}: {err}", "OK");
+                await DisplayAlertAsync("Gagal", $"Error {(int)response.StatusCode}: {err}", "OK");
             }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Terjadi kesalahan: {ex.Message}", "OK");
+            await DisplayAlertAsync("Error", $"Terjadi kesalahan: {ex.Message}", "OK");
         }
         finally
         {

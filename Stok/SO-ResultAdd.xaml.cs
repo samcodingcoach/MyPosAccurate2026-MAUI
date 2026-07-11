@@ -10,6 +10,7 @@ public partial class SO_ResultAdd : ContentPage
     private ObservableCollection<SODetailItem> _detailList = new ObservableCollection<SODetailItem>();
     private List<SODetailItem> _allLoadedDetails = new List<SODetailItem>();
     private string _currentOrderNumber = "";
+    private string _currentStatusName = "";
 
 	public SO_ResultAdd()
 	{
@@ -96,6 +97,7 @@ public partial class SO_ResultAdd : ContentPage
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
                             string status = result.data.statusName ?? "";
+                            _currentStatusName = status;
                             StatusNameLabel.Text = $"Status: {status}";
                             
                             Color bgColor = Color.FromArgb("#fff4c7"); // Default: Dalam Penghitungan
@@ -208,8 +210,8 @@ public partial class SO_ResultAdd : ContentPage
                 if (!answer) return;
             }
             
-            // Pindah ke halaman detail dengan membawa seluruh objek detail dan order number
-            await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem, _currentOrderNumber));
+            // Pindah ke halaman detail dengan membawa seluruh objek detail, order number, dan statusName
+            await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem, _currentOrderNumber, _currentStatusName));
         }
     }
 }
