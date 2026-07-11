@@ -35,9 +35,25 @@ public partial class PopSelesai_SO : Popup
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        LabelStatus.Text = result.data.statusName ?? "-";
+                        string statusName = result.data.statusName ?? "-";
+                        LabelStatus.Text = statusName;
                         int itemsCount = result.data.detailItem?.Count ?? 0;
                         LabelTotalItems.Text = $"{itemsCount} Items";
+
+                        if (statusName == "Selesai")
+                        {
+                            BtnSelesai.IsEnabled = false;
+                            BtnSelesai.BackgroundColor = Color.FromArgb("#a9a9a9"); // Grey out visually
+                            BtnExport.IsVisible = true;
+                            
+                            if (result.data.itemAdjustment != null)
+                            {
+                                SectionAdjustment.IsVisible = true;
+                                LabelAdjustmentNumber.Text = result.data.itemAdjustment.number ?? "-";
+                                LabelAdjustmentDate.Text = result.data.itemAdjustment.transDateView ?? "-";
+                                LabelAdjustmentTotal.Text = $"{result.data.itemAdjustment.totalItem} Items";
+                            }
+                        }
 
                         OprListContainer.Children.Clear();
                         

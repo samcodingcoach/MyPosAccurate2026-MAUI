@@ -237,6 +237,14 @@ public class SODetailData
     public List<SODetailItem> detailItem { get; set; }
     public int countItemOpnameResult { get; set; }
     public List<SOOpnameResult> stockOpnameResultList { get; set; }
+    public SOItemAdjustment itemAdjustment { get; set; }
+}
+
+public class SOItemAdjustment
+{
+    public string number { get; set; }
+    public string transDateView { get; set; }
+    public int totalItem { get; set; }
 }
 
 public class SOOpnameResult

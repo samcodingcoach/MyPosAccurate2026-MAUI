@@ -48,6 +48,20 @@
                                 <Label Text="Total Rencana SO" TextColor="#616363" FontSize="14" VerticalOptions="Center"></Label>
                                 <Label x:Name="LabelTotalItems" Text="- Items" FontAttributes="Bold" TextColor="#191c1d" FontSize="14" Grid.Column="1"></Label>
                             </Grid>
+
+                            <StackLayout x:Name="SectionAdjustment" IsVisible="False" Spacing="10">
+                                <BoxView HeightRequest="1" Color="#e1e3e3" Margin="-15,5" />
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <StackLayout Grid.Column="0">
+                                        <Label Text="NOMOR PENYESUAIAN" FontSize="12" FontAttributes="Bold" TextColor="#616363"></Label>
+                                        <Label x:Name="LabelAdjustmentNumber" Text="-" FontSize="16" FontAttributes="Bold" TextColor="DarkCyan"></Label>
+                                    </StackLayout>
+                                    <StackLayout Grid.Column="1" HorizontalOptions="End">
+                                        <Label x:Name="LabelAdjustmentDate" Text="-" FontSize="12" TextColor="#616363" HorizontalOptions="End"></Label>
+                                        <Label x:Name="LabelAdjustmentTotal" Text="- Items" FontAttributes="Bold" TextColor="#191c1d" FontSize="14" HorizontalOptions="End"></Label>
+                                    </StackLayout>
+                                </Grid>
+                            </StackLayout>
                         </StackLayout>
                     </Border>
 
@@ -67,8 +81,8 @@
             <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="15" BackgroundColor="#f8fafa">
                 <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#e1e3e3" VerticalOptions="Start" Margin="-15,-15,-15,0" />
                 
-                <Button Grid.Column="0" Text="EXPORT PDF" BackgroundColor="DarkCyan" TextColor="White" FontAttributes="Bold" CornerRadius="8" Clicked="BtnExport_Clicked" />
-                <Button Grid.Column="1" Text="SELESAI" BackgroundColor="DarkCyan" TextColor="White" FontAttributes="Bold" CornerRadius="8" Clicked="BtnSelesai_Clicked" />
+                <Button x:Name="BtnExport" IsVisible="False" Grid.Column="0" Text="EXPORT PDF" BackgroundColor="DarkCyan" TextColor="White" FontAttributes="Bold" CornerRadius="8" Clicked="BtnExport_Clicked" />
+                <Button x:Name="BtnSelesai" Grid.Column="1" Text="SELESAI" BackgroundColor="DarkCyan" TextColor="White" FontAttributes="Bold" CornerRadius="8" Clicked="BtnSelesai_Clicked" />
             </Grid>
 
         </Grid>
