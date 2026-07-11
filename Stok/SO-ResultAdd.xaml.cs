@@ -235,6 +235,16 @@ public class SODetailData
 {
     public string statusName { get; set; }
     public List<SODetailItem> detailItem { get; set; }
+    public int countItemOpnameResult { get; set; }
+    public List<SOOpnameResult> stockOpnameResultList { get; set; }
+}
+
+public class SOOpnameResult
+{
+    public string number { get; set; }
+    public int countDetail { get; set; }
+    public string transDate { get; set; }
+    public string fullname { get; set; }
 }
 
 public class SODetailItem : INotifyPropertyChanged
