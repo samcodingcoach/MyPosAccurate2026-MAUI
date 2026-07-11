@@ -1,6 +1,8 @@
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MyPosAccurate2026.Stok;
 
@@ -210,8 +212,13 @@ public partial class SO_ResultAdd : ContentPage
                 if (!answer) return;
             }
             
-            // Pindah ke halaman detail dengan membawa seluruh objek detail, order number, dan statusName
-            await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem, _currentOrderNumber, _currentStatusName));
+            // Pindah ke halaman detail dengan membawa seluruh objek detail, order number, statusName, dan description
+            string desc = SODescription.Text ?? "";
+            await Navigation.PushAsync(new SO_ResultAdd_Detail(selectedItem, _currentOrderNumber, _currentStatusName, desc, (newStatus) => {
+                _currentStatusName = newStatus;
+                StatusNameLabel.Text = $"Status: {newStatus}";
+                StatusNameLabel.BackgroundColor = Color.FromArgb("#fff4c7");
+            }));
         }
     }
 }
@@ -230,13 +237,35 @@ public class SODetailData
     public List<SODetailItem> detailItem { get; set; }
 }
 
-public class SODetailItem
+public class SODetailItem : INotifyPropertyChanged
 {
     public ItemInfo item { get; set; }
     public double quantity { get; set; }
     public ItemUnit itemUnit { get; set; }
-    public double? quantityResult { get; set; }
-    public List<SOSerialNumberDetail> detailSerialNumber { get; set; }
+
+    private double? _quantityResult;
+    public double? quantityResult 
+    { 
+        get => _quantityResult; 
+        set 
+        { 
+            _quantityResult = value; 
+            OnPropertyChanged(); 
+        } 
+    }
+
+    private List<SOSerialNumberDetail> _detailSerialNumber;
+    public List<SOSerialNumberDetail> detailSerialNumber 
+    { 
+        get => _detailSerialNumber; 
+        set 
+        { 
+            _detailSerialNumber = value; 
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(HasSerialNumber));
+            OnPropertyChanged(nameof(SerialNumberDisplay));
+        } 
+    }
 
     public bool HasSerialNumber => detailSerialNumber != null && detailSerialNumber.Count > 0;
 
@@ -258,6 +287,12 @@ public class SODetailItem
             string baseHost = App.API_HOST.Replace("api/", "");
             return $"{baseHost}images/{imgName}";
         }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
 
