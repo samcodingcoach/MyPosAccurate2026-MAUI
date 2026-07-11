@@ -45,6 +45,9 @@
                                 </StackLayout>
 
                                 <Border Grid.Row="0" Grid.Column="1"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Padding="15,5" StrokeShape="RoundRectangle 20"  Stroke="Transparent" StrokeThickness="0" BackgroundColor="{Binding StatusBackgroundColor}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Status_Tapped" />
+                                    </Border.GestureRecognizers>
                                     <!--statusName-->
                                     <Label Text="{Binding statusName}" TextColor="{Binding StatusTextColor}" FontAttributes="Bold" FontSize="Caption"></Label>
                                 </Border>

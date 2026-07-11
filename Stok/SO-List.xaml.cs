@@ -231,6 +231,24 @@ public partial class SO_List : ContentPage
             await Navigation.PushAsync(detailPage);
         }
     }
+
+    private async void Status_Tapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Border border && border.BindingContext is SOItem item)
+        {
+          
+
+            await this.ShowPopupAsync(new PopSelesai_SO(item.number), new PopupOptions
+            {
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    Stroke = Colors.Transparent,
+                    StrokeThickness = 0
+                }
+            });
+        }
+    }
 }
 
 // ===== DTO =====

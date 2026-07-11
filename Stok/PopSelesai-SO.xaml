@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Stok.PopSelesai_SO"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             CanBeDismissedByTappingOutsideOfPopup="True" Padding="0" BackgroundColor="Transparent">
+
+    <Border BackgroundColor="White" StrokeThickness="0" Stroke="Transparent" 
+            StrokeShape="RoundRectangle 20" WidthRequest="350" HeightRequest="400" Padding="0">
+        
+        <Grid RowDefinitions="Auto,*,Auto">
+            
+            <!-- Header -->
+            <Grid Grid.Row="0" BackgroundColor="#f2f4f4" Padding="15" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                <Image Source="close100.png" HeightRequest="20" Grid.Column="0" Opacity="0.5">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="BtnClose_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label Text="Hasil Stok Opname" Grid.Column="1" FontAttributes="Bold" FontSize="18" TextColor="#191c1d" VerticalOptions="Center"></Label>
+                <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#e1e3e3" VerticalOptions="End" Margin="-15,0,-15,-15" />
+            </Grid>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator x:Name="LoadingIndicator" Grid.Row="1" IsRunning="True" IsVisible="True" Color="DarkCyan" HorizontalOptions="Center" VerticalOptions="Center" />
+
+            <!-- Content Area (Hidden initially) -->
+            <ScrollView Grid.Row="1" x:Name="ContentArea" IsVisible="False" Padding="15">
+                <StackLayout Spacing="20">
+                    
+                    <!-- Summary Section -->
+                    <Border StrokeShape="RoundRectangle 10" Stroke="#e1e3e3" StrokeThickness="1" BackgroundColor="#ffffff" Padding="15">
+                        <StackLayout Spacing="10">
+                            
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackLayout Grid.Column="0">
+                                    <Label Text="NO PERIKSA" FontSize="12" FontAttributes="Bold" TextColor="#616363"></Label>
+                                    <Label x:Name="LabelOrderNumber" Text="-" FontSize="16" FontAttributes="Bold" TextColor="DarkCyan"></Label>
+                                </StackLayout>
+                                <Border Grid.Column="1" Padding="12,4" StrokeShape="RoundRectangle 15" BackgroundColor="#d4e6e5" Stroke="Transparent" VerticalOptions="Start">
+                                    <Label x:Name="LabelStatus" Text="-" FontSize="12" TextColor="#0e1e1e" FontAttributes="Bold"></Label>
+                                </Border>
+                            </Grid>
+
+                            <BoxView HeightRequest="1" Color="#e1e3e3" Margin="-15,5" />
+
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="Total Rencana SO" TextColor="#616363" FontSize="14" VerticalOptions="Center"></Label>
+                                <Label x:Name="LabelTotalItems" Text="- Items" FontAttributes="Bold" TextColor="#191c1d" FontSize="14" Grid.Column="1"></Label>
+                            </Grid>
+                        </StackLayout>
+                    </Border>
+
+                    <!-- Transaction List Section -->
+                    <StackLayout Spacing="10">
+                        <Label Text="Daftar Transaksi Hasil (OPR)" FontSize="16" FontAttributes="Bold" TextColor="#191c1d"></Label>
+                        
+                        <StackLayout x:Name="OprListContainer" Spacing="10">
+                            <!-- Items will be generated in code-behind -->
+                        </StackLayout>
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+
+            <!-- Footer -->
+            <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="15" BackgroundColor="#f8fafa">
+                <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#e1e3e3" VerticalOptions="Start" Margin="-15,-15,-15,0" />
+                
+                <Button Grid.Column="0" Text="EXPORT PDF" BackgroundColor="DarkCyan" TextColor="White" FontAttributes="Bold" CornerRadius="8" Clicked="BtnExport_Clicked" />
+                <Button Grid.Column="1" Text="SELESAI" BackgroundColor="DarkCyan" TextColor="White" FontAttributes="Bold" CornerRadius="8" Clicked="BtnSelesai_Clicked" />
+            </Grid>
+
+        </Grid>
+        
+    </Border>
+
+</mct:Popup>

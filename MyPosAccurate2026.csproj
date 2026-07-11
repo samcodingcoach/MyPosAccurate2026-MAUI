@@ -189,6 +189,9 @@
 	  <MauiXaml Update="Stok\DetailwithInsert.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Stok\PopSelesai-SO.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Stok\SO-List.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -204,6 +207,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="Stok\PopSelesai-SO.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
 	  <None Update="Stok\SO-ResultAdd.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </None>
