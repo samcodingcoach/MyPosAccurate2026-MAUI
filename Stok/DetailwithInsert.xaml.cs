@@ -321,13 +321,15 @@ public partial class DetailwithInsert : ContentPage
         if (company != null)
         {
             AddCenter(company.name, pCompany, 4);
-            AddCenter(company.address, pCompanyInfo, 2);
-            var districtParts = new[] { company.district?.district, company.district?.province, company.district?.country }.Where(s => !string.IsNullOrWhiteSpace(s));
-            AddCenter(string.Join(", ", districtParts), pCompanyInfo, 2);
+            var distParts = new[] { company.district?.district, company.district?.province, company.district?.country }.Where(s => !string.IsNullOrWhiteSpace(s));
+            string distStr = string.Join(", ", distParts);
+            string addressFull = string.IsNullOrWhiteSpace(company.address) ? distStr : (string.IsNullOrWhiteSpace(distStr) ? company.address : $"{company.address}, {distStr}");
+            AddCenter(addressFull, pCompanyInfo, 2);
+            
             var contactParts = new List<string>();
             if (!string.IsNullOrWhiteSpace(company.phone)) contactParts.Add($"Telp: {company.phone}");
             if (!string.IsNullOrWhiteSpace(company.email)) contactParts.Add($"Email: {company.email}");
-            if (contactParts.Count > 0) AddCenter(string.Join("  •  ", contactParts), pCompanyInfo, 6);
+            if (contactParts.Count > 0) AddCenter(string.Join(" • ", contactParts), pCompanyInfo, 6);
         }
         else
         {

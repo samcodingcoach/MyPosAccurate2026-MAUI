@@ -26,7 +26,6 @@
                     <TapGestureRecognizer Tapped="BtnSearch_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
-            <Button x:Name="BtnExportPdf" Text="EXPORT PDF" BackgroundColor="DarkCyan" TextColor="White" FontSize="10" FontAttributes="Bold" Padding="10,0" HeightRequest="30" CornerRadius="5" Grid.Column="3" IsVisible="False" Clicked="BtnExportPdf_Clicked" />
         </Grid>
 
         <BoxView HeightRequest="0.5" Grid.Row="1" Color="#E0E0E0" HorizontalOptions="Fill" >
@@ -137,6 +136,26 @@
                 <Label Text="Mohon Tunggu..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
             </VerticalStackLayout>
         </Grid>
+
+        <!-- FAB Export PDF -->
+        <ImageButton x:Name="BtnExportPdf" 
+                     Grid.Row="0" Grid.RowSpan="5" 
+                     IsVisible="False"
+                     Source="pdfwhite10.png" 
+                     BackgroundColor="DarkCyan" 
+                     CornerRadius="30"
+                     HeightRequest="60" 
+                     WidthRequest="60" 
+                     Padding="15"
+                     HorizontalOptions="End" 
+                     VerticalOptions="End" 
+                     Margin="0,0,20,30" 
+                     ZIndex="99"
+                     Clicked="BtnExportPdf_Clicked">
+            <ImageButton.Shadow>
+                <Shadow Brush="#000000" Opacity="0.3" Radius="10" Offset="0,5" />
+            </ImageButton.Shadow>
+        </ImageButton>
 
     </Grid>
 
