@@ -138,6 +138,9 @@
 	  <MauiXaml Update="Pemasok\List-Pemasok.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Penyesuaian\List-Penyesuaian.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Produk\List-Produk.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Penyesuaian.List_Penyesuaian"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa" >
+    <Grid RowDefinitions="Auto,*">
+        <!--search & sort-->
+        <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                    <SearchBar Placeholder="Cari Item Adjustment" x:Name="T_Search" TextChanged="T_Search_TextChanged"></SearchBar>
+                </Border>
+                <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Image Source="date100.png" HeightRequest="24">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapAdd" Tapped="TapAdd_Tapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
+            </Grid>
+
+        </Border>
+
+        <RefreshView x:Name="RV_Adjustments" Grid.Row="1" Margin="10,0" Refreshing="OnRefreshing">
+            <CollectionView x:Name="CV_Adjustments">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border VerticalOptions="Start" Padding="15" StrokeShape="RoundRectangle 10" Margin="0,0,0,10" Stroke="Transparent" 
+                                StrokeThickness="0.5" BackgroundColor="White">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+                            </Border.Shadow>
+
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                                <!--number-->
+                                <Label Text="{Binding number}" FontSize="18" Grid.Column="0" FontAttributes="Bold" TextColor="DarkCyan"></Label>
+                                <!--transDateView-->
+                                <Label Text="{Binding transDateView}" Grid.Column="1" HorizontalTextAlignment="End" VerticalTextAlignment="Center" TextColor="#444"></Label>
+                               
+                                <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0">
+                                    <BoxView HeightRequest="0.5" Margin="0,10,0,5" Opacity="0.2" Color="LightGrey" HorizontalOptions="Fill"/>
+                                    <Label Text="Keterangan:" FontAttributes="Bold"></Label>
+                                    <!--description-->
+                                    <Label Text="{Binding description}" 
+                                           LineBreakMode="TailTruncation" MaxLines="2"
+                                           FontSize="Caption"></Label>
+                                </StackLayout>
+                            </Grid>
+
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Overlay Loading -->
+        <Grid x:Name="OverlayLoading" Grid.Row="0" Grid.RowSpan="2" BackgroundColor="#80000000" IsVisible="True" ZIndex="999">
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding Source={x:Reference OverlayLoading}, Path=IsVisible}" Color="White" WidthRequest="50" HeightRequest="50" />
+                <Label Text="Mohon Tunggu..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
+
+
+    </Grid>
+</ContentPage>

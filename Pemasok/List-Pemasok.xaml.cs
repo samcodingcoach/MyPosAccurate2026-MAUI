@@ -34,10 +34,10 @@ public partial class List_Pemasok : ContentPage
             _cts = new CancellationTokenSource();
             var token = _cts.Token;
 
-            string url = $"{App.API_HOST}vendor/list.php";
+            string url = $"{App.API_HOST}vendor/list.php?limit=100&page=1";
             if (!string.IsNullOrWhiteSpace(search))
             {
-                url += $"?search={Uri.EscapeDataString(search)}";
+                url += $"&search={Uri.EscapeDataString(search)}";
             }
 
             string cleanToken = Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
@@ -51,45 +51,61 @@ public partial class List_Pemasok : ContentPage
             {
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cleanToken);
                 var response = await client.GetAsync(url, token);
-                if (response.IsSuccessStatusCode)
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
+                    MainThread.BeginInvokeOnMainThread(async () => {
+                        await DisplayAlert("API Error", $"Status {response.StatusCode}\n{content}", "OK");
+                    });
+                    return;
+                }
+
+                if (content.StartsWith("<"))
+                {
+                    MainThread.BeginInvokeOnMainThread(async () => {
+                        await DisplayAlert("API Error", "Respons berupa HTML, bukan JSON.", "OK");
+                    });
+                    return;
+                }
+
+                try 
+                {
+                    var result = JsonConvert.DeserializeObject<VendorResponse>(content);
+                    MainThread.BeginInvokeOnMainThread(() => 
+                    {
+                        _vendors.Clear();
+                        if (result?.data != null)
+                        {
+                            foreach (var item in result.data)
+                            {
+                                _vendors.Add(item);
+                            }
+                        }
+                    });
+                }
+                catch
+                {
                     try 
                     {
-                        var result = JsonConvert.DeserializeObject<VendorResponse>(content);
+                        var arrResult = JsonConvert.DeserializeObject<List<VendorItem>>(content);
                         MainThread.BeginInvokeOnMainThread(() => 
                         {
                             _vendors.Clear();
-                            if (result?.data != null)
+                            if (arrResult != null)
                             {
-                                foreach (var item in result.data)
+                                foreach (var item in arrResult)
                                 {
                                     _vendors.Add(item);
                                 }
                             }
                         });
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        try 
-                        {
-                            var arrResult = JsonConvert.DeserializeObject<List<VendorItem>>(content);
-                            MainThread.BeginInvokeOnMainThread(() => 
-                            {
-                                _vendors.Clear();
-                                if (arrResult != null)
-                                {
-                                    foreach (var item in arrResult)
-                                    {
-                                        _vendors.Add(item);
-                                    }
-                                }
-                            });
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
+                        MainThread.BeginInvokeOnMainThread(async () => {
+                            await DisplayAlert("JSON Error", ex.Message, "OK");
+                        });
                     }
                 }
             }

@@ -5,7 +5,6 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#f8fafa"
              >
-
     <Grid RowDefinitions="Auto,*">
         <!--search & sort-->
         <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
