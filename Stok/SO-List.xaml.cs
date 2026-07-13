@@ -227,7 +227,7 @@ public partial class SO_List : ContentPage
     {
         if (sender is Border border && border.BindingContext is SOItem item)
         {
-            var detailPage = new DetailwithInsert { TransNumber = item.number };
+            var detailPage = new DetailwithInsert { TransNumber = item.number, StatusName = item.statusName };
             await Navigation.PushAsync(detailPage);
         }
     }

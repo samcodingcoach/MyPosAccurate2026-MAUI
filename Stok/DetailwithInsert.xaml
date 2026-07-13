@@ -9,7 +9,7 @@
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
         <!--navigation-->
 
-        <Grid Grid.Row="0" Padding="20" RowDefinitions="Auto" VerticalOptions="Start" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+        <Grid Grid.Row="0" Padding="20" RowDefinitions="Auto" VerticalOptions="Start" ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10">
             <Grid.Shadow>
                 <Shadow Brush="#000000" Opacity="0.10" Radius="10" Offset="0,-3" />
             </Grid.Shadow>
@@ -26,6 +26,7 @@
                     <TapGestureRecognizer Tapped="BtnSearch_Tapped" />
                 </Image.GestureRecognizers>
             </Image>
+            <Button x:Name="BtnExportPdf" Text="EXPORT PDF" BackgroundColor="DarkCyan" TextColor="White" FontSize="10" FontAttributes="Bold" Padding="10,0" HeightRequest="30" CornerRadius="5" Grid.Column="3" IsVisible="False" Clicked="BtnExportPdf_Clicked" />
         </Grid>
 
         <BoxView HeightRequest="0.5" Grid.Row="1" Color="#E0E0E0" HorizontalOptions="Fill" >

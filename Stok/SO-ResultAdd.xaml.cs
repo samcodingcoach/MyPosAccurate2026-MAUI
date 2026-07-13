@@ -233,7 +233,18 @@ public class SODetailResponse
 
 public class SODetailData
 {
+    public string number { get; set; }
     public string statusName { get; set; }
+    public string transDateView { get; set; }
+    public string startDate { get; set; }
+    public string description { get; set; }
+    public string transDate { get; set; }
+    public string branchName { get; set; }
+    public string personCharged { get; set; }
+    public Warehouse warehouse { get; set; }
+    public List<SODetailCategory> itemCategoryList { get; set; }
+    public List<SODetailUser> userList { get; set; }
+    
     public List<SODetailItem> detailItem { get; set; }
     public int countItemOpnameResult { get; set; }
     public List<SOOpnameResult> stockOpnameResultList { get; set; }
@@ -245,6 +256,16 @@ public class SOItemAdjustment
     public string number { get; set; }
     public string transDateView { get; set; }
     public int totalItem { get; set; }
+}
+
+public class SODetailCategory
+{
+    public string name { get; set; }
+}
+
+public class SODetailUser
+{
+    public string fullName { get; set; }
 }
 
 public class SOOpnameResult
