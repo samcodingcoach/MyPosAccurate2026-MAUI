@@ -28,38 +28,68 @@
 
         </Border>
 
-        <Border Grid.Row="1" x:Name="FormEdit" IsVisible="True" VerticalOptions="Start"
-                Padding="15" StrokeShape="RoundRectangle 10" Margin="10,0" Stroke="Transparent" 
-                StrokeThickness="0.5" BackgroundColor="White">
-            <Border.Shadow>
-                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
-            </Border.Shadow>
+        <RefreshView x:Name="RV_Vendors" Grid.Row="1" Margin="10,0" Refreshing="OnRefreshing">
+            <CollectionView x:Name="CV_Vendors">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border VerticalOptions="Start"
+                            Padding="15" StrokeShape="RoundRectangle 10" Margin="0,0,0,10" Stroke="Transparent" 
+                            StrokeThickness="0.5" BackgroundColor="White">
+                        <Border.Shadow>
+                            <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+                        </Border.Shadow>
 
-            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 
-                <StackLayout Grid.Column="0">
-                    <Label Text="NAMA PEMASOK, PT AND CV" FontAttributes="Bold" TextColor="DarkCyan" FontSize="18"></Label>
-                    <Label Text="Samarinda" TextColor="Grey" FontSize="Caption"></Label>
-                    <Label Text="SEMUA CABANG" TextColor="#444" FontAttributes="Bold" Margin="0,15,0,0"></Label>
-                </StackLayout>
+                            <StackLayout Grid.Column="0">
+                                <!--name-->
+                                <Label Text="{Binding name}" FontAttributes="Bold" TextColor="DarkCyan" FontSize="18"></Label>
+                                <!--"lookupSubText": "\nSamarinda" hilangkan \n diawal-->
+                                <Label Text="{Binding CleanLookupSubText}" TextColor="Grey" FontSize="Caption"></Label>
+                                <!--vendorBranchName-->
+                                <Label Text="{Binding vendorBranchName}" TextColor="#444" FontAttributes="Bold" Margin="0,15,0,0"></Label>
+                            </StackLayout>
 
-                <StackLayout Grid.Column="1">
-                    <!--bungkus dengan badge atau border-->
-                    <Border Padding="12,4" StrokeShape="RoundRectangle 20"
-                            Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="SlateGrey">
-                        <Label Text="1VNDR-0001-216" TextColor="White" FontAttributes="Bold" FontSize="Caption"></Label>
+                            <StackLayout Grid.Column="1">
+                                <!--bungkus dengan badge atau border-->
+                                <Border Padding="12,4" StrokeShape="RoundRectangle 20" HorizontalOptions="End"
+                                        Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="SlateGrey">
+                                    <!--vendorNo-->
+                                    <Label Text="{Binding vendorNo}" TextColor="White" FontAttributes="Bold" FontSize="Caption"></Label>
+                                </Border>
+
+                                <StackLayout TranslationY="6" HorizontalOptions="End" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="10">
+                                    <!--email : ketika ditap function mail to--> 
+                                    <Image Source="mail2.png" HeightRequest="38" IsVisible="{Binding HasEmail}">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Email_Tapped" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <!--mobilePhone : ketika di tap direct ke wa.me membuka whatsapp-->
+                                    <Image Source="phone2.png" HeightRequest="32" IsVisible="{Binding HasPhone}">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Phone_Tapped" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </StackLayout>
+
+                        </Grid>
+
                     </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        </RefreshView>
 
-                    <StackLayout Grid.Column="0" TranslationY="6" HorizontalOptions="EndAndExpand" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="10">
-                        <Image Source="mail2.png" HeightRequest="38"></Image>
-                        <Image Source="phone2.png" HeightRequest="32"></Image>
-                    </StackLayout>
-                </StackLayout>
+        <!-- Overlay Loading -->
+        <Grid x:Name="OverlayLoading" Grid.Row="0" Grid.RowSpan="2" BackgroundColor="#80000000" IsVisible="True" ZIndex="999">
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding Source={x:Reference OverlayLoading}, Path=IsVisible}" Color="White" WidthRequest="50" HeightRequest="50" />
+                <Label Text="Mohon Tunggu..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
 
-
-            </Grid>
-
-        </Border>
     </Grid>
 
 </ContentPage>
