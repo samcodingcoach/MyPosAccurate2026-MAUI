@@ -43,7 +43,7 @@ public partial class RugiLaba : ContentPage
             string cleanToken = Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
             if (string.IsNullOrEmpty(cleanToken))
             {
-                await DisplayAlert("Sesi Habis", "Anda harus login kembali.", "OK");
+                await DisplayAlertAsync("Sesi Habis", "Anda harus login kembali.", "OK");
                 return;
             }
 
@@ -60,7 +60,7 @@ public partial class RugiLaba : ContentPage
 
                 if (responseContent.StartsWith("<"))
                 {
-                    await DisplayAlert("Error Server", "Gagal membaca format data dari server.", "OK");
+                    await DisplayAlertAsync("Error Server", "Gagal membaca format data dari server.", "OK");
                     return;
                 }
 
@@ -94,7 +94,7 @@ public partial class RugiLaba : ContentPage
                 }
                 else
                 {
-                    await DisplayAlert("Gagal", result?.message ?? "Gagal mengambil data rugi laba.", "OK");
+                    await DisplayAlertAsync("Gagal", result?.message ?? "Gagal mengambil data rugi laba.", "OK");
                 }
             }
         }
@@ -201,7 +201,7 @@ public partial class RugiLaba : ContentPage
     {
         if (_rugiLabaGroups.Count == 0)
         {
-            await DisplayAlert("Data Kosong", "Tidak ada data rugi laba untuk didownload.", "OK");
+            await DisplayAlertAsync("Data Kosong", "Tidak ada data rugi laba untuk didownload.", "OK");
             return;
         }
 
@@ -220,7 +220,7 @@ public partial class RugiLaba : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Gagal", "Gagal membuat PDF: " + ex.Message, "OK");
+            await DisplayAlertAsync("Gagal", "Gagal membuat PDF: " + ex.Message, "OK");
         }
 #else
         await DisplayAlert("Tidak Didukung", "Pembuatan PDF laporan hanya didukung di Android.", "OK");
