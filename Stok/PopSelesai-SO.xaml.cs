@@ -139,6 +139,8 @@ public partial class PopSelesai_SO : Popup
     private async void BtnSelesai_Clicked(object sender, EventArgs e)
     {
         // Finish logic
+
+
         await CloseAsync();
     }
 }

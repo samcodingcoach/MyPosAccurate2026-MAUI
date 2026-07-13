@@ -135,6 +135,9 @@
 	  <MauiXaml Update="Kategori\List-Kategori.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pemasok\List-Pemasok.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Produk\List-Produk.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

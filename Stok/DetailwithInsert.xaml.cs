@@ -429,7 +429,7 @@ public partial class DetailwithInsert : ContentPage
                         float textW = p.MeasureText(lines[j]);
                         float colCenter = cols[i] + colWidth / 2f;
                         
-                        if (isHeader || i >= 3)
+                        if (isHeader || i != 2)
                             canvas.DrawText(lines[j], colCenter - textW / 2f, startY + (j * TextH(p)), p);
                         else
                             canvas.DrawText(lines[j], cols[i] + 5, startY + (j * TextH(p)), p);

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyPosAccurate2026.Pemasok.List_Pemasok"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#f8fafa"
+             >
+
+    <Grid RowDefinitions="Auto,*">
+        <!--search & sort-->
+        <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
+                    <SearchBar Placeholder="Cari Pemasok" x:Name="T_Search" TextChanged="T_Search_TextChanged"></SearchBar>
+                </Border>
+                <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                    <Image Source="newadd100.png" HeightRequest="24">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="TapAdd" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
+            </Grid>
+
+        </Border>
+
+        <Border Grid.Row="1" x:Name="FormEdit" IsVisible="True" VerticalOptions="Start"
+                Padding="15" StrokeShape="RoundRectangle 10" Margin="10,0" Stroke="Transparent" 
+                StrokeThickness="0.5" BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+
+                <StackLayout Grid.Column="0">
+                    <Label Text="NAMA PEMASOK, PT AND CV" FontAttributes="Bold" TextColor="DarkCyan" FontSize="18"></Label>
+                    <Label Text="Samarinda" TextColor="Grey" FontSize="Caption"></Label>
+                    <Label Text="SEMUA CABANG" TextColor="#444" FontAttributes="Bold" Margin="0,15,0,0"></Label>
+                </StackLayout>
+
+                <StackLayout Grid.Column="1">
+                    <!--bungkus dengan badge atau border-->
+                    <Border Padding="12,4" StrokeShape="RoundRectangle 20"
+                            Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="SlateGrey">
+                        <Label Text="1VNDR-0001-216" TextColor="White" FontAttributes="Bold" FontSize="Caption"></Label>
+                    </Border>
+
+                    <StackLayout Grid.Column="0" TranslationY="6" HorizontalOptions="EndAndExpand" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="10">
+                        <Image Source="mail2.png" HeightRequest="38"></Image>
+                        <Image Source="phone2.png" HeightRequest="32"></Image>
+                    </StackLayout>
+                </StackLayout>
+
+
+            </Grid>
+
+        </Border>
+    </Grid>
+
+</ContentPage>
