@@ -144,6 +144,9 @@
 	  <MauiXaml Update="Penyesuaian\New-Penyesuaian.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Penyesuaian\PopUpBarangSelected.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Produk\List-Produk.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

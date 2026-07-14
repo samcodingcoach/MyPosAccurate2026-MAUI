@@ -10,32 +10,49 @@
         <StackLayout Spacing="5">
 
             <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent">
-
                 <StackLayout Orientation="Horizontal">
                     <DatePicker Format="dd/MM/yyyy"></DatePicker>
                     <Image HorizontalOptions="EndAndExpand" Source="date100.png" HeightRequest="24" Opacity="0.5"></Image>
                 </StackLayout>
-
             </Border>
 
-            <Border Padding="0,2,10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent">
-
-                <SearchBar Placeholder="Ketik Nama atau Kode Barang..." x:Name="SearchBar_Item" SearchIconColor="DarkCyan"
-                     HorizontalOptions="FillAndExpand"/>
-
-            </Border>
+            <StackLayout>
+                <Border Padding="0,2,10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent">
+                    <SearchBar Placeholder="Ketik Nama atau Kode Barang..." x:Name="SearchBar_Item" SearchIconColor="DarkCyan"
+                         TextChanged="SearchBar_Item_TextChanged" HorizontalOptions="FillAndExpand"/>
+                </Border>
+                <Border x:Name="Border_AutoComplete" IsVisible="False" Padding="0" Margin="0, -5, 0, 10" StrokeShape="RoundRectangle 5" Stroke="#CCCCCC" StrokeThickness="1" BackgroundColor="White" MaximumHeightRequest="200">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.2" />
+                    </Border.Shadow>
+                    <CollectionView x:Name="List_AutoComplete" SelectionMode="Single" SelectionChanged="List_AutoComplete_SelectionChanged">
+                        <CollectionView.EmptyView>
+                            <StackLayout Padding="15">
+                                <Label Text="Tidak ada barang yang cocok." TextColor="Red" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Padding="10" Orientation="Horizontal" BackgroundColor="White">
+                                    <StackLayout HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding name}" FontAttributes="Bold" FontSize="14" TextColor="Black"/>
+                                        <Label Text="{Binding item_no}" FontSize="12" TextColor="Gray"/>
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="End" VerticalOptions="Center">
+                                        <Label Text="{Binding price, StringFormat='Rp {0:N0}'}" FontSize="12" TextColor="DarkCyan"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Border>
+            </StackLayout>
 
             <StackLayout Orientation="Horizontal" Padding="10">
                 <Label Text="Detail Barang Penyesuaian" FontSize="20" FontAttributes="Bold" TextColor="#444"></Label>
                 <Label Text="100 Items" FontSize="Caption" TextColor="Grey" HorizontalOptions="EndAndExpand" 
                  VerticalTextAlignment="Center"></Label>
             </StackLayout>
-
-
-
-           
-
-           
         </StackLayout>
 
         <!--data barang terselect-->
@@ -83,10 +100,10 @@
 
         </Border>
 
-        <StackLayout Grid.Row="2" Spacing="5" Margin="0,0,0,10">
+        <StackLayout Grid.Row="2" Spacing="5" Margin="0,0,0,10" x:Name="formCOAket" IsVisible="False">
             <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent">
                 <StackLayout Orientation="Horizontal">
-                    <Picker Title="Pilih Akun Prakiraan Penyesuaian"></Picker>
+                    <Picker Title="Pilih Akun Prakiraan Penyesuaian" x:Name="PickerAdjustmentAccountNo"></Picker>
                     <Image Source="chevron100.png" Opacity="0.5" HeightRequest="24" HorizontalOptions="EndAndExpand"></Image>
                 </StackLayout>
             </Border>
@@ -96,9 +113,14 @@
         </StackLayout>
         
 
-        <Grid ColumnDefinitions="0.3*,0.7*" ColumnSpacing="10" Grid.Row="3">
-            <Button Text="BATAL" FontAttributes="Bold" FontSize="18" TextColor="LightGray" BackgroundColor="Transparent" BorderWidth="0.5" BorderColor="LightGray"></Button>
-            <Button Text="SIMPAN" FontAttributes="Bold" Grid.Column="1" FontSize="18" BackgroundColor="DarkCyan"></Button>
+        <Grid ColumnDefinitions="0.25*,0.2*,0.6*" ColumnSpacing="10" Grid.Row="3">
+            <Button Text="BATAL" Grid.Column="0"  FontAttributes="Bold" FontSize="18" TextColor="LightGray" BackgroundColor="Transparent" 
+                    BorderWidth="0.5" BorderColor="LightGray"></Button>
+            <Button Text="OPSI" Grid.Column="1" FontAttributes="Bold" FontSize="18" TextColor="Grey" BackgroundColor="LightGrey" 
+                    BorderWidth="0.5" x:Name="bOpsi" Clicked="bOpsi_Clicked" BorderColor="Transparent"></Button>
+            
+           
+            <Button Text="SIMPAN" FontAttributes="Bold" Grid.Column="2" FontSize="18" BackgroundColor="DarkCyan"></Button>
         </Grid>
     </Grid>
   
