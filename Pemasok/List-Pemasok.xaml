@@ -14,7 +14,7 @@
 
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
                 <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
-                    <SearchBar Placeholder="Cari Pemasok" x:Name="T_Search" TextChanged="T_Search_TextChanged"></SearchBar>
+                    <SearchBar Placeholder="Cari Pemasok" x:Name="T_Search" SearchButtonPressed="T_Search_SearchButtonPressed"></SearchBar>
                 </Border>
                 <Border Grid.Column="1" Padding="10,0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
                     <Image Source="newadd100.png" HeightRequest="24">

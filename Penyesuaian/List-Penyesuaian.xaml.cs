@@ -35,6 +35,7 @@ public partial class List_Penyesuaian : ContentPage
 
     private async Task LoadDataAsync(string search)
     {
+        MainThread.BeginInvokeOnMainThread(() => OverlayLoading.IsVisible = true);
         var delayTask = Task.Delay(3000);
         try
         {
@@ -125,76 +126,22 @@ public partial class List_Penyesuaian : ContentPage
         await LoadDataAsync(T_Search.Text ?? "");
     }
 
-    private void T_Search_TextChanged(object sender, TextChangedEventArgs e)
+    private void T_Search_SearchButtonPressed(object sender, EventArgs e)
     {
-        _ = LoadDataAsync(e.NewTextValue);
+        _ = LoadDataAsync(T_Search.Text ?? "");
     }
 
-    private async void TapAdd_Tapped(object sender, TappedEventArgs e)
+    private void TapAdd_Tapped(object sender, TappedEventArgs e)
     {
-        var popup = new DateRangePopup();
-        popup.OnApply = async (start, end) => 
-        {
-            _startDate = start;
-            _endDate = end;
-            await LoadDataAsync(T_Search.Text ?? "");
-        };
-        await this.ShowPopupAsync(popup);
+        FormFilterDate.IsVisible = !FormFilterDate.IsVisible;
     }
-}
 
-public class DateRangePopup : Popup
-{
-    private DatePicker dpStart;
-    private DatePicker dpEnd;
-    public Action<string, string> OnApply;
-
-    public DateRangePopup()
+    private async void BtnApplyFilter_Tapped(object sender, TappedEventArgs e)
     {
-        CanBeDismissedByTappingOutsideOfPopup = true;
-
-        var frame = new Border
-        {
-            Padding = 0,
-            BackgroundColor = Colors.White,
-            WidthRequest = 250,
-            HeightRequest = 250,
-            StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(15) },
-            StrokeThickness = 0
-        };
-
-        var layout = new VerticalStackLayout { Spacing = 8 };
-
-        layout.Add(new Label { Text = "Filter Tanggal", FontAttributes = FontAttributes.Bold, 
-            FontSize = 16, TextColor = Colors.DarkCyan, Margin = new Thickness(0, 0, 0, 10) });
-
-        layout.Add(new Label { Text = "Mulai Tanggal:", TextColor = Colors.Gray, FontSize = 12 });
-        dpStart = new DatePicker { Format = "dd/MM/yyyy", TextColor = Colors.Black, HeightRequest = 35, FontSize = 13 };
-        layout.Add(dpStart);
-
-        layout.Add(new Label { Text = "Sampai Tanggal:", TextColor = Colors.Gray, FontSize = 12 });
-        dpEnd = new DatePicker { Format = "dd/MM/yyyy", TextColor = Colors.Black, HeightRequest = 35, FontSize = 13 };
-        layout.Add(dpEnd);
-
-        var btnApply = new Button
-        {
-            Text = "Terapkan",
-            BackgroundColor = Colors.DarkCyan,
-            TextColor = Colors.White,
-            FontAttributes = FontAttributes.Bold,
-            CornerRadius = 10,
-            HeightRequest = 40,
-            Margin = new Thickness(0, 15, 0, 0)
-        };
-        btnApply.Clicked += async (s, e) =>
-        {
-            OnApply?.Invoke(string.Format("{0:dd/MM/yyyy}", dpStart.Date), string.Format("{0:dd/MM/yyyy}", dpEnd.Date));
-            await CloseAsync();
-        };
-
-        layout.Add(btnApply);
-        frame.Content = layout;
-        Content = frame;
+        _startDate = string.Format("{0:dd/MM/yyyy}", DP_StartDate.Date);
+        _endDate = string.Format("{0:dd/MM/yyyy}", DP_EndDate.Date);
+        FormFilterDate.IsVisible = false;
+        await LoadDataAsync(T_Search.Text ?? "");
     }
 }
 

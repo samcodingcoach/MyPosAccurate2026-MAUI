@@ -27,6 +27,7 @@ public partial class List_Pemasok : ContentPage
 
     private async Task LoadDataAsync(string search)
     {
+        MainThread.BeginInvokeOnMainThread(() => OverlayLoading.IsVisible = true);
         var delayTask = Task.Delay(3000);
         try
         {
@@ -131,9 +132,9 @@ public partial class List_Pemasok : ContentPage
         await LoadDataAsync(T_Search.Text ?? "");
     }
 
-    private void T_Search_TextChanged(object sender, TextChangedEventArgs e)
+    private void T_Search_SearchButtonPressed(object sender, EventArgs e)
     {
-        _ = LoadDataAsync(e.NewTextValue);
+        _ = LoadDataAsync(T_Search.Text ?? "");
     }
 
     private async void Email_Tapped(object sender, TappedEventArgs e)
