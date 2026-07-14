@@ -157,21 +157,23 @@ public class DateRangePopup : Popup
         {
             Padding = 0,
             BackgroundColor = Colors.White,
-            WidthRequest = 280,
+            WidthRequest = 250,
+            HeightRequest = 250,
             StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(15) },
             StrokeThickness = 0
         };
 
-        var layout = new VerticalStackLayout { Spacing = 15 };
+        var layout = new VerticalStackLayout { Spacing = 8 };
 
-        layout.Add(new Label { Text = "Filter Tanggal", FontAttributes = FontAttributes.Bold, FontSize = 18, TextColor = Colors.DarkCyan });
+        layout.Add(new Label { Text = "Filter Tanggal", FontAttributes = FontAttributes.Bold, 
+            FontSize = 16, TextColor = Colors.DarkCyan, Margin = new Thickness(0, 0, 0, 10) });
 
         layout.Add(new Label { Text = "Mulai Tanggal:", TextColor = Colors.Gray, FontSize = 12 });
-        dpStart = new DatePicker { Format = "dd/MM/yyyy", TextColor = Colors.Black };
+        dpStart = new DatePicker { Format = "dd/MM/yyyy", TextColor = Colors.Black, HeightRequest = 35, FontSize = 13 };
         layout.Add(dpStart);
 
         layout.Add(new Label { Text = "Sampai Tanggal:", TextColor = Colors.Gray, FontSize = 12 });
-        dpEnd = new DatePicker { Format = "dd/MM/yyyy", TextColor = Colors.Black };
+        dpEnd = new DatePicker { Format = "dd/MM/yyyy", TextColor = Colors.Black, HeightRequest = 35, FontSize = 13 };
         layout.Add(dpEnd);
 
         var btnApply = new Button
@@ -181,8 +183,8 @@ public class DateRangePopup : Popup
             TextColor = Colors.White,
             FontAttributes = FontAttributes.Bold,
             CornerRadius = 10,
-            HeightRequest = 45,
-            Margin = new Thickness(0, 10, 0, 0)
+            HeightRequest = 40,
+            Margin = new Thickness(0, 15, 0, 0)
         };
         btnApply.Clicked += async (s, e) =>
         {

@@ -4,14 +4,14 @@
              x:Class="MyPosAccurate2026.Penyesuaian.List_Penyesuaian"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#f8fafa" >
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,Auto,*">
         <!--search & sort-->
         <Border Grid.Row="0" x:Name="FormSearch" IsVisible="True" Padding="10" StrokeShape="RoundRectangle 10" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
             <Border.Shadow>
                 <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
             </Border.Shadow>
 
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="15">
                 <Border Grid.Column="0" Padding="0" StrokeShape="RoundRectangle 10"  Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="White">
                     <SearchBar Placeholder="Cari Item Adjustment" x:Name="T_Search" TextChanged="T_Search_TextChanged"></SearchBar>
                 </Border>
@@ -22,11 +22,36 @@
                         </Image.GestureRecognizers>
                     </Image>
                 </Border>
+                <!--ganti pop up-->
+                <StackLayout Grid.Row="1" Grid.Column="0" Spacing="10" Grid.ColumnSpan="2" x:Name="FormFilterDate" IsVisible="False">
+                    <Label Text="Filter berdasarkan tanggal" TextColor="#444" FontAttributes="Bold"></Label>
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Border Padding="10,0" StrokeShape="RoundRectangle 10"  
+                                HorizontalOptions="Start" WidthRequest="100"
+                                Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent">
+                            <DatePicker Format="dd/MM/yyyy" HorizontalOptions="Center"></DatePicker>
+                        </Border>
+                        <Border Padding="10,0" StrokeShape="RoundRectangle 10"  
+                                HorizontalOptions="Start" WidthRequest="100"
+                                Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent">
+                            <DatePicker Format="dd/MM/yyyy" HorizontalOptions="Center"></DatePicker>
+                        </Border>
+                        <Border Padding="10,0" StrokeShape="RoundRectangle 10"  
+                                HorizontalOptions="Start" WidthRequest="50"
+                                Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="WhiteSmoke">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Opacity="0.10" Radius="2" Offset="0,-1" />
+                            </Border.Shadow>
+                            <Image Source="search100.png" HeightRequest="24" Opacity="0.5"></Image>
+                        </Border>
+                    </StackLayout>
+                </StackLayout>
+                
             </Grid>
 
         </Border>
 
-        <RefreshView x:Name="RV_Adjustments" Grid.Row="1" Margin="10,0" Refreshing="OnRefreshing">
+        <RefreshView x:Name="RV_Adjustments" Grid.Row="2" Margin="10,0" Refreshing="OnRefreshing">
             <CollectionView x:Name="CV_Adjustments">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
