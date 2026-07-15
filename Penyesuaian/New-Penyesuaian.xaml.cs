@@ -125,7 +125,7 @@ public partial class New_Penyesuaian : ContentPage
 
     private async void bSimpan_Clicked(object sender, EventArgs e)
     {
-        string itemNo = "100003";
+        string itemNo = "100014";
         await this.ShowPopupAsync(new PopUpBarangSelected(itemNo), new PopupOptions
         {
             Shape = new RoundRectangle
