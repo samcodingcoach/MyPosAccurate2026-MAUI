@@ -3,99 +3,104 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyPosAccurate2026.Penyesuaian.PopUpBarangSelected"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-             CanBeDismissedByTappingOutsideOfPopup="True" Padding="0" BackgroundColor="White"
+             CanBeDismissedByTappingOutsideOfPopup="True" Padding="0" BackgroundColor="Transparent"
              >
-    <StackLayout Padding="0" Spacing="8" >
-        <Label Text="Detail Barang Penyesuaian" FontSize="18" FontAttributes="Bold"></Label>
 
-        <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
-                BackgroundColor="WhiteSmoke" Padding="20">
+    <Border BackgroundColor="White" StrokeThickness="0" Padding="15" Stroke="Transparent" 
+            StrokeShape="RoundRectangle 20" WidthRequest="280" HeightRequest="600">
 
-            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="15">
+        <Grid RowDefinitions="Auto,*,Auto">
 
-                <!--gambar ambil dari no + ekstensi .jpg-->
-                <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source="{Binding DisplayImage}" HeightRequest="70" VerticalOptions="Start">
+            <Grid Grid.Row="0"  BackgroundColor="#f2f4f4" Padding="15" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                <Image Source="close100.png" HeightRequest="20" Grid.Column="0" Opacity="0.5">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="BtnClose_Tapped" />
+                    </Image.GestureRecognizers>
                 </Image>
+                <Label Text="Detail Barang Penyesuaian" Grid.Column="1" FontAttributes="Bold" FontSize="18" TextColor="#191c1d" VerticalOptions="Center"></Label>
+                <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#e1e3e3" VerticalOptions="End" Margin="-15,0,-15,-15" />
+            </Grid>
 
 
-                <StackLayout Grid.Column="1" Grid.Row="1" VerticalOptions="Start" Spacing="4">
-                    <!--name-->
-                    <Label Text="{Binding name}" LineBreakMode="TailTruncation" 
-                           MaxLines="2"
-                           FontAttributes="Bold"></Label>
-                    <!--no + '-' itemCategory.name-->
-                    <Label Text="{Binding Subtext}" FontSize="Caption" TextColor="Gray"></Label>
+            <StackLayout Spacing="8" Grid.Row="1">
+                <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
+                        BackgroundColor="WhiteSmoke" Padding="20">
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="15">
 
-                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                        <StackLayout>
-                            <Label Text="Stok Sistem" TextColor="Grey"></Label>
-                            <!--balance + unit1Name-->
-                            <Label Text="{Binding FormattedBalance}" FontAttributes="Bold" TextColor="DarkCyan"></Label>
+                        <!--gambar ambil dari no + ekstensi .jpg-->
+                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source="{Binding DisplayImage}" HeightRequest="70" VerticalOptions="Start">
+                        </Image>
+
+
+                        <StackLayout Grid.Column="1" Grid.Row="1" VerticalOptions="Start" Spacing="4">
+                            <!--name-->
+                            <Label Text="{Binding name}" LineBreakMode="TailTruncation" 
+                   MaxLines="2"
+                   FontAttributes="Bold"></Label>
+                            <!--no + '-' itemCategory.name-->
+                            <Label Text="{Binding Subtext}" FontSize="Caption" TextColor="Gray"></Label>
+
+                            <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                                <StackLayout>
+                                    <Label Text="Stok Sistem" TextColor="Grey"></Label>
+                                    <!--balance + unit1Name-->
+                                    <Label Text="{Binding FormattedBalance}" FontAttributes="Bold" TextColor="DarkCyan"></Label>
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="EndAndExpand">
+                                    <Label Text="Harga Dasar" TextColor="Grey"></Label>
+                                    <!--Rp + vendorPrice-->
+                                    <Label Text="{Binding FormattedVendorPrice}" FontAttributes="Bold" HorizontalTextAlignment="End" TextColor="Goldenrod"></Label>
+                                </StackLayout>
+                            </StackLayout>
+
+
                         </StackLayout>
-                        <StackLayout HorizontalOptions="EndAndExpand">
-                            <Label Text="Harga Dasar" TextColor="Grey"></Label>
-                            <!--Rp + vendorPrice-->
-                            <Label Text="{Binding FormattedVendorPrice}" FontAttributes="Bold" HorizontalTextAlignment="End" TextColor="Goldenrod"></Label>
-                        </StackLayout>
+
+
+
+                    </Grid>
+                </Border>
+
+                <Label Text="Tipe Penyesuaian" Margin="0,10,0,0"></Label>
+
+                <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent" Padding="15,2">
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <RadioButton Content="ADJUSTMENT IN" IsChecked="True" TextColor="DarkGray" FontAttributes="Bold"></RadioButton>
+                        <RadioButton Content="ADJUSTMENT OUT" TextColor="DarkGray" FontAttributes="Bold"></RadioButton>
                     </StackLayout>
-                    
-                    
+                </Border>
+
+                <Label Text="Kuantitas Penyesuaian" Margin="0,10,0,0"></Label>
+                <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent" Padding="15,2">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Image Source="minus1.png" HeightRequest="30"></Image>
+                        <Entry Text="0" HorizontalTextAlignment="Center" FontAttributes="Bold" TextColor="Grey" FontSize="18" Grid.Column="1"></Entry>
+                        <Image Source="plus1.png" HeightRequest="20" Grid.Column="2"></Image>
+                    </Grid>
+                </Border>
+
+                <StackLayout x:Name="FormSerial" IsVisible="{Binding manageSN}">
+                    <Label Text="Nomor Serial Item" Margin="0,10"></Label>
+                    <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent" Padding="15,2">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Image Source="barcode1.png" HeightRequest="24"></Image>
+                            <Entry Placeholder="Nomor Serial" Grid.Column="1"></Entry>
+                        </Grid>
+                    </Border>
                 </StackLayout>
-                
-                
-                
-            </Grid>
-            
-        </Border>
 
-
-        <Label Text="Tipe Penyesuaian" Margin="0,10,0,0"></Label>
-
-        <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
-                BackgroundColor="Transparent" Padding="15,2">
-            <StackLayout Orientation="Horizontal" Spacing="20">
-                <RadioButton Content="ADJUSTMENT IN" IsChecked="True" TextColor="DarkGray" FontAttributes="Bold"></RadioButton>
-                <RadioButton Content="ADJUSTMENT OUT" TextColor="DarkGray" FontAttributes="Bold"></RadioButton>
+                <Label Text="Total Biaya" Margin="0,10,0,0"></Label>
+                <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent" Padding="15,15">
+                    <Label Text="10.000.000" FontSize="18" FontAttributes="Bold" TextColor="DarkCyan"></Label>
+                </Border>
             </StackLayout>
-        </Border>
 
-        <Label Text="Kuantitas Penyesuaian" Margin="0,10,0,0"></Label>
-        <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
-                BackgroundColor="Transparent" Padding="15,2">
-            <Grid ColumnDefinitions="Auto,*,Auto">
-                <Image Source="minus1.png" HeightRequest="30"></Image>
-                <Entry Text="0" HorizontalTextAlignment="Center" FontAttributes="Bold" TextColor="Grey" FontSize="18" Grid.Column="1"></Entry>
-                <Image Source="plus1.png" HeightRequest="20" Grid.Column="2"></Image>
+            <Grid ColumnDefinitions="0.3*,*" Grid.Row="2" ColumnSpacing="10">
+                <Button Text="BATAL" Grid.Column="0"  FontAttributes="Bold" FontSize="18" TextColor="LightGray" BackgroundColor="Transparent" 
+                        BorderWidth="0.5" BorderColor="LightGray"></Button>
+                <Button Text="SIMPAN" FontAttributes="Bold" Grid.Column="1" FontSize="18" BackgroundColor="DarkCyan"></Button>
             </Grid>
-        </Border>
-
-        <StackLayout x:Name="FormSerial" IsVisible="{Binding manageSN}">
-            <Label Text="Nomor Serial Item" Margin="0,10"></Label>
-            <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
-                    BackgroundColor="Transparent" Padding="15,2">
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                    <Image Source="barcode1.png" HeightRequest="24"></Image>
-                    <Entry Placeholder="Nomor Serial" Grid.Column="1"></Entry>
-                </Grid>
-            </Border>
-        </StackLayout>
-
-        <Label Text="Total Biaya" Margin="0,10,0,0"></Label>
-        <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
-                BackgroundColor="Transparent" Padding="15,15">
-            <Label Text="10.000.000" FontSize="18" FontAttributes="Bold" TextColor="DarkCyan"></Label>
-        </Border>
-
-
-        <Grid ColumnDefinitions="0.3*,*" ColumnSpacing="10">
-            <Button Text="BATAL" Grid.Column="0"  FontAttributes="Bold" FontSize="18" TextColor="LightGray" BackgroundColor="Transparent" 
-                BorderWidth="0.5" BorderColor="LightGray"></Button>
-            <Button Text="SIMPAN" FontAttributes="Bold" Grid.Column="1" FontSize="18" BackgroundColor="DarkCyan"></Button>
         </Grid>
-
-
-
-
-
-    </StackLayout>
+        
+    </Border>
 </mct:Popup>

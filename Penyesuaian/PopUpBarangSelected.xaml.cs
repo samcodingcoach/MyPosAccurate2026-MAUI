@@ -14,6 +14,11 @@ public partial class PopUpBarangSelected : Popup
         _ = LoadItemData();
 	}
 
+    private async void BtnClose_Tapped(object sender, TappedEventArgs e)
+    {
+        await CloseAsync();
+    }
+
     private async Task LoadItemData()
     {
         try
