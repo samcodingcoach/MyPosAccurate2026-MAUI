@@ -4,6 +4,12 @@ using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
+using Microsoft.Maui.Controls.Shapes;
+
 
 namespace MyPosAccurate2026.Penyesuaian;
 
@@ -115,6 +121,20 @@ public partial class New_Penyesuaian : ContentPage
             SearchBar_Item.Text = selectedItem.item_no;
             Border_AutoComplete.IsVisible = false;
         }
+    }
+
+    private async void bSimpan_Clicked(object sender, EventArgs e)
+    {
+        string itemNo = "100003";
+        await this.ShowPopupAsync(new PopUpBarangSelected(itemNo), new PopupOptions
+        {
+            Shape = new RoundRectangle
+            {
+                CornerRadius = new CornerRadius(20),
+                Stroke = Colors.Transparent,
+                StrokeThickness = 0
+            }
+        });
     }
 }
 

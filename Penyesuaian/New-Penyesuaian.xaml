@@ -120,7 +120,7 @@
                     BorderWidth="0.5" x:Name="bOpsi" Clicked="bOpsi_Clicked" BorderColor="Transparent"></Button>
             
            
-            <Button Text="SIMPAN" FontAttributes="Bold" Grid.Column="2" FontSize="18" BackgroundColor="DarkCyan"></Button>
+            <Button Text="SIMPAN" x:Name="bSimpan" Clicked="bSimpan_Clicked" FontAttributes="Bold" Grid.Column="2" FontSize="18" BackgroundColor="DarkCyan"></Button>
         </Grid>
     </Grid>
   

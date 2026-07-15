@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyPosAccurate2026.Penyesuaian.PopUpBarangSelected"
-             
-             Title="PopUpBarangSelected">
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             CanBeDismissedByTappingOutsideOfPopup="True" Padding="0" BackgroundColor="Transparent"
+             >
     <StackLayout Padding="20" Spacing="8" >
         <Label Text="Detail Barang Penyesuaian" FontSize="18" FontAttributes="Bold"></Label>
-
 
         <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
                 BackgroundColor="WhiteSmoke" Padding="20">
 
             <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="15">
 
+                <!--gambar ambil dari no + ekstensi .jpg-->
                 <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"  Source="pp100.jpg" HeightRequest="70" VerticalOptions="Start">
 
                 </Image>
 
 
                 <StackLayout Grid.Column="1" Grid.Row="1" VerticalOptions="Start" Spacing="4">
+                    <!--name-->
                     <Label Text="NAMA BARANG PENYESUAIAN. MAX 2 BARIS LINE BREAK MODE TAIL TRAUNCET MANTAP" LineBreakMode="TailTruncation" 
                            MaxLines="2"
                            FontAttributes="Bold"></Label>
+                    <!--no + '-' itemCategory.name-->
                     <Label Text="No. 100912 - Mouse" FontSize="Caption" TextColor="Gray"></Label>
 
                     <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
                         <StackLayout>
                             <Label Text="Stok Sistem" TextColor="Grey"></Label>
+                            <!--balance + unit1Name-->
                             <Label Text="100 Unit" FontAttributes="Bold" TextColor="DarkCyan"></Label>
                         </StackLayout>
                         <StackLayout HorizontalOptions="EndAndExpand">
                             <Label Text="Harga Dasar" TextColor="Grey"></Label>
-                            <Label Text="Rp 500.000" FontAttributes="Bold" HorizontalTextAlignment="End" TextColor="Goldenrod"></Label>
+                            <!--Rp + vendorPrice-->
+                            <Label Text="Rp 0" FontAttributes="Bold" HorizontalTextAlignment="End" TextColor="Goldenrod"></Label>
                         </StackLayout>
                     </StackLayout>
                     
@@ -46,7 +51,6 @@
 
 
         <Label Text="Tipe Penyesuaian" Margin="0,10,0,0"></Label>
-
 
         <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
                 BackgroundColor="Transparent" Padding="15,2">
@@ -87,7 +91,6 @@
         <Grid ColumnDefinitions="0.3*,*" ColumnSpacing="10">
             <Button Text="BATAL" Grid.Column="0"  FontAttributes="Bold" FontSize="18" TextColor="LightGray" BackgroundColor="Transparent" 
                 BorderWidth="0.5" BorderColor="LightGray"></Button>
-       
             <Button Text="SIMPAN" FontAttributes="Bold" Grid.Column="1" FontSize="18" BackgroundColor="DarkCyan"></Button>
         </Grid>
 
@@ -96,4 +99,4 @@
 
 
     </StackLayout>
-</ContentPage>
+</mct:Popup>
