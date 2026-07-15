@@ -6,12 +6,12 @@
              CanBeDismissedByTappingOutsideOfPopup="True" Padding="0" BackgroundColor="Transparent"
              >
 
-    <Border BackgroundColor="White" StrokeThickness="0" Padding="15" Stroke="Transparent" 
-            StrokeShape="RoundRectangle 20" WidthRequest="280" HeightRequest="600">
+    <Border BackgroundColor="White" StrokeThickness="0" Padding="0" Stroke="Transparent" 
+            StrokeShape="RoundRectangle 20" WidthRequest="360" HeightRequest="700">
 
-        <Grid RowDefinitions="Auto,*,Auto">
+        <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10">
 
-            <Grid Grid.Row="0"  BackgroundColor="#f2f4f4" Padding="15" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+            <Grid Grid.Row="0" BackgroundColor="#f2f4f4" Padding="15" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                 <Image Source="close100.png" HeightRequest="20" Grid.Column="0" Opacity="0.5">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Tapped="BtnClose_Tapped" />
@@ -22,7 +22,7 @@
             </Grid>
 
 
-            <StackLayout Spacing="8" Grid.Row="1">
+            <StackLayout Spacing="8" Grid.Row="1" Padding="15" >
                 <Border StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" 
                         BackgroundColor="WhiteSmoke" Padding="20">
                     <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="15">
@@ -95,8 +95,10 @@
                 </Border>
             </StackLayout>
 
-            <Grid ColumnDefinitions="0.3*,*" Grid.Row="2" ColumnSpacing="10">
-                <Button Text="BATAL" Grid.Column="0"  FontAttributes="Bold" FontSize="18" TextColor="LightGray" BackgroundColor="Transparent" 
+            <Grid Grid.Row="2" ColumnDefinitions="*,*" Padding="15" ColumnSpacing="10" BackgroundColor="#f8fafa">
+                <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#e1e3e3" VerticalOptions="Start" Margin="-15,-15,-15,0" />
+                <Button Text="BATAL" Grid.Column="0"  FontAttributes="Bold" FontSize="18" 
+                        TextColor="LightGray" BackgroundColor="Transparent" 
                         BorderWidth="0.5" BorderColor="LightGray"></Button>
                 <Button Text="SIMPAN" FontAttributes="Bold" Grid.Column="1" FontSize="18" BackgroundColor="DarkCyan"></Button>
             </Grid>
