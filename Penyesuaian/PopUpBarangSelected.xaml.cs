@@ -7,6 +7,9 @@ namespace MyPosAccurate2026.Penyesuaian;
 public partial class PopUpBarangSelected : Popup
 {
 	string _noItem;
+    ItemDetailPayload _currentItem;
+    bool _isUpdatingQuantity = false;
+
 	public PopUpBarangSelected(string itemNo)
 	{
 		InitializeComponent();
@@ -41,9 +44,11 @@ public partial class PopUpBarangSelected : Popup
                     
                     if (result?.data?.s == true && result.data.d != null)
                     {
+                        _currentItem = result.data.d;
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
-                            BindingContext = result.data.d;
+                            BindingContext = _currentItem;
+                            UpdateTotalCost();
                         });
                     }
                 }
@@ -52,6 +57,79 @@ public partial class PopUpBarangSelected : Popup
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Failed to load item detail: {ex.Message}");
+        }
+    }
+
+    private void Minus_Tapped(object sender, TappedEventArgs e)
+    {
+        if (int.TryParse(itemQuantity.Text, out int qty))
+        {
+            if (qty > 0)
+            {
+                qty--;
+                itemQuantity.Text = qty.ToString();
+            }
+        }
+        else
+        {
+            itemQuantity.Text = "0";
+        }
+    }
+
+    private void Plus_Tapped(object sender, TappedEventArgs e)
+    {
+        if (int.TryParse(itemQuantity.Text, out int qty))
+        {
+            qty++;
+            itemQuantity.Text = qty.ToString();
+        }
+        else
+        {
+            itemQuantity.Text = "1";
+        }
+    }
+
+    private void itemQuantity_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        CheckStockLimit();
+        UpdateTotalCost();
+    }
+
+    private void rbAdjustment_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        CheckStockLimit();
+    }
+
+    private void CheckStockLimit()
+    {
+        if (_currentItem == null || _isUpdatingQuantity) return;
+
+        if (rbAdjustmentOut != null && rbAdjustmentOut.IsChecked)
+        {
+            if (int.TryParse(itemQuantity.Text, out int qty))
+            {
+                if (qty > _currentItem.balance)
+                {
+                    _isUpdatingQuantity = true;
+                    itemQuantity.Text = _currentItem.balance.ToString();
+                    _isUpdatingQuantity = false;
+                }
+            }
+        }
+    }
+
+    private void UpdateTotalCost()
+    {
+        if (_currentItem == null) return;
+
+        if (int.TryParse(itemQuantity.Text, out int qty))
+        {
+            double total = qty * _currentItem.vendorPrice;
+            TotalUnitCost.Text = $"Rp {total:N0}";
+        }
+        else
+        {
+            TotalUnitCost.Text = "Rp 0";
         }
     }
 }
