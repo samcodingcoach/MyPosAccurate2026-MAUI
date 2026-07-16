@@ -41,6 +41,32 @@ public partial class New_Penyesuaian : ContentPage
         UpdateSummaryCount();
 	}
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        var delayTask = Task.Delay(3000);
+        
+        try
+        {
+            // Fetch initial data if any
+        }
+        catch (Exception ex)
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+            });
+        }
+        finally
+        {
+            await delayTask;
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                OverlayLoading.IsVisible = false;
+            });
+        }
+    }
+
     private void UpdateSummaryCount()
     {
         int rowCount = SelectedItems.Count;

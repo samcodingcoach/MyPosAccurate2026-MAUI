@@ -57,6 +57,12 @@
 
         <!--data barang terselect-->
         <CollectionView Grid.Row="1" Margin="0,0,0,10" x:Name="SelectedItemsLayout" ItemsSource="{Binding SelectedItems}">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,50,0,0">
+                    <Image Source="emptylist01.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" />
+                    <Label Text="Item Kosong" TextColor="Grey" FontAttributes="Bold" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border VerticalOptions="Start" Padding="10" StrokeShape="RoundRectangle 10" Margin="0,0,0,10" Stroke="Transparent" 
@@ -120,6 +126,14 @@
             
            
             <Button Text="SIMPAN" x:Name="bSimpan" Clicked="bSimpan_Clicked" FontAttributes="Bold" Grid.Column="2" FontSize="18" BackgroundColor="DarkCyan"></Button>
+        </Grid>
+
+        <!-- Overlay Loading -->
+        <Grid x:Name="OverlayLoading" Margin="-10" Grid.Row="0" Grid.RowSpan="4" BackgroundColor="#80000000" IsVisible="True" ZIndex="999">
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding Source={x:Reference OverlayLoading}, Path=IsVisible}" Color="White" WidthRequest="50" HeightRequest="50" />
+                <Label Text="Mohon Tunggu..." TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
+            </VerticalStackLayout>
         </Grid>
     </Grid>
   
