@@ -10,7 +10,7 @@
         <StackLayout Spacing="5">
             <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent">
                 <StackLayout Orientation="Horizontal">
-                    <DatePicker Format="dd/MM/yyyy"></DatePicker>
+                    <DatePicker x:Name="DP_TransDate" Format="dd/MM/yyyy"></DatePicker>
                     <Image HorizontalOptions="EndAndExpand" Source="date100.png" HeightRequest="24" Opacity="0.5"></Image>
                 </StackLayout>
             </Border>
@@ -111,7 +111,7 @@
                 </StackLayout>
             </Border>
             <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent">
-                <Editor Placeholder="Keterangan (Opsional)" HeightRequest="60"></Editor>
+                <Editor x:Name="Editor_Description" Placeholder="Keterangan (Opsional)" HeightRequest="60"></Editor>
             </Border>
         </StackLayout>
         

@@ -29,8 +29,8 @@ public partial class New_Penyesuaian : ContentPage
         
         PickerAdjustmentAccountNo.ItemsSource = new List<AdjustmentAccount>
         {
-            new AdjustmentAccount { DisplayName = "STOCK_IN", Value = "ADJUSTMENT_IN" },
-            new AdjustmentAccount { DisplayName = "STOCK_OUT", Value = "ADJUSTMENT_OUT" }
+            new AdjustmentAccount { DisplayName = "STOCK_IN", Value = "ADJUSTMENT_IN", AdjustmentAccountNo = "710003" },
+            new AdjustmentAccount { DisplayName = "STOCK_OUT", Value = "ADJUSTMENT_OUT", AdjustmentAccountNo = "600026" }
         };
         PickerAdjustmentAccountNo.ItemDisplayBinding = new Binding("DisplayName");
         
@@ -54,7 +54,7 @@ public partial class New_Penyesuaian : ContentPage
         {
             MainThread.BeginInvokeOnMainThread(async () =>
             {
-                await DisplayAlert("Error", ex.Message, "OK");
+                await DisplayAlertAsync("Error", ex.Message, "OK");
             });
         }
         finally
@@ -194,7 +194,7 @@ public partial class New_Penyesuaian : ContentPage
     {
         if (sender is Image img && img.BindingContext is AdjustmentPayloadItem item)
         {
-            bool confirm = await DisplayAlert("Konfirmasi", $"Hapus {item.itemName} dari daftar?", "Ya", "Tidak");
+            bool confirm = await DisplayAlertAsync("Konfirmasi", $"Hapus {item.itemName} dari daftar?", "Ya", "Tidak");
             if (confirm)
             {
                 SelectedItems.Remove(item);
@@ -209,14 +209,74 @@ public partial class New_Penyesuaian : ContentPage
             if (item.detailSerialNumber != null && item.detailSerialNumber.Count > 0)
             {
                 string serials = string.Join("\n", item.detailSerialNumber.Select(s => s.serialNumberNo));
-                await DisplayAlert($"Serial Number ({item.itemName})", serials, "OK");
+                await DisplayAlertAsync($"Serial Number ({item.itemName})", serials, "OK");
             }
         }
     }
 
-    private void bSimpan_Clicked(object sender, EventArgs e)
+    private async void bSimpan_Clicked(object sender, EventArgs e)
     {
-        // Fitur simpan data utama
+        if (SelectedItems.Count == 0)
+        {
+            await DisplayAlert("Error", "Harap tambahkan minimal 1 barang.", "OK");
+            return;
+        }
+
+        if (PickerAdjustmentAccountNo.SelectedItem == null)
+        {
+            await DisplayAlert("Error", "Harap pilih Akun Prakiraan pada menu OPSI.", "OK");
+            return;
+        }
+
+        var selectedAccount = (AdjustmentAccount)PickerAdjustmentAccountNo.SelectedItem;
+
+        var payload = new
+        {
+            adjustmentAccountNo = selectedAccount.AdjustmentAccountNo,
+            transDate = $"{DP_TransDate.Date:dd/MM/yyyy}",
+            description = Editor_Description.Text ?? "",
+            detailItem = SelectedItems.ToList()
+        };
+
+        OverlayLoading.IsVisible = true;
+        try
+        {
+            string cleanToken = Microsoft.Maui.Storage.Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
+            string apiUrl = $"{App.API_HOST}item-adjustment/save.php";
+            string jsonPayload = JsonConvert.SerializeObject(payload);
+
+            using (var client = new HttpClient())
+            {
+                if (!string.IsNullOrEmpty(cleanToken))
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cleanToken);
+
+                client.DefaultRequestHeaders.Add("User-Agent", "AccuratePOS-App/1.0");
+
+                var content = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(apiUrl, content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                var result = JsonConvert.DeserializeObject<SaveApiResponse>(responseContent);
+                if (result != null && result.status == "success")
+                {
+                    await DisplayAlert("Sukses", "Data penyesuaian berhasil disimpan.", "OK");
+                    await Navigation.PushAsync(new List_Penyesuaian());
+                    Navigation.RemovePage(this);
+                }
+                else
+                {
+                    await DisplayAlert("Gagal", result?.message ?? "Terjadi kesalahan saat menyimpan data.", "OK");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
+        finally
+        {
+            OverlayLoading.IsVisible = false;
+        }
     }
 }
 
@@ -241,23 +301,31 @@ public class AdjustmentAccount
 {
     public string DisplayName { get; set; }
     public string Value { get; set; }
+    public string AdjustmentAccountNo { get; set; }
 }
 
 public class AdjustmentPayloadItem
 {
     public string itemAdjustmentType { get; set; }
     public string itemNo { get; set; }
+    
+    [JsonIgnore]
     public string itemName { get; set; } 
     public double quantity { get; set; }
     public double unitCost { get; set; }
     public string warehouseName { get; set; }
     public string detailNotes { get; set; }
     
+    [JsonIgnore]
     public string image { get; set; }
+    [JsonIgnore]
     public string itemNoDisplay { get; set; }
+    [JsonIgnore]
     public string qtyDisplay { get; set; }
+    [JsonIgnore]
     public string totalCostDisplay { get; set; }
 
+    [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
     public List<SerialPayload> detailSerialNumber { get; set; }
 }
 
@@ -265,4 +333,10 @@ public class SerialPayload
 {
     public string serialNumberNo { get; set; }
     public int quantity { get; set; }
+}
+
+public class SaveApiResponse
+{
+    public string status { get; set; }
+    public string message { get; set; }
 }
