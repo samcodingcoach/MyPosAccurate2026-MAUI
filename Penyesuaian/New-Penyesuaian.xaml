@@ -56,49 +56,43 @@
         </StackLayout>
 
         <!--data barang terselect-->
-        <Border VerticalOptions="Start" Grid.Row="1" Padding="10" StrokeShape="RoundRectangle 10" Margin="0" Stroke="Transparent" 
-                StrokeThickness="0.5" BackgroundColor="White">
-            <Border.Shadow>
-                <Shadow Brush="#000000" Opacity="0.15" Radius="5" Offset="0,1" />
-            </Border.Shadow>
+        <CollectionView Grid.Row="1" Margin="0,0,0,10" x:Name="SelectedItemsLayout" ItemsSource="{Binding SelectedItems}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border VerticalOptions="Start" Padding="10" StrokeShape="RoundRectangle 10" Margin="0,0,0,10" Stroke="Transparent" 
+                            StrokeThickness="0.5" BackgroundColor="White">
+                        <Border.Shadow>
+                            <Shadow Brush="#000000" Opacity="0.15" Radius="5" Offset="0,1" />
+                        </Border.Shadow>
 
-            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                        <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                            <Image Source="{Binding image}" Grid.Column="0" HeightRequest="75" WidthRequest="75" Aspect="AspectFill" VerticalOptions="Start"></Image>
 
-                <Image Source="pp100.jpg"  Grid.Column="0" HeightRequest="75" WidthRequest="75" Aspect="AspectFill" VerticalOptions="Start"></Image>
+                            <StackLayout Grid.Column="1" Spacing="2">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <Label Grid.Column="0" Text="{Binding itemName}" 
+                                    FontAttributes="Bold" TextColor="#444" FontSize="14" MaxLines="2" 
+                                    LineBreakMode="TailTruncation" VerticalOptions="Start" />
 
-                <StackLayout Grid.Column="1" Spacing="2">
+                                    <Image Source="delete1.png" HeightRequest="20" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="BtnDeleteSelected_Tapped" CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
 
-                    <Grid ColumnDefinitions="*, Auto">
-                        <Label Grid.Column="0" Text="NAMA BARANG YANG DIMUAT DAN DISESUAIKAN DLL" 
-                        FontAttributes="Bold" TextColor="#444" FontSize="14" MaxLines="2" 
-                        LineBreakMode="TailTruncation" VerticalOptions="Start" />
+                                <Label Text="{Binding itemNoDisplay}" TextColor="DarkCyan" FontSize="Caption" />
+                                <Label Text="{Binding qtyDisplay}" TextColor="Black" TranslationY="5" FontSize="13" />
 
-                        <Image Source="delete1.png" HeightRequest="20" HorizontalOptions="EndAndExpand">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer />
-                            </Image.GestureRecognizers>
-                        </Image>
-
-                    </Grid>
-
-                    <Label Text="No. 100015" TextColor="DarkCyan" FontSize="Caption" />
-
-                    <Label Text="STOK IN : 10" TextColor="Black" TranslationY="5" FontSize="13" />
-
-
-
-                    <Grid ColumnDefinitions="*, Auto" Margin="0,3,0,0">
-
-                        <Label Grid.Column="1" Text="Rp 10.000.000" FontAttributes="Bold" TextColor="DarkCyan" FontSize="18" VerticalOptions="Center" HorizontalOptions="End" />
-                    </Grid>
-
-
-
-                </StackLayout>
-            </Grid>
-
-
-        </Border>
+                                <Grid ColumnDefinitions="*, Auto" Margin="0,3,0,0">
+                                    <Label Grid.Column="1" Text="{Binding totalCostDisplay}" FontAttributes="Bold" TextColor="DarkCyan" FontSize="18" VerticalOptions="Center" HorizontalOptions="End" />
+                                </Grid>
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
         <StackLayout Grid.Row="2" Spacing="5" Margin="0,0,0,10" x:Name="formCOAket" IsVisible="False">
             <Border Padding="10,2" StrokeShape="RoundRectangle 10" Stroke="#CCCCCC" StrokeThickness="0.5" BackgroundColor="Transparent">

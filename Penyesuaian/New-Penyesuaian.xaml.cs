@@ -16,8 +16,11 @@ namespace MyPosAccurate2026.Penyesuaian;
 public partial class New_Penyesuaian : ContentPage
 {
     string AdjustmentAccountNo;
+    string itemNo_selected;
 
     public ObservableCollection<ItemModel> AutoCompleteResults { get; set; } = new ObservableCollection<ItemModel>();
+
+    public ObservableCollection<AdjustmentPayloadItem> SelectedItems { get; set; } = new ObservableCollection<AdjustmentPayloadItem>();
 
     public New_Penyesuaian()
 	{
@@ -31,6 +34,7 @@ public partial class New_Penyesuaian : ContentPage
         PickerAdjustmentAccountNo.ItemDisplayBinding = new Binding("DisplayName");
         
         List_AutoComplete.ItemsSource = AutoCompleteResults;
+        SelectedItemsLayout.BindingContext = this;
 	}
 
     private void bOpsi_Clicked(object sender, EventArgs e)
@@ -113,28 +117,48 @@ public partial class New_Penyesuaian : ContentPage
         }
     }
 
-    private void List_AutoComplete_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void List_AutoComplete_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.FirstOrDefault() is ItemModel selectedItem)
         {
             List_AutoComplete.SelectedItem = null;
-            SearchBar_Item.Text = selectedItem.item_no;
+            SearchBar_Item.Text = ""; // Kosongkan search bar kembali atau bisa dibiarkan
             Border_AutoComplete.IsVisible = false;
+            
+            string itemNo_selected = selectedItem.item_no;
+
+            Action<AdjustmentPayloadItem> onSimpan = (payload) => 
+            {
+                System.Diagnostics.Debug.WriteLine($"[Popup Success Callback] ItemNo: {payload.itemNo}, Qty: {payload.quantity}");
+                MainThread.BeginInvokeOnMainThread(() => 
+                {
+                    SelectedItems.Add(payload);
+                });
+            };
+
+            await this.ShowPopupAsync(new PopUpBarangSelected(itemNo_selected, onSimpan), new PopupOptions
+            {
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    Stroke = Colors.Transparent,
+                    StrokeThickness = 0
+                }
+            });
         }
     }
 
-    private async void bSimpan_Clicked(object sender, EventArgs e)
+    private void BtnDeleteSelected_Tapped(object sender, TappedEventArgs e)
     {
-        string itemNo = "100014";
-        await this.ShowPopupAsync(new PopUpBarangSelected(itemNo), new PopupOptions
+        if (sender is Image img && img.BindingContext is AdjustmentPayloadItem item)
         {
-            Shape = new RoundRectangle
-            {
-                CornerRadius = new CornerRadius(20),
-                Stroke = Colors.Transparent,
-                StrokeThickness = 0
-            }
-        });
+            SelectedItems.Remove(item);
+        }
+    }
+
+    private void bSimpan_Clicked(object sender, EventArgs e)
+    {
+        // Fitur simpan data utama
     }
 }
 
@@ -159,4 +183,28 @@ public class AdjustmentAccount
 {
     public string DisplayName { get; set; }
     public string Value { get; set; }
+}
+
+public class AdjustmentPayloadItem
+{
+    public string itemAdjustmentType { get; set; }
+    public string itemNo { get; set; }
+    public string itemName { get; set; } 
+    public double quantity { get; set; }
+    public double unitCost { get; set; }
+    public string warehouseName { get; set; }
+    public string detailNotes { get; set; }
+    
+    public string image { get; set; }
+    public string itemNoDisplay { get; set; }
+    public string qtyDisplay { get; set; }
+    public string totalCostDisplay { get; set; }
+
+    public List<SerialPayload> detailSerialNumber { get; set; }
+}
+
+public class SerialPayload
+{
+    public string serialNumberNo { get; set; }
+    public int quantity { get; set; }
 }

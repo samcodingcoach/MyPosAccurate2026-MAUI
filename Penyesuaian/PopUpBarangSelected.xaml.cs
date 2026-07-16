@@ -7,23 +7,25 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 namespace MyPosAccurate2026.Penyesuaian;
 
-public partial class PopUpBarangSelected : Popup
+public partial class PopUpBarangSelected : Popup<AdjustmentPayloadItem>
 {
 	string _noItem;
     ItemDetailPayload _currentItem;
     bool _isUpdatingQuantity = false;
     List<string> _availableSerials = new List<string>();
+    Action<AdjustmentPayloadItem> _onSimpan;
 
-	public PopUpBarangSelected(string itemNo)
+	public PopUpBarangSelected(string itemNo, Action<AdjustmentPayloadItem> onSimpan = null)
 	{
 		InitializeComponent();
 		_noItem = itemNo;
+        _onSimpan = onSimpan;
         _ = LoadItemData();
 	}
 
     private async void BtnClose_Tapped(object sender, TappedEventArgs e)
     {
-        await CloseAsync();
+        await CloseAsync(null);
     }
 
     private async Task LoadItemData()
@@ -202,6 +204,52 @@ public partial class PopUpBarangSelected : Popup
                 _currentItem.SerialEntries.Clear();
             }
         }
+    }
+
+    private async void BSimpanTemp_Clicked(object sender, EventArgs e)
+    {
+        if (_currentItem == null) return;
+        if (!int.TryParse(itemQuantity.Text, out int qty) || qty <= 0)
+        {
+            qty = 1;
+        }
+
+        string adjType = rbAdjustmentIn.IsChecked ? "ADJUSTMENT_IN" : "ADJUSTMENT_OUT";
+        string typeDisp = rbAdjustmentIn.IsChecked ? "STOK IN" : "STOK OUT";
+        
+        var resultPayload = new AdjustmentPayloadItem
+        {
+            itemAdjustmentType = adjType,
+            itemNo = _currentItem.no,
+            itemName = _currentItem.name,
+            quantity = qty,
+            unitCost = _currentItem.vendorPrice,
+            warehouseName = "Gudang Utama",
+            detailNotes = "Hilang",
+            image = _currentItem.DisplayImage,
+            itemNoDisplay = $"No. {_currentItem.no}",
+            qtyDisplay = $"{typeDisp} : {qty}",
+            totalCostDisplay = $"Rp {(qty * _currentItem.vendorPrice):N0}"
+        };
+
+        if (_currentItem.manageSN && _currentItem.SerialEntries != null)
+        {
+            resultPayload.detailSerialNumber = new List<SerialPayload>();
+            foreach(var sn in _currentItem.SerialEntries)
+            {
+                if (!string.IsNullOrWhiteSpace(sn.SerialNumber))
+                {
+                    resultPayload.detailSerialNumber.Add(new SerialPayload 
+                    {
+                        serialNumberNo = sn.SerialNumber,
+                        quantity = 1
+                    });
+                }
+            }
+        }
+
+        _onSimpan?.Invoke(resultPayload);
+        await CloseAsync(null);
     }
 }
 
