@@ -30,8 +30,9 @@
                             <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="15">
 
                                 <!--gambar ambil dari no + ekstensi .jpg-->
-                                <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source="{Binding DisplayImage}" HeightRequest="70" VerticalOptions="Start">
-                                </Image>
+                                <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HeightRequest="70" WidthRequest="70" VerticalOptions="Start" StrokeShape="RoundRectangle 8" Padding="0" StrokeThickness="0.5" Stroke="#E0E0E0">
+                                    <Image Source="{Binding DisplayImage}" Aspect="AspectFill" />
+                                </Border>
 
 
                                 <StackLayout Grid.Column="1" Grid.Row="1" VerticalOptions="Start" Spacing="4">
