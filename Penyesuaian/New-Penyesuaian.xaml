@@ -50,7 +50,7 @@
 
             <StackLayout Orientation="Horizontal" Padding="10">
                 <Label Text="Detail Barang Penyesuaian" FontSize="20" FontAttributes="Bold" TextColor="#444"></Label>
-                <Label Text="100 Items" FontSize="Caption" TextColor="Grey" HorizontalOptions="EndAndExpand" 
+                <Label x:Name="LabelSummaryCount" Text="0 (0 Items)" FontSize="Caption" TextColor="Grey" HorizontalOptions="EndAndExpand" 
                  VerticalTextAlignment="Center"></Label>
             </StackLayout>
         </StackLayout>
@@ -61,12 +61,17 @@
                 <DataTemplate>
                     <Border VerticalOptions="Start" Padding="10" StrokeShape="RoundRectangle 10" Margin="0,0,0,10" Stroke="Transparent" 
                             StrokeThickness="0.5" BackgroundColor="White">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Row_Tapped" CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
                         <Border.Shadow>
                             <Shadow Brush="#000000" Opacity="0.15" Radius="5" Offset="0,1" />
                         </Border.Shadow>
 
                         <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
-                            <Image Source="{Binding image}" Grid.Column="0" HeightRequest="75" WidthRequest="75" Aspect="AspectFill" VerticalOptions="Start"></Image>
+                            <Border Grid.Column="0" HeightRequest="75" WidthRequest="75" VerticalOptions="Start" StrokeShape="RoundRectangle 8" Padding="0" StrokeThickness="0.5" Stroke="#E0E0E0">
+                                <Image Source="{Binding image}" Aspect="AspectFill"></Image>
+                            </Border>
 
                             <StackLayout Grid.Column="1" Spacing="2">
                                 <Grid ColumnDefinitions="*, Auto">

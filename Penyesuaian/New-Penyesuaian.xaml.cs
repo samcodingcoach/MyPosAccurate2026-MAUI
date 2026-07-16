@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Net.Http;
@@ -35,7 +36,17 @@ public partial class New_Penyesuaian : ContentPage
         
         List_AutoComplete.ItemsSource = AutoCompleteResults;
         SelectedItemsLayout.BindingContext = this;
+
+        SelectedItems.CollectionChanged += (s, e) => UpdateSummaryCount();
+        UpdateSummaryCount();
 	}
+
+    private void UpdateSummaryCount()
+    {
+        int rowCount = SelectedItems.Count;
+        double totalQty = SelectedItems.Sum(x => x.quantity);
+        LabelSummaryCount.Text = $"{rowCount} ({totalQty} Items)";
+    }
 
     private void bOpsi_Clicked(object sender, EventArgs e)
     {
@@ -130,8 +141,13 @@ public partial class New_Penyesuaian : ContentPage
             Action<AdjustmentPayloadItem> onSimpan = (payload) => 
             {
                 System.Diagnostics.Debug.WriteLine($"[Popup Success Callback] ItemNo: {payload.itemNo}, Qty: {payload.quantity}");
-                MainThread.BeginInvokeOnMainThread(() => 
+                MainThread.BeginInvokeOnMainThread(async () => 
                 {
+                    if (SelectedItems.Any(x => x.itemNo == payload.itemNo))
+                    {
+                        await DisplayAlert("Info", "Barang ini sudah ada di dalam daftar.", "OK");
+                        return;
+                    }
                     SelectedItems.Add(payload);
                 });
             };
@@ -148,11 +164,27 @@ public partial class New_Penyesuaian : ContentPage
         }
     }
 
-    private void BtnDeleteSelected_Tapped(object sender, TappedEventArgs e)
+    private async void BtnDeleteSelected_Tapped(object sender, TappedEventArgs e)
     {
         if (sender is Image img && img.BindingContext is AdjustmentPayloadItem item)
         {
-            SelectedItems.Remove(item);
+            bool confirm = await DisplayAlert("Konfirmasi", $"Hapus {item.itemName} dari daftar?", "Ya", "Tidak");
+            if (confirm)
+            {
+                SelectedItems.Remove(item);
+            }
+        }
+    }
+
+    private async void Row_Tapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Border border && border.BindingContext is AdjustmentPayloadItem item)
+        {
+            if (item.detailSerialNumber != null && item.detailSerialNumber.Count > 0)
+            {
+                string serials = string.Join("\n", item.detailSerialNumber.Select(s => s.serialNumberNo));
+                await DisplayAlert($"Serial Number ({item.itemName})", serials, "OK");
+            }
         }
     }
 

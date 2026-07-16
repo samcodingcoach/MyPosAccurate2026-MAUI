@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Linq;
 namespace MyPosAccurate2026.Penyesuaian;
 
 public partial class PopUpBarangSelected : Popup<AdjustmentPayloadItem>
@@ -212,6 +213,15 @@ public partial class PopUpBarangSelected : Popup<AdjustmentPayloadItem>
         if (!int.TryParse(itemQuantity.Text, out int qty) || qty <= 0)
         {
             qty = 1;
+        }
+
+        if (_currentItem.manageSN)
+        {
+            if (_currentItem.SerialEntries == null || _currentItem.SerialEntries.Any(s => string.IsNullOrWhiteSpace(s.SerialNumber)))
+            {
+                await App.Current.MainPage.DisplayAlert("Peringatan", "Barang ini memerlukan Serial Number. Harap isi seluruh kolom serial number!", "OK");
+                return;
+            }
         }
 
         string adjType = rbAdjustmentIn.IsChecked ? "ADJUSTMENT_IN" : "ADJUSTMENT_OUT";
