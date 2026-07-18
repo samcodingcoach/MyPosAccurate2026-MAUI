@@ -60,18 +60,31 @@
                     <DataTemplate>
                         <Border VerticalOptions="Start" Padding="15" StrokeShape="RoundRectangle 10" Margin="0,0,0,10" Stroke="Transparent" 
                                 StrokeThickness="0.5" BackgroundColor="White">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnItemTapped" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
                             <Border.Shadow>
                                 <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
                             </Border.Shadow>
 
                             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                                 <!--number-->
-                                <Label Text="{Binding number}" FontSize="18" Grid.Column="0" FontAttributes="Bold" TextColor="DarkCyan"></Label>
-                                <!--transDateView-->
-                                <Label Text="{Binding transDateView}" Grid.Column="1" HorizontalTextAlignment="End" VerticalTextAlignment="Center" TextColor="#444"></Label>
-                               
+                                
+
+                                <StackLayout Grid.Column="0">
+                                    <Label Text="{Binding number}" FontSize="18"  FontAttributes="Bold" TextColor="DarkCyan"></Label>
+                                    <!--transDateView-->
+                                    <Label Text="{Binding transDateView}" HorizontalTextAlignment="Start" FontSize="Caption"
+                                           
+                                           VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="1">
+                                    <Label Text="{Binding totalAmount, StringFormat='Rp {0:N0}'}" FontSize="19" TextColor="Goldenrod" FontAttributes="Bold" HorizontalTextAlignment="End"></Label>
+                                </StackLayout>
+                                
                                 <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0">
-                                    <BoxView HeightRequest="0.5" Margin="0,10,0,5" Opacity="0.5" Color="WhiteSmoke" HorizontalOptions="Fill"/>
+                                    <BoxView HeightRequest="0.3" Margin="0,10,0,5" Opacity="1" Color="LightGrey" HorizontalOptions="Fill"/>
                                     <Label Text="Keterangan:" FontAttributes="Bold"></Label>
                                     <!--description-->
                                     <Label Text="{Binding description}" 

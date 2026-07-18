@@ -223,7 +223,7 @@ public partial class RugiLaba : ContentPage
             await DisplayAlertAsync("Gagal", "Gagal membuat PDF: " + ex.Message, "OK");
         }
 #else
-        await DisplayAlert("Tidak Didukung", "Pembuatan PDF laporan hanya didukung di Android.", "OK");
+        await DisplayAlertAsync("Tidak Didukung", "Pembuatan PDF laporan hanya didukung di Android.", "OK");
 #endif
     }
 
