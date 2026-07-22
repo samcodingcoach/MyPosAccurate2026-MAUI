@@ -233,6 +233,17 @@ public class ProdukTerlarisData
     public int Rank { get; set; }
     public string RankText => $"#{Rank}";
 
+    public string RankColor
+    {
+        get
+        {
+            if (Rank == 1) return "#006767";
+            if (Rank == 2) return "#5d5f5f";
+            if (Rank == 3) return "#677877";
+            return "#006767";
+        }
+    }
+
     public string DisplayImage
     {
         get
