@@ -35,42 +35,59 @@ public partial class Beranda : ContentPage
     {
         try
         {
-            SkeletonPenjualan.IsVisible = true;
-            LabelPenjualan.IsVisible = false;
-            _ = AnimateSkeleton(SkeletonPenjualan);
+            SkeletonPenerimaan.IsVisible = true;
+            SkeletonTransaksi.IsVisible = true;
+            _ = AnimateSkeleton(SkeletonPenerimaan);
+            _ = AnimateSkeleton(SkeletonTransaksi);
 
             // Simulasi delay 3 detik agar animasi skeleton terlihat jelas
             await Task.Delay(3000);
 
             string cleanToken = Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
-            string apiUrl = $"{App.API_HOST}dashboard/total-penerimaan.php";
+            string apiUrlPenerimaan = $"{App.API_HOST}dashboard/total-penerimaan.php";
+            string apiUrlTransaksi = $"{App.API_HOST}dashboard/jumlah-penerimaan.php";
 
             using (var client = new HttpClient())
             {
                 if (!string.IsNullOrEmpty(cleanToken))
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cleanToken);
 
-                var response = await client.GetAsync(apiUrl);
-                if (response.IsSuccessStatusCode)
+                var taskPenerimaan = client.GetAsync(apiUrlPenerimaan);
+                var taskTransaksi = client.GetAsync(apiUrlTransaksi);
+
+                await Task.WhenAll(taskPenerimaan, taskTransaksi);
+
+                if (taskPenerimaan.Result.IsSuccessStatusCode)
                 {
-                    string content = await response.Content.ReadAsStringAsync();
+                    string content = await taskPenerimaan.Result.Content.ReadAsStringAsync();
                     var result = JsonConvert.DeserializeObject<TotalPenerimaanResponse>(content);
                     if (result?.status == "success" && result.data != null)
                     {
                         LabelPenjualan.Text = $"Rp {result.data.totalPenerimaan:N0}";
                     }
                 }
+
+                if (taskTransaksi.Result.IsSuccessStatusCode)
+                {
+                    string content = await taskTransaksi.Result.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<JumlahPenerimaanResponse>(content);
+                    if (result?.status == "success" && result.data != null)
+                    {
+                        LabelTransaksi.Text = $"{result.data.jumlahPenerimaan:N0}";
+                    }
+                }
             }
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error loading total penerimaan: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Error loading dashboard: {ex.Message}");
             LabelPenjualan.Text = "Rp 0";
+            LabelTransaksi.Text = "0";
         }
         finally
         {
-            SkeletonPenjualan.IsVisible = false;
-            LabelPenjualan.IsVisible = true;
+            SkeletonPenerimaan.IsVisible = false;
+            SkeletonTransaksi.IsVisible = false;
         }
     }
 
@@ -94,5 +111,18 @@ public class TotalPenerimaanResponse
 public class TotalPenerimaanData
 {
     public double totalPenerimaan { get; set; }
+    public string date { get; set; }
+}
+
+public class JumlahPenerimaanResponse
+{
+    public string status { get; set; }
+    public string message { get; set; }
+    public JumlahPenerimaanData data { get; set; }
+}
+
+public class JumlahPenerimaanData
+{
+    public int jumlahPenerimaan { get; set; }
     public string date { get; set; }
 }

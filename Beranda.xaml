@@ -164,15 +164,15 @@
                         <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
                     </Border.Shadow>
 
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                        <Image Source="berandashop01.png" Grid.Column="0" HeightRequest="36"></Image>
-                        <StackLayout VerticalOptions="Start" Grid.Column="1">
-                            <Label Text="Penerimaan Hari Ini" FontSize="Small" TextColor="Grey"></Label>
-                            <Grid>
-                                <BoxView x:Name="SkeletonPenjualan" HeightRequest="20" WidthRequest="120" Color="#E0E0E0" CornerRadius="4" HorizontalOptions="Start" VerticalOptions="Center" />
-                                <Label x:Name="LabelPenjualan" Text="Rp 0" FontAttributes="Bold" FontSize="18" TextColor="#FA5252" IsVisible="False"></Label>
-                            </Grid>
-                        </StackLayout>
+                    <Grid>
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Image Source="berandashop01.png" Grid.Column="0" HeightRequest="36"></Image>
+                            <StackLayout VerticalOptions="Start" Grid.Column="1">
+                                <Label Text="Penerimaan Hari Ini" FontSize="Small" TextColor="Grey"></Label>
+                                <Label x:Name="LabelPenjualan" Text="Rp 0" FontAttributes="Bold" FontSize="18" TextColor="#FA5252"></Label>
+                            </StackLayout>
+                        </Grid>
+                        <BoxView x:Name="SkeletonPenerimaan" Color="#E0E0E0" Margin="-15" IsVisible="True"/>
                     </Grid>
 
                 </Border>
@@ -182,12 +182,15 @@
                         <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
                     </Border.Shadow>
 
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                        <Image Source="berandacountpenjualan1.png" Grid.Column="0" HeightRequest="36"></Image>
-                        <StackLayout VerticalOptions="Start" Grid.Column="1">
-                            <Label Text="Transaksi Hari Ini" FontSize="Small" TextColor="Grey"></Label>
-                            <Label Text="1.050" FontAttributes="Bold" FontSize="18" TextColor="#FACB52" ></Label>
-                        </StackLayout>
+                    <Grid>
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Image Source="berandacountpenjualan1.png" Grid.Column="0" HeightRequest="36"></Image>
+                            <StackLayout VerticalOptions="Start" Grid.Column="1">
+                                <Label Text="Transaksi Hari Ini" FontSize="Small" TextColor="Grey"></Label>
+                                <Label x:Name="LabelTransaksi" Text="0" FontAttributes="Bold" FontSize="18" TextColor="#FACB52" ></Label>
+                            </StackLayout>
+                        </Grid>
+                        <BoxView x:Name="SkeletonTransaksi" Color="#E0E0E0" Margin="-15" IsVisible="True"/>
                     </Grid>
 
                 </Border>
