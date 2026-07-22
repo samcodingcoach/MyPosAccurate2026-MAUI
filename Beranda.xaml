@@ -167,8 +167,11 @@
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
                         <Image Source="berandashop01.png" Grid.Column="0" HeightRequest="36"></Image>
                         <StackLayout VerticalOptions="Start" Grid.Column="1">
-                            <Label Text="Penjualan Hari Ini" FontSize="Small" TextColor="Grey"></Label>
-                            <Label Text="Rp 50.000.000" FontAttributes="Bold" FontSize="18" TextColor="#FA5252" ></Label>
+                            <Label Text="Penerimaan Hari Ini" FontSize="Small" TextColor="Grey"></Label>
+                            <Grid>
+                                <BoxView x:Name="SkeletonPenjualan" HeightRequest="20" WidthRequest="120" Color="#E0E0E0" CornerRadius="4" HorizontalOptions="Start" VerticalOptions="Center" />
+                                <Label x:Name="LabelPenjualan" Text="Rp 0" FontAttributes="Bold" FontSize="18" TextColor="#FA5252" IsVisible="False"></Label>
+                            </Grid>
                         </StackLayout>
                     </Grid>
 
