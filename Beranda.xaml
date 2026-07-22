@@ -202,29 +202,36 @@
                 <Border.Shadow>
                     <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
                 </Border.Shadow>
-                <VerticalStackLayout>
-                    <Grid BackgroundColor="#fafafa" Padding="15,10">
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="Stok Menipis"  TextColor="#444" />
-                            <Label Text="Lihat Semua" HorizontalOptions="EndAndExpand" TextColor="CornflowerBlue" FontAttributes="Bold" 
-                                    />
+                <Grid>
+                    <VerticalStackLayout>
+                        <Grid BackgroundColor="#fafafa" Padding="15,10">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Stok Menipis"  TextColor="#444" />
+                                <Label Text="Lihat Semua" HorizontalOptions="EndAndExpand" TextColor="CornflowerBlue" FontAttributes="Bold" />
+                            </StackLayout>
+                        </Grid>
+
+                        <StackLayout x:Name="ListStokMenipis">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="15" ColumnSpacing="10">
+                                        <!--corner radius 5 for image-->
+                                        <Border Grid.Column="0" StrokeShape="RoundRectangle 5" StrokeThickness="0" HeightRequest="32" WidthRequest="32" VerticalOptions="Center" BackgroundColor="Transparent">
+                                            <Image Source="{Binding DisplayImage}" Aspect="AspectFill" />
+                                        </Border>
+                                            <StackLayout Grid.Column="1">
+                                                <Label Text="{Binding name}" MaxLines="2" LineBreakMode="TailTruncation" FontAttributes="Bold" TextColor="Grey" VerticalTextAlignment="Center" />
+                                                <Label Text="{Binding itemNo,StringFormat= 'Kode Barang : {0}'}" FontSize="Small" TextColor="Grey"></Label>
+                                            </StackLayout>
+                                        
+                                        <Label Text="{Binding quantity}" Grid.Column="2" FontAttributes="Bold" TextColor="Red" FontSize="28" VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
                         </StackLayout>
-
-                    </Grid>
-
-                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="15" ColumnSpacing="10">
-                        <!--itemNo plus extensi .jpg--> 
-                        <Image Source="nophotoproduct150.jpg" Grid.Column="0" HeightRequest="32" VerticalOptions="Center"></Image>
-                        <!--name-->
-                        <Label Text="Ezren M109 Mouse Click Silent Bluetooth Wireless 2.4G Rechargeable" 
-                               MaxLines="2" LineBreakMode="TailTruncation" TextColor="Grey" VerticalTextAlignment="Center"
-                                Grid.Column="1"></Label>
-                        <!--quantity-->
-                        <Label Text="3" Grid.Column="2" FontAttributes="Bold" TextColor="Red" 
-                               FontSize="28"
-                               VerticalTextAlignment="Center"></Label>
-                    </Grid>
-                </VerticalStackLayout>
+                    </VerticalStackLayout>
+                    <BoxView x:Name="SkeletonStok" Color="#E0E0E0" CornerRadius="12" Margin="0" IsVisible="True" HeightRequest="120" />
+                </Grid>
             </Border>
 
             <!--produk terlaris-->
