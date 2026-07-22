@@ -256,54 +256,60 @@
             </Border>
 
             <!--faktur terbaru-->
-            <Border Stroke="#bcc9c8" Margin="10,10,10,0" Grid.Row="6" StrokeThickness="0.5" StrokeShape="RoundRectangle 12" 
+            <Border Stroke="#bcc9c8" Margin="10" 
+                    Grid.Row="6" StrokeThickness="0.5" StrokeShape="RoundRectangle 12" VerticalOptions="Start"
                     BackgroundColor="#ffffff">
                 <Border.Shadow>
                     <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
                 </Border.Shadow>
-                <VerticalStackLayout>
-
-                    <Grid BackgroundColor="#fafafa" Padding="15,10">
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="Faktur Penjualan Terbaru"  TextColor="#444" />
-                            <Label Text="Lihat Semua" HorizontalOptions="EndAndExpand" TextColor="CornflowerBlue" FontAttributes="Bold" />
-                        </StackLayout>
-                    </Grid>
-
-                        <StackLayout Orientation="Horizontal" Padding="15,10" Spacing="10">
-                            <!--branchName-->
-                            <Label Text="Kantor Pusat" TextColor="Grey" VerticalTextAlignment="Center"></Label>
-                            <!--number-->
-                            <Label Text="SI.2026.06.00033" TextColor="#444" VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand" FontAttributes="Bold"></Label>
-                            <Border Stroke="Transparent" Padding="12,5" VerticalOptions="Center"  StrokeThickness="0.5" Grid.Column="1" StrokeShape="RoundRectangle 5" 
-                                    BackgroundColor="DarkCyan">
-                                <!--statusName-->
-                                <Label Text="Lunas" VerticalTextAlignment="Center" TextColor="White"></Label>
-                            </Border>
-
-                        </StackLayout>
-                        <BoxView HeightRequest="0.5" BackgroundColor="LightGrey" 
-                                 Margin="15,5"
-                                 Opacity="0.5"></BoxView>
-
-                    <Grid ColumnDefinitions="0.4*,Auto" Padding="15,5" ColumnSpacing="20">
-
-                        <StackLayout Grid.Column="1" VerticalOptions="Center">
-                                <!--totalAmount-->
-                                <Label Text="Rp 0" FontAttributes="Bold" 
-                                    TextColor="DarkGoldenrod" FontSize="18" VerticalTextAlignment="Center"></Label>
-                        </StackLayout>
-
-
-                            <StackLayout Grid.Column="0">
-                                <!--receiptHistory.historyNumber-->
-                                <Label Text="IA.00000.000000" FontAttributes="Bold" TextColor="DarkCyan"></Label>
-                                <!--invoiceTime-->
-                                <Label Text="Terbayar pukul 20:00" FontSize="Small" FontAttributes="Italic" VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                <Grid>
+                    <VerticalStackLayout>
+                        <Grid BackgroundColor="#fafafa" Padding="15,10">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Faktur Penjualan Terbaru"  TextColor="#444" />
+                                <Label Text="Lihat Semua" HorizontalOptions="EndAndExpand" TextColor="CornflowerBlue" FontAttributes="Bold" />
                             </StackLayout>
-                       
-                    </Grid>
-                </VerticalStackLayout>
+                        </Grid>
+
+                        <StackLayout x:Name="ListFakturTerbaru">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout>
+                                        <StackLayout Orientation="Horizontal" Padding="15,10" Spacing="10">
+                                            <!--branchName-->
+                                            <Label Text="{Binding branchName}" TextColor="Grey" VerticalTextAlignment="Center"></Label>
+                                            <!--number-->
+                                            <Label Text="{Binding number}" TextColor="#444" VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand" FontAttributes="Bold"></Label>
+                                            <Border Stroke="Transparent" Padding="12,5" VerticalOptions="Center" StrokeThickness="0.5" StrokeShape="RoundRectangle 5" BackgroundColor="DarkCyan">
+                                                <!--statusName-->
+                                                <Label Text="{Binding statusName}" VerticalTextAlignment="Center" TextColor="White"></Label>
+                                            </Border>
+                                        </StackLayout>
+                                        
+                                        <BoxView HeightRequest="0.5" BackgroundColor="LightGrey" Margin="15,5" Opacity="0.5"></BoxView>
+
+                                        <Grid ColumnDefinitions="*,Auto" Padding="15,5" ColumnSpacing="20">
+                                            <StackLayout Grid.Column="0">
+                                                <!--receiptHistoryNumber-->
+                                                <Label Text="{Binding receiptHistoryNumber}" FontAttributes="Bold" TextColor="DarkCyan"></Label>
+                                                <!--invoiceTime-->
+                                                <Label Text="{Binding invoiceTime, StringFormat='Terbayar pukul {0}'}" FontSize="Small" FontAttributes="Italic" VerticalTextAlignment="Center" TextColor="Grey"></Label>
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <!--totalAmount-->
+                                                <Label Text="{Binding FormattedTotalAmount}" FontAttributes="Bold" TextColor="DarkGoldenrod" FontSize="18" VerticalTextAlignment="Center"></Label>
+                                            </StackLayout>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </VerticalStackLayout>
+                    
+                    <BoxView x:Name="SkeletonFaktur" Color="#E0E0E0" CornerRadius="12" Margin="0" IsVisible="True" HeightRequest="150" />
+                </Grid>
+                
+               
             </Border>
         </Grid>
         </ScrollView>

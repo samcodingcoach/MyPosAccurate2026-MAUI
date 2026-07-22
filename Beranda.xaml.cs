@@ -37,8 +37,10 @@ public partial class Beranda : ContentPage
         {
             SkeletonPenerimaan.IsVisible = true;
             SkeletonTransaksi.IsVisible = true;
+            SkeletonFaktur.IsVisible = true;
             _ = AnimateSkeleton(SkeletonPenerimaan);
             _ = AnimateSkeleton(SkeletonTransaksi);
+            _ = AnimateSkeleton(SkeletonFaktur);
 
             // Simulasi delay 3 detik agar animasi skeleton terlihat jelas
             await Task.Delay(3000);
@@ -46,6 +48,7 @@ public partial class Beranda : ContentPage
             string cleanToken = Preferences.Get("TOKEN_KEY", "").Replace("Bearer ", "").Trim();
             string apiUrlPenerimaan = $"{App.API_HOST}dashboard/total-penerimaan.php";
             string apiUrlTransaksi = $"{App.API_HOST}dashboard/jumlah-penerimaan.php";
+            string apiUrlFaktur = $"{App.API_HOST}dashboard/faktur-terakhir.php";
 
             using (var client = new HttpClient())
             {
@@ -54,8 +57,9 @@ public partial class Beranda : ContentPage
 
                 var taskPenerimaan = client.GetAsync(apiUrlPenerimaan);
                 var taskTransaksi = client.GetAsync(apiUrlTransaksi);
+                var taskFaktur = client.GetAsync(apiUrlFaktur);
 
-                await Task.WhenAll(taskPenerimaan, taskTransaksi);
+                await Task.WhenAll(taskPenerimaan, taskTransaksi, taskFaktur);
 
                 if (taskPenerimaan.Result.IsSuccessStatusCode)
                 {
@@ -76,6 +80,16 @@ public partial class Beranda : ContentPage
                         LabelTransaksi.Text = $"{result.data.jumlahPenerimaan:N0}";
                     }
                 }
+
+                if (taskFaktur.Result.IsSuccessStatusCode)
+                {
+                    string content = await taskFaktur.Result.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<FakturTerakhirResponse>(content);
+                    if (result?.status == "success" && result.data != null)
+                    {
+                        BindableLayout.SetItemsSource(ListFakturTerbaru, result.data);
+                    }
+                }
             }
         }
         catch (Exception ex)
@@ -88,6 +102,7 @@ public partial class Beranda : ContentPage
         {
             SkeletonPenerimaan.IsVisible = false;
             SkeletonTransaksi.IsVisible = false;
+            SkeletonFaktur.IsVisible = false;
         }
     }
 
@@ -125,4 +140,22 @@ public class JumlahPenerimaanData
 {
     public int jumlahPenerimaan { get; set; }
     public string date { get; set; }
+}
+
+public class FakturTerakhirResponse
+{
+    public string status { get; set; }
+    public List<FakturTerakhirData> data { get; set; }
+}
+
+public class FakturTerakhirData
+{
+    public string invoiceTime { get; set; }
+    public string number { get; set; }
+    public string statusName { get; set; }
+    public double totalAmount { get; set; }
+    public string branchName { get; set; }
+    public string receiptHistoryNumber { get; set; }
+    
+    public string FormattedTotalAmount => $"Rp {totalAmount:N0}";
 }
