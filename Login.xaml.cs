@@ -204,8 +204,7 @@ public partial class Login : ContentPage
                 }
                
                 
-                //Direct setelah login
-                Application.Current.MainPage = new NavigationPage(new Sales.List_Faktur());
+                Application.Current.MainPage = new NavigationPage(new Beranda());
             }
             else
             {

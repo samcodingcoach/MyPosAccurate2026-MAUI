@@ -5,8 +5,9 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MyPosAccurate2026.Beranda">
 
-    <ScrollView>
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+    <Grid>
+        <ScrollView>
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 
             <!--header : Menu Hamburger, Nama Toko, Bell, Icon Avatar-->
             <Border Grid.Row="0" Padding="12" StrokeShape="RoundRectangle 15" Margin="10" Stroke="Transparent" StrokeThickness="0.5" BackgroundColor="White">
@@ -74,6 +75,9 @@
                     <!--Konsumen-->
                     <Border Grid.Row="0" Grid.Column="2" Padding="10" StrokeShape="RoundRectangle 10"
                             Stroke="DarkCyan" StrokeThickness="0.7" BackgroundColor="White">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="MenuFaktur_Tapped" />
+                        </Border.GestureRecognizers>
                         <Border.Shadow>
                             <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,1" />
                         </Border.Shadow>
@@ -279,6 +283,14 @@
                 </VerticalStackLayout>
             </Border>
         </Grid>
-    </ScrollView>
+        </ScrollView>
+
+        <Grid x:Name="OverlayLoading" BackgroundColor="#B3000000" IsVisible="False">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="True" Color="White" />
+                <Label Text="Membuka Halaman Faktur" TextColor="White" FontAttributes="Bold" FontSize="18"/>
+            </StackLayout>
+        </Grid>
+    </Grid>
 
 </ContentPage>

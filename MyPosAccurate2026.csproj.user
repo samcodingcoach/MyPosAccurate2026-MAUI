@@ -3,7 +3,7 @@
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <ActiveDebugFramework>net10.0-android</ActiveDebugFramework>
-    <ActiveDebugProfile>Samsung SM-A156E (Android 15.0 - API 35)</ActiveDebugProfile>
+    <ActiveDebugProfile>Samsung SM-A235F (Android 15.0 - API 35)</ActiveDebugProfile>
     <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
     <DefaultDevice>pixel_6_-_api_33_0</DefaultDevice>
     <SelectedDevice>pixel_6_-_api_33_0</SelectedDevice>
