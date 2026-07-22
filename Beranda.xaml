@@ -247,8 +247,39 @@
                                 <Label Text="Lihat Semua" HorizontalOptions="EndAndExpand" TextColor="CornflowerBlue" FontAttributes="Bold"  />
                             </StackLayout>
                         </Grid>
-                        
-                        
+                        <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                            <StackLayout Orientation="Horizontal" Padding="15,10,15,15" Spacing="16">
+                                
+                                <!-- Card 1 -->
+                                <Border WidthRequest="180"
+                                        Stroke="#e1e3e3" StrokeThickness="1" StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="White">
+                                    <VerticalStackLayout>
+                                        <Grid HeightRequest="150" BackgroundColor="#e1e3e3">
+                                            <!--itemNo, ekstensi.jpg-->
+                                            <Image Source="nophotoproduct150.jpg" HeightRequest="120" Aspect="AspectFit" Margin="16" />
+                                            <Border HorizontalOptions="Start" VerticalOptions="Start" 
+                                                    BackgroundColor="DarkCyan" StrokeThickness="0" StrokeShape="RoundRectangle 5"
+                                                    Padding="8,4" Margin="8,8,0,0">
+                                                <Label Text="#1" TextColor="White" FontSize="Small" FontAttributes="Bold" />
+                                            </Border>
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" Padding="15">
+                                            <StackLayout>
+                                                <!--itemNo-->
+                                                <Label Text="RX-M030" FontSize="11" TextColor="#6d7979" />
+                                                <!--name-->
+                                                <Label Text="Rexus Q30 Office 12345" LineBreakMode="TailTruncation" MaxLines="1" FontSize="16" FontAttributes="Bold" TextColor="#444" />
+                                            </StackLayout>
+                                            <!--terjual-->
+                                            <Label Text="0" Grid.Column="1" FontSize="18" FontAttributes="Bold" TextColor="#006767" />
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                            </StackLayout>
+                        </ScrollView>
                     </VerticalStackLayout>
                 </Border>
 
