@@ -240,47 +240,54 @@
                     <Border.Shadow>
                         <Shadow Brush="#000000" Opacity="0.10" Radius="12" Offset="0,-3" />
                     </Border.Shadow>
-                    <VerticalStackLayout>
-                        <Grid BackgroundColor="#fafafa" Padding="15,10">
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="Produk Terlaris"  TextColor="#444" />
-                                <Label Text="Lihat Semua" HorizontalOptions="EndAndExpand" TextColor="CornflowerBlue" FontAttributes="Bold"  />
-                            </StackLayout>
-                        </Grid>
-                        <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
-                            <StackLayout Orientation="Horizontal" Padding="15,10,15,15" Spacing="16">
-                                
-                                <!-- Card 1 -->
-                                <Border WidthRequest="180"
-                                        Stroke="#e1e3e3" StrokeThickness="1" StrokeShape="RoundRectangle 12"
-                                        BackgroundColor="White">
-                                    <VerticalStackLayout>
-                                        <Grid HeightRequest="150" BackgroundColor="#e1e3e3">
-                                            <!--itemNo, ekstensi.jpg-->
-                                            <Image Source="nophotoproduct150.jpg" HeightRequest="120" Aspect="AspectFit" Margin="16" />
-                                            <Border HorizontalOptions="Start" VerticalOptions="Start" 
-                                                    BackgroundColor="DarkCyan" StrokeThickness="0" StrokeShape="RoundRectangle 5"
-                                                    Padding="8,4" Margin="8,8,0,0">
-                                                <Label Text="#1" TextColor="White" FontSize="Small" FontAttributes="Bold" />
-                                            </Border>
-                                        </Grid>
+                    <Grid>
+                        <VerticalStackLayout>
+                            <Grid BackgroundColor="#fafafa" Padding="15,10">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Produk Terlaris"  TextColor="#444" />
+                                    <Label Text="Lihat Semua" HorizontalOptions="EndAndExpand" TextColor="CornflowerBlue" FontAttributes="Bold"  />
+                                </StackLayout>
+                            </Grid>
 
-                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" Padding="15">
-                                            <StackLayout>
-                                                <!--itemNo-->
-                                                <Label Text="RX-M030" FontSize="11" TextColor="#6d7979" />
-                                                <!--name-->
-                                                <Label Text="Rexus Q30 Office 12345" LineBreakMode="TailTruncation" MaxLines="1" FontSize="16" FontAttributes="Bold" TextColor="#444" />
-                                            </StackLayout>
-                                            <!--terjual-->
-                                            <Label Text="0" Grid.Column="1" FontSize="18" FontAttributes="Bold" TextColor="#006767" />
-                                        </Grid>
-                                    </VerticalStackLayout>
-                                </Border>
+                            <CarouselView x:Name="ListProdukTerlaris" HeightRequest="220" PeekAreaInsets="95" 
+                                          Margin="0,10">
+                                <CarouselView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"  />
+                                </CarouselView.ItemsLayout>
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border WidthRequest="180"
+                                                Stroke="#e1e3e3" StrokeThickness="1" StrokeShape="RoundRectangle 12"
+                                                BackgroundColor="White">
+                                            <VerticalStackLayout>
+                                                <Grid HeightRequest="150" BackgroundColor="#e1e3e3">
+                                                    <!--itemNo, ekstensi.jpg-->
+                                                    <Image Source="{Binding DisplayImage}" HeightRequest="120" Aspect="AspectFit" Margin="16" />
+                                                    <Border HorizontalOptions="Start" VerticalOptions="Start" 
+                                                            BackgroundColor="DarkCyan" StrokeThickness="0" StrokeShape="RoundRectangle 5"
+                                                            Padding="8,4" Margin="8,8,0,0">
+                                                        <Label Text="{Binding RankText}" TextColor="White" FontSize="Small" FontAttributes="Bold" />
+                                                    </Border>
+                                                </Grid>
 
-                            </StackLayout>
-                        </ScrollView>
-                    </VerticalStackLayout>
+                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" Padding="15">
+                                                    <StackLayout>
+                                                        <!--itemNo-->
+                                                        <Label Text="{Binding itemNo}" FontSize="11" TextColor="#6d7979" />
+                                                        <!--name-->
+                                                        <Label Text="{Binding name}" LineBreakMode="TailTruncation" MaxLines="1" FontSize="16" FontAttributes="Bold" TextColor="#444" />
+                                                    </StackLayout>
+                                                    <!--terjual-->
+                                                    <Label Text="{Binding terjual}" Grid.Column="1" FontSize="18" FontAttributes="Bold" TextColor="#006767" VerticalTextAlignment="Center" />
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                        </VerticalStackLayout>
+                        <BoxView x:Name="SkeletonTerlaris" Color="#E0E0E0" CornerRadius="12" Margin="0" IsVisible="True" HeightRequest="290" />
+                    </Grid>
                 </Border>
 
                 <!--faktur terbaru-->

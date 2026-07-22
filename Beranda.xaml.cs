@@ -39,10 +39,12 @@ public partial class Beranda : ContentPage
             SkeletonTransaksi.IsVisible = true;
             SkeletonFaktur.IsVisible = true;
             SkeletonStok.IsVisible = true;
+            SkeletonTerlaris.IsVisible = true;
             _ = AnimateSkeleton(SkeletonPenerimaan);
             _ = AnimateSkeleton(SkeletonTransaksi);
             _ = AnimateSkeleton(SkeletonFaktur);
             _ = AnimateSkeleton(SkeletonStok);
+            _ = AnimateSkeleton(SkeletonTerlaris);
 
             // Simulasi delay 3 detik agar animasi skeleton terlihat jelas
             await Task.Delay(3000);
@@ -52,6 +54,7 @@ public partial class Beranda : ContentPage
             string apiUrlTransaksi = $"{App.API_HOST}dashboard/jumlah-penerimaan.php";
             string apiUrlFaktur = $"{App.API_HOST}dashboard/faktur-terakhir.php";
             string apiUrlStok = $"{App.API_HOST}dashboard/stok-menipis.php";
+            string apiUrlTerlaris = $"{App.API_HOST}dashboard/barang-terlaris.php";
 
             using (var client = new HttpClient())
             {
@@ -62,8 +65,9 @@ public partial class Beranda : ContentPage
                 var taskTransaksi = client.GetAsync(apiUrlTransaksi);
                 var taskFaktur = client.GetAsync(apiUrlFaktur);
                 var taskStok = client.GetAsync(apiUrlStok);
+                var taskTerlaris = client.GetAsync(apiUrlTerlaris);
 
-                await Task.WhenAll(taskPenerimaan, taskTransaksi, taskFaktur, taskStok);
+                await Task.WhenAll(taskPenerimaan, taskTransaksi, taskFaktur, taskStok, taskTerlaris);
 
                 if (taskPenerimaan.Result.IsSuccessStatusCode)
                 {
@@ -103,6 +107,20 @@ public partial class Beranda : ContentPage
                         BindableLayout.SetItemsSource(ListStokMenipis, result.data);
                     }
                 }
+                
+                if (taskTerlaris.Result.IsSuccessStatusCode)
+                {
+                    string content = await taskTerlaris.Result.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<ProdukTerlarisResponse>(content);
+                    if (result?.status == "success" && result.data != null)
+                    {
+                        for (int i = 0; i < result.data.Count; i++)
+                        {
+                            result.data[i].Rank = i + 1;
+                        }
+                        ListProdukTerlaris.ItemsSource = result.data;
+                    }
+                }
             }
         }
         catch (Exception ex)
@@ -117,6 +135,7 @@ public partial class Beranda : ContentPage
             SkeletonTransaksi.IsVisible = false;
             SkeletonFaktur.IsVisible = false;
             SkeletonStok.IsVisible = false;
+            SkeletonTerlaris.IsVisible = false;
         }
     }
 
@@ -186,6 +205,33 @@ public class StokMenipisData
     public string itemNo { get; set; }
     public string name { get; set; }
     public double quantity { get; set; }
+
+    public string DisplayImage
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(itemNo)) return "nophotoproduct150.jpg";
+            string baseHost = App.API_HOST.Replace("api/", "");
+            return $"{baseHost}images/{itemNo}.jpg";
+        }
+    }
+}
+
+public class ProdukTerlarisResponse
+{
+    public string status { get; set; }
+    public string message { get; set; }
+    public List<ProdukTerlarisData> data { get; set; }
+}
+
+public class ProdukTerlarisData
+{
+    public string itemNo { get; set; }
+    public string name { get; set; }
+    public int terjual { get; set; }
+
+    public int Rank { get; set; }
+    public string RankText => $"#{Rank}";
 
     public string DisplayImage
     {
