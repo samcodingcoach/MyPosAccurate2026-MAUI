@@ -213,10 +213,13 @@
                     </Grid>
 
                     <Grid ColumnDefinitions="Auto,*,Auto" Padding="15" ColumnSpacing="10">
+                        <!--itemNo plus extensi .jpg--> 
                         <Image Source="nophotoproduct150.jpg" Grid.Column="0" HeightRequest="32" VerticalOptions="Center"></Image>
+                        <!--name-->
                         <Label Text="Ezren M109 Mouse Click Silent Bluetooth Wireless 2.4G Rechargeable" 
                                MaxLines="2" LineBreakMode="TailTruncation" TextColor="Grey" VerticalTextAlignment="Center"
                                 Grid.Column="1"></Label>
+                        <!--quantity-->
                         <Label Text="3" Grid.Column="2" FontAttributes="Bold" TextColor="Red" 
                                FontSize="28"
                                VerticalTextAlignment="Center"></Label>
