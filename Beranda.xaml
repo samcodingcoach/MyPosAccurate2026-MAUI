@@ -339,6 +339,12 @@
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
+
+                            <!-- Empty State -->
+                            <VerticalStackLayout x:Name="EmptyFakturState" IsVisible="False" Padding="20" Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Image Source="invoicegrey100.png" HeightRequest="80" HorizontalOptions="Center" Opacity="0.6" />
+                                <Label Text="Tidak ada faktur hari ini" TextColor="LightGray" FontSize="Small" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
 
                         <BoxView x:Name="SkeletonFaktur" Color="#E0E0E0" CornerRadius="12" Margin="0" IsVisible="True" HeightRequest="150" />

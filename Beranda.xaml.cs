@@ -93,10 +93,22 @@ public partial class Beranda : ContentPage
                 {
                     string content = await taskFaktur.Result.Content.ReadAsStringAsync();
                     var result = JsonConvert.DeserializeObject<FakturTerakhirResponse>(content);
-                    if (result?.status == "success" && result.data != null)
+                    if (result?.status == "success" && result.data != null && result.data.Count > 0)
                     {
                         BindableLayout.SetItemsSource(ListFakturTerbaru, result.data);
+                        ListFakturTerbaru.IsVisible = true;
+                        EmptyFakturState.IsVisible = false;
                     }
+                    else
+                    {
+                        ListFakturTerbaru.IsVisible = false;
+                        EmptyFakturState.IsVisible = true;
+                    }
+                }
+                else
+                {
+                    ListFakturTerbaru.IsVisible = false;
+                    EmptyFakturState.IsVisible = true;
                 }
                 if (taskStok.Result.IsSuccessStatusCode)
                 {
