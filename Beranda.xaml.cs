@@ -40,11 +40,15 @@ public partial class Beranda : ContentPage
             SkeletonFaktur.IsVisible = true;
             SkeletonStok.IsVisible = true;
             SkeletonTerlaris.IsVisible = true;
+            SkeletonLabaBersih.IsVisible = true;
+            SkeletonHPP.IsVisible = true;
             _ = AnimateSkeleton(SkeletonPenerimaan);
             _ = AnimateSkeleton(SkeletonTransaksi);
             _ = AnimateSkeleton(SkeletonFaktur);
             _ = AnimateSkeleton(SkeletonStok);
             _ = AnimateSkeleton(SkeletonTerlaris);
+            _ = AnimateSkeleton(SkeletonLabaBersih);
+            _ = AnimateSkeleton(SkeletonHPP);
 
             // Simulasi delay 3 detik agar animasi skeleton terlihat jelas
             await Task.Delay(3000);
@@ -55,6 +59,7 @@ public partial class Beranda : ContentPage
             string apiUrlFaktur = $"{App.API_HOST}dashboard/faktur-terakhir.php";
             string apiUrlStok = $"{App.API_HOST}dashboard/stok-menipis.php";
             string apiUrlTerlaris = $"{App.API_HOST}dashboard/barang-terlaris.php";
+            string apiUrlRugiLaba = $"{App.API_HOST}dashboard/rugi-laba.php";
 
             using (var client = new HttpClient())
             {
@@ -66,8 +71,9 @@ public partial class Beranda : ContentPage
                 var taskFaktur = client.GetAsync(apiUrlFaktur);
                 var taskStok = client.GetAsync(apiUrlStok);
                 var taskTerlaris = client.GetAsync(apiUrlTerlaris);
+                var taskRugiLaba = client.GetAsync(apiUrlRugiLaba);
 
-                await Task.WhenAll(taskPenerimaan, taskTransaksi, taskFaktur, taskStok, taskTerlaris);
+                await Task.WhenAll(taskPenerimaan, taskTransaksi, taskFaktur, taskStok, taskTerlaris, taskRugiLaba);
 
                 if (taskPenerimaan.Result.IsSuccessStatusCode)
                 {
@@ -133,6 +139,17 @@ public partial class Beranda : ContentPage
                         ListProdukTerlaris.ItemsSource = result.data;
                     }
                 }
+
+                if (taskRugiLaba.Result.IsSuccessStatusCode)
+                {
+                    string content = await taskRugiLaba.Result.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<RugiLabaResponse>(content);
+                    if (result?.status == "success" && result.summary != null)
+                    {
+                        LabelLabaBersih.Text = $"Rp {result.summary.labaBersih:N0}";
+                        LabelHPP.Text = $"Rp {result.summary.hpp:N0}";
+                    }
+                }
             }
         }
         catch (Exception ex)
@@ -140,6 +157,8 @@ public partial class Beranda : ContentPage
             System.Diagnostics.Debug.WriteLine($"Error loading dashboard: {ex.Message}");
             LabelPenjualan.Text = "Rp 0";
             LabelTransaksi.Text = "0";
+            LabelLabaBersih.Text = "Rp 0";
+            LabelHPP.Text = "Rp 0";
         }
         finally
         {
@@ -148,6 +167,8 @@ public partial class Beranda : ContentPage
             SkeletonFaktur.IsVisible = false;
             SkeletonStok.IsVisible = false;
             SkeletonTerlaris.IsVisible = false;
+            SkeletonLabaBersih.IsVisible = false;
+            SkeletonHPP.IsVisible = false;
         }
     }
 
@@ -265,4 +286,17 @@ public class ProdukTerlarisData
             return $"{baseHost}images/{itemNo}.jpg";
         }
     }
+}
+
+public class RugiLabaResponse
+{
+    public string status { get; set; }
+    public string message { get; set; }
+    public RugiLabaSummary summary { get; set; }
+}
+
+public class RugiLabaSummary
+{
+    public double hpp { get; set; }
+    public double labaBersih { get; set; }
 }
